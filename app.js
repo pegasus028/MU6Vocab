@@ -459,10 +459,10 @@ function bmFind() {
       if (r.done) return;
       const hit = REG[id], okHit = hit.word === need.word;
       if (okHit) { r.right++; r.ok.push(id); S.pts += 4; mark(hit.word, true); toast("✓ " + BY[hit.word].word); }
-      else { r.wrong++; toast("That is the " + BY[hit.word].word + ". Try " + BY[need.word].word + "."); return paintFigure({ layer: null, lit: [id], ok: r.ok }, tap); }
+      else { r.wrong++; toast("That is the " + BY[hit.word].word + ". Try " + BY[need.word].word + "."); return paintFigure({ layer: BM.layer, lit: [id], ok: r.ok }, tap); }
       r.i++; save(); hud(); draw();
     };
-    paintFigure({ layer: null, lit: [], ok: [] }, tap);
+    paintFigure({ layer: BM.layer, lit: [], ok: [] }, tap);
   };
   const finishFind = () => {
     const secs = Math.round((Date.now() - r.start) / 1000);
@@ -520,14 +520,14 @@ function bmHurt() {
       panel.innerHTML = '<div class="prompt-card"><div class="score" style="color:var(--green)">' + r.right + '<span style="font-size:20px;color:var(--ink3)"> / ' + r.qs.length + '</span></div><div class="row"><button class="btn" id="again">Again</button></div></div>';
       document.getElementById("again").onclick = () => { BM.run = null; bmHurt(); }; return;
     }
-    const c = r.qs[r.i], need = REG[c.region]; BM.view = need.view; r.stage = 0;
+    const c = r.qs[r.i], need = REG[c.region]; BM.view = need.view; BM.layer = need.layer; r.stage = 0;
     panel.innerHTML = '<div class="muted">Where does it hurt? · ' + (r.i + 1) + " / " + r.qs.length + "</div>" +
       '<div class="prompt-card"><p class="q">“' + esc(c.text) + "”</p>" + '<p class="muted" id="step">Step 1: tap where it hurts.</p><div id="opts"></div><div id="fb"></div></div>';
-    paintFigure({ layer: null, lit: [] }, id => {
+    paintFigure({ layer: BM.layer, lit: [] }, id => {
       if (r.stage !== 0) return;
       const hit = REG[id]; r.stage = 1;
       const okHit = hit.word === need.word;
-      paintFigure({ layer: null, lit: okHit ? [] : [id], ok: okHit ? [id] : regionsFor(need.word).filter(x => REG[x].view === BM.view) }, null);
+      paintFigure({ layer: BM.layer, lit: okHit ? [] : [id], ok: okHit ? [id] : regionsFor(need.word).filter(x => REG[x].view === BM.view) }, null);
       document.getElementById("step").textContent = (okHit ? "Yes, the " + BY[need.word].word + ". " : "It is the " + BY[need.word].word + ", not the " + BY[hit.word].word + ". ") + "Step 2: which word names the problem?";
       document.getElementById("opts").innerHTML = '<div class="opts" style="margin-top:8px">' + c.options.map((o, i) => '<button class="opt" data-i="' + i + '"><span class="ltr">' + "ABCD"[i] + "</span><span>" + esc(o) + "</span></button>").join("") + "</div>";
       document.querySelectorAll("#opts .opt").forEach(b => b.onclick = () => {
