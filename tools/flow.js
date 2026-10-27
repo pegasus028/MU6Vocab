@@ -31,7 +31,7 @@ const fs = require("fs"), path = require("path");
     await p.goto(base + "/#/words"); await p.waitForTimeout(300); await overflow("words");
     await p.click(".wcard >> nth=0"); await p.waitForTimeout(250); await shot(p, theme + "_card");
     let depth = 0;
-    for (let i = 0; i < 3; i++) { const s = await p.$(".sheet [data-term]"); if (!s) break; await s.click(); await p.waitForTimeout(150); depth++; }
+    for (let i = 0; i < 3; i++) { const s = await p.$(".sheet [data-term]") || await p.$(".sheet .itemchip[data-word]"); if (!s) break; await s.click(); await p.waitForTimeout(150); depth++; }
     if (depth < 3) errs.push("synonym stack only " + depth + " deep");
     const back = await p.$(".sheet [data-act='back']"); if (!back) errs.push("no back bar in stacked card"); else await back.click();
     await p.click(".sheet [data-act='close']");
@@ -62,7 +62,8 @@ const fs = require("fs"), path = require("path");
       const reg = await p.evaluate(() => { const q = BM.run && BM.run.qs[BM.run.i]; return q ? BODY.regions.find(r => r.id === q.region) : null; });
       if (!reg) break;
       if (reg.view !== BM_view(await p.evaluate(() => BM.view))) await p.click(".figure [data-v='" + reg.view + "']");
-      await p.click(".figure [data-region='" + reg.id + "']", { force: true }); await p.waitForTimeout(60);
+      // dispatch the tap on the region itself: the centre of a ring-shaped region (ribs) can sit over another organ
+      await p.$eval(".figure [data-region='" + reg.id + "']", el => el.dispatchEvent(new MouseEvent("click", { bubbles: true }))); await p.waitForTimeout(60);
     }
     await p.waitForTimeout(200); await shot(p, theme + "_find");
     const findScore = await p.evaluate(() => (S.body && S.body.find) || 0); if (findScore < 16) errs.push("Find it: " + findScore + "/16 by tapping the right regions");
@@ -87,10 +88,10 @@ const fs = require("fs"), path = require("path");
     await p.goto(base + "/#/tests"); await p.waitForTimeout(300); await p.click("[data-run='finalB2']"); await p.waitForTimeout(200);
     for (let k = 0; k < 20; k++) { const ans = await p.evaluate(() => T.t.questions[T.i].answer); await p.click(".opt >> nth=" + ans); await p.waitForTimeout(30); await p.click("#nx"); await p.waitForTimeout(30); }
     const b2 = await p.evaluate(() => S.tests.finalB2 && S.tests.finalB2.score); if (b2 !== 20) errs.push("Final B2 keyed answers scored " + b2);
-    await p.goto(base + "/#/tests"); await p.waitForTimeout(300); await p.click("[data-exam='B3']"); await p.waitForTimeout(200);
-    for (let k = 0; k < 8; k++) { const a = await p.evaluate(() => X.s.items[X.i].answerText); await p.fill("#xIn", k % 2 ? "’" + a.toUpperCase() + "." : a); await p.click("#chk"); await p.waitForTimeout(40); await p.click("#nx"); await p.waitForTimeout(40); }
+    await p.click("#tab-tests"); await p.waitForTimeout(300); await p.click("[data-exam='B3']"); await p.waitForTimeout(200);
+    for (let k = 0; k < 8; k++) { const a = await p.evaluate(() => X.s.items[X.i].answerText); await p.fill("#xIn", k % 2 ? a.replace(/'/g, "’").toUpperCase() + "." : a); await p.click("#chk"); await p.waitForTimeout(40); await p.click("#nx"); await p.waitForTimeout(40); }
     const b3 = await p.evaluate(() => S.exam.B3 && S.exam.B3.score); if (b3 !== 8) errs.push("Exam B3 typed answers scored " + b3 + " (curly quote / caps / full stop tolerance)");
-    await p.goto(base + "/#/tests"); await p.waitForTimeout(200); await p.click("[data-exam='D1']"); await p.waitForTimeout(300);
+    await p.click("#tab-tests"); await p.waitForTimeout(200); await p.click("[data-exam='D1']"); await p.waitForTimeout(300);
     const shown = await p.evaluate(() => { const q = X && X.s.items[X.i]; return q ? document.querySelector(".qcard").textContent.toLowerCase().includes(q.answerText.toLowerCase()) : false; });
     if (shown) errs.push("listen-and-spell shows the word before typing");
     await shot(p, theme + "_listen");

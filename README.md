@@ -23,7 +23,7 @@ MU6Vocab/
 ├── SPEC.md           the content contract every writer followed
 ├── README.md
 ├── .nojekyll
-├── art/              story illustrations (empty until the Gemini art run; see docs/)
+├── art/              words/: one Wikimedia Commons picture per keyword (Story card); story illustrations go here after the Gemini art run
 ├── tts-clean.js      turns on-screen text into spoken text (shared by the app and the recorder)
 ├── audio/tts/        one Sonia MP3 per spoken text (see Read-aloud recordings)
 ├── docs/             SOURCE-Praew-Art-Brief.md — the prompts for the 12 pages and the cover
@@ -31,7 +31,8 @@ MU6Vocab/
 ├── .github/workflows/record-audio.yml   records new or changed texts automatically on every push
 └── data/
     ├── words.js      80 entries (70 targets + 10 bonus), fully defined
-    ├── lexicon.js    every synonym and antonym as a full clickable entry
+    ├── lexicon.js    every synonym and antonym as a full clickable entry (306)
+    ├── images.js     one picture per word for the Story card: file, credit, Commons link, licence, alt
     ├── story.js      "Back on Her Feet": 5 chapters, 12 pages, all 80 items tagged
     ├── patterns.js   16 pattern cards (3 with interactive drills)
     ├── bodymap.js    the SVG figure, regions, Find-it prompts, Where-does-it-hurt cases
@@ -47,7 +48,11 @@ MU6Vocab/
   Exam Room → boss), progress per area, rank (Shuttle Rookie → Champion), a weekly target of 4 study days
   (no streak punishment), surprise badges, media shelf, **Copy my report** for Line.
 - **📖 Story** — *Back on Her Feet*: Praew dislocates her shoulder, Mali comes down with flu, Yai's cabinet meets a
-  science project, physio, the final. Every gold word opens its card; 🔊 Listen plays the recorded page.
+  science project, physio, the final. Every gold word opens a **picture card** (like Trail Mix's story card): a photo of
+  the keyword, the word with IPA and 🔊 Say it, part of speech, countability, level and area, the meaning, two examples,
+  collocations, grammar, word family, Say it right, British / American, Watch out, Did you know?, the Thai note, the
+  textbook line, related words (each opens its own picture card) and its pattern cards; 📇 Full study card opens the
+  complete entry with clickable synonyms and antonyms. 🔊 Listen plays the recorded page.
   The grammar modelled on each page is named under the text. The boss unlocks after page 11.
 - **🧍 Body Map** — Explore (Outside / Inside, Front / Back), Find it (60-second clock), Name it (typed),
   Where does it hurt? (tap the place, then choose the word).
@@ -73,8 +78,11 @@ origin; ↺ clears only this app's key.
 
 Everything a teacher might change is in `data/` or `media.js`; `app.js` holds no content.
 
-- **Words and cards:** `data/words.js` (schema at the top of the file and in `SPEC.md` §7). A synonym or antonym you add
+- **Words and cards:** `data/words.js` (schema at the top of the file and in `SPEC.md` §7, plus the Story-card fields
+  `emoji`, `count`, `grammar`, `say`, `ukus`, `fact`, `related`). A synonym or antonym you add
   must also get an entry in `data/lexicon.js`, or it will not be tappable. Use `null` for a level that is not graded.
+- **Pictures:** `data/images.js` + `art/words/<id>.jpg` (640 px, Wikimedia Commons, CC0 / PD / CC BY / CC BY-SA only; keep
+  the credit, link and licence). Delete an entry and the card shows the word's emoji instead.
 - **Story:** `data/story.js`. Mark a target item as `{{id|surface form}}`. Every one of the 80 ids must be tagged at least once.
 - **Tests:** `data/tests.js`. Four options, one answer, `why` ≤ 35 words, no option letters. Typed items carry
   `answerText` and `accept:[]` (every acceptable variant).

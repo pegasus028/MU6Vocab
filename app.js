@@ -403,7 +403,8 @@ function route() {
 window.addEventListener("hashchange", route);
 function buildTabs() {
   document.getElementById("tabsin").innerHTML = TABS.map(t => '<button class="tab" id="tab-' + t.id + '" role="tab" aria-selected="false">' + t.label + "</button>").join("");
-  TABS.forEach(t => document.getElementById("tab-" + t.id).onclick = () => { if (t.id === "tests") T = null; go(t.id); });
+  TABS.forEach(t => document.getElementById("tab-" + t.id).onclick = () => { if (t.id === "tests") { T = null; X = null; }
+    if (location.hash === "#/" + t.id) route(); else go(t.id); });   // same hash fires no hashchange, so redraw by hand
 }
 
 /* ==================================================================
@@ -550,7 +551,7 @@ function bodySVG(view, opts) {
 }
 function drawBody() {
   if (!(BODY.regions || []).length) { document.getElementById("v-body").innerHTML = '<h2 class="sec">Body Map</h2><p class="lede">No body map loaded yet.</p>'; return; }
-  if (P[0] && ["explore", "find", "name", "hurt"].indexOf(P[0]) > -1) BM.mode = P[0];
+  if (P[0] && ["explore", "find", "name", "hurt"].indexOf(P[0]) > -1 && P[0] !== BM.mode) { BM.mode = P[0]; BM.run = null; BM.lit = []; }  // a deep link to another mode starts a fresh round
   const modeBtn = (m, l) => '<button class="chip" data-mode="' + m + '" aria-pressed="' + (BM.mode === m) + '">' + l + "</button>";
   document.getElementById("v-body").innerHTML =
     '<h2 class="sec">Body Map</h2><p class="lede">Sixteen places on a body. Left and right always mean <i>her</i> left and right: she faces you, so her left is on your right.</p>' +
