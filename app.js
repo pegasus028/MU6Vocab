@@ -493,12 +493,17 @@ function readPage11() { return S.read.some(k => { const [c, p] = k.split(".").ma
 const BM = { mode: "explore", view: "front", layer: "outside", lit: [], run: null };
 const REG = {}; (BODY.regions || []).forEach(r => REG[r.id] = r);
 function regionsFor(wordId) { return (BODY.regions || []).filter(r => r.word === wordId).map(r => r.id); }
+let bmSeq = 0;
 function bodySVG(view, opts) {
   opts = opts || {}; const v = (BODY.views || {})[view]; if (!v) return '<p class="muted">Body map not loaded.</p>';
-  const regs = (BODY.regions || []).filter(r => r.view === view && (!opts.layer || r.layer === opts.layer));
-  return '<svg viewBox="' + esc(v.viewBox) + '" role="img" aria-label="Body map, ' + view + ' view">' + v.base +
-    regs.map(r => '<path class="region' + ((opts.lit || []).indexOf(r.id) > -1 ? " lit" : "") + ((opts.ok || []).indexOf(r.id) > -1 ? " ok" : "") + (opts.interactive === false ? " muted" : "") + '" d="' + esc(r.path) + '" data-region="' + r.id + '"><title>' + (opts.labels ? esc(BY[r.word] ? BY[r.word].word : r.word) : "") + "</title></path>").join("") +
-    (opts.labels ? regs.map(r => '<text class="lbl" x="' + r.label[0] + '" y="' + r.label[1] + '" text-anchor="middle">' + esc(BY[r.word] ? BY[r.word].word : r.word) + "</text>").join("") : "") + "</svg>";
+  // the base holds both layers (bm-out / bm-in); show the asked layer, else the layer of the lit part
+  const first = (opts.lit || [])[0], layer = opts.layer || (first && REG[first] ? REG[first].layer : "outside");
+  const regs = (BODY.regions || []).filter(r => r.view === view && r.layer === layer);
+  const nm = r => esc(BY[r.word] ? BY[r.word].word : r.word), seen = {};
+  const n = ++bmSeq;   // filter and clip-path ids must be unique when two figures share a page
+  return '<svg class="bm-' + layer + (opts.labels ? " bm-labels" : "") + '" viewBox="' + esc(v.viewBox) + '" role="img" aria-label="Body map, ' + view + " view, " + layer + '">' + v.base.replace(/bmf-/g, "bmf" + n + "-") +
+    regs.map(r => '<path class="region' + ((opts.lit || []).indexOf(r.id) > -1 ? " lit" : "") + ((opts.ok || []).indexOf(r.id) > -1 ? " ok" : "") + (opts.interactive === false ? " muted" : "") + '" d="' + esc(r.path) + '" data-region="' + r.id + '"><title>' + (opts.labels ? nm(r) : "") + "</title></path>").join("") +
+    (opts.labels ? regs.filter(r => { const k = r.word + r.label.join(); return seen[k] ? false : (seen[k] = 1); }).map(r => '<text class="lbl' + (regs.some(x => x.word === r.word && x.label.join() === r.label.join() && (opts.lit || []).indexOf(x.id) > -1) ? " on" : "") + '" x="' + r.label[0] + '" y="' + r.label[1] + '" text-anchor="middle">' + nm(r) + "</text>").join("") : "") + "</svg>";
 }
 function drawBody() {
   if (!(BODY.regions || []).length) { document.getElementById("v-body").innerHTML = '<h2 class="sec">Body Map</h2><p class="lede">No body map loaded yet.</p>'; return; }
@@ -513,8 +518,8 @@ function drawBody() {
 }
 function paintFigure(opts, onTap) {
   const fig = document.getElementById("figure");
-  fig.innerHTML = bodySVG(BM.view, opts) +
-    '<div class="vtog"><button class="chip" data-v="front" aria-pressed="' + (BM.view === "front") + '">Front</button><button class="chip" data-v="back" aria-pressed="' + (BM.view === "back") + '">Back</button></div>';
+  fig.innerHTML = '<div class="vtog"><span class="vcap">' + (BM.view === "front" ? "She faces you: her right is on <b>your left</b>." : "Her back: her right is on <b>your right</b>.") + "</span>" +
+    '<button class="chip" data-v="front" aria-pressed="' + (BM.view === "front") + '">Front</button><button class="chip" data-v="back" aria-pressed="' + (BM.view === "back") + '">Back</button></div>' + bodySVG(BM.view, opts);
   fig.querySelectorAll("[data-v]").forEach(b => b.onclick = () => { BM.view = b.dataset.v; paintFigure(opts, onTap); });
   if (onTap) fig.querySelectorAll(".region").forEach(p => p.onclick = () => onTap(p.dataset.region));
 }
@@ -618,7 +623,7 @@ function bmHurt() {
     }
     const c = r.qs[r.i], need = REG[c.region]; BM.view = need.view; BM.layer = need.layer; r.stage = 0;
     panel.innerHTML = '<div class="muted">Where does it hurt? · ' + (r.i + 1) + " / " + r.qs.length + "</div>" +
-      '<div class="prompt-card"><p class="q">“' + esc(c.text) + "” " + speakBtn(c.text) + "</p>" + '<p class="muted" id="step">Step 1: tap where it hurts.</p><div id="opts"></div><div id="fb"></div></div>';
+      '<div class="prompt-card">' + (c.pic ? '<img class="hurtpic" src="' + esc(c.pic) + '" alt="" width="320" height="140">' : "") + '<p class="q">“' + esc(c.text) + "” " + speakBtn(c.text) + "</p>" + '<p class="muted" id="step">Step 1: tap where it hurts.</p><div id="opts"></div><div id="fb"></div></div>';
     wireSpeak(panel);
     paintFigure({ layer: BM.layer, lit: [] }, id => {
       if (r.stage !== 0) return;
