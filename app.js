@@ -693,7 +693,7 @@ function drawPatterns() {
     PATS.map((p, i) => {
       const med = mediaForPattern(p.id);
       return '<div class="card pat" data-i="' + i + '" data-id="' + p.id + '" data-open="0"><button class="pathead"><span class="ic">' + p.icon + '</span><span class="tt"><span class="k">' + esc(p.kind) + "</span><h3>" + esc(p.title) + '</h3></span><span class="car">▶</span></button>' +
-        '<div class="patbody"><div class="row" style="margin-bottom:10px">' + readBtn("pat:" + p.id, "Listen to this card") + "</div>" +
+        '<div class="patbody"><div class="row" style="margin-bottom:10px">' + readBtn("pat:" + p.id, "Listen to this card") + "</div>" + (p.img ? '<figure class="patart" data-src="' + esc(p.img) + '" data-alt="' + esc(p.alt || p.title) + '"></figure>' : "") +
         '<p class="insight">' + bold(p.insight) + "</p>" + (p.examples || []).map(x => '<div class="exline">' + bold(x) + "</div>").join("") +
         '<div class="itemchips">' + (p.items || []).filter(id => BY[id]).map(id => '<button class="itemchip" data-word="' + id + '">' + esc(BY[id].word) + "</button>").join("") + "</div>" +
         '<div class="drill"><b>Try it now:</b> ' + bold(p.drill) + "</div>" +
@@ -704,6 +704,7 @@ function drawPatterns() {
     const p = h.parentElement; p.dataset.open = p.dataset.open === "1" ? "0" : "1";
     if (p.dataset.open === "0" && RD.owner === "pat:" + p.dataset.id) stopSpeech();
     if (p.dataset.open === "1") { if (S.pats.indexOf(p.dataset.id) < 0) { S.pats.push(p.dataset.id); S.pts += 2; touchDay(); save(); hud(); if (S.pats.length >= PATS.length) award("patterns"); }
+      loadPatArt(p.querySelector(".patart"));
       const pat = PATS.find(x => x.id === p.dataset.id); if (pat && pat.game) drawGame(pat); }
   });
   document.querySelectorAll("#v-patterns [data-word]").forEach(b => b.onclick = e => { e.stopPropagation(); stack = []; openWord(b.dataset.word); });
@@ -714,6 +715,25 @@ function drawPatterns() {
       .concat([{ text: "Try it now. " + (p.drill || ""), el: card.querySelector(".drill") }]), { label: p.title, bar: true });
   });
   paintReader();
+}
+/* Pattern pictures are SVGs drawn in code that colour themselves with the page's CSS variables, so they are
+   inlined (an <img> SVG cannot see page CSS). Loaded only when a card is first opened; cached for redraws.
+   If fetch fails (e.g. opened from file://), fall back to a plain lazy <img> in the light palette. */
+const PAT_ART = {};
+function loadPatArt(fig) {
+  if (!fig || fig.dataset.done) return;
+  fig.dataset.done = "1";
+  const src = fig.dataset.src, alt = fig.dataset.alt || "";
+  const put = txt => {
+    fig.innerHTML = txt.replace(/<script[\s\S]*?<\/script>/gi, "").replace(/^[\s\S]*?(?=<svg)/, "");
+    const s = fig.querySelector("svg"); if (s) { s.setAttribute("aria-label", alt); s.removeAttribute("width"); s.removeAttribute("height"); }
+  };
+  const img = () => { fig.innerHTML = '<img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" decoding="async">'; };
+  if (PAT_ART[src]) return put(PAT_ART[src]);
+  if (!window.fetch) return img();
+  fetch(src).then(r => r.ok ? r.text() : Promise.reject(r.status))
+    .then(t => { if (!/<svg[\s>]/.test(t)) throw 0; PAT_ART[src] = t; put(t); })
+    .catch(img);
 }
 function drawGame(p) {
   const el = document.getElementById("game-" + p.id); if (!el) return;

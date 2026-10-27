@@ -269,6 +269,9 @@ p.lede{color:var(--ink2);margin:0 0 18px;font-size:14.5px;max-width:62ch}
 .pat[data-open="1"] .pathead .car{transform:rotate(90deg)}
 .patbody{display:none;padding:0 16px 16px;border-top:1px solid var(--line2);margin-top:2px;padding-top:14px}
 .pat[data-open="1"] .patbody{display:block}
+.patart{margin:0 auto 14px;aspect-ratio:16/9;width:100%;max-width:640px}
+.patart svg,.patart img{display:block;width:100%;max-width:100%;height:auto}
+@media (max-width:520px){.patart{margin:-6px -10px 12px;width:calc(100% + 20px)}}
 .insight{font-size:15px;line-height:1.65;margin:0 0 14px;color:var(--ink)}
 .exline{font-family:var(--serif);font-size:14.5px;line-height:1.6;color:var(--ink2);padding:9px 12px;background:var(--paper2);border-radius:9px;border:1px solid var(--line2);margin-bottom:7px}
 .drill{background:var(--green-bg);border-radius:11px;padding:11px 13px;font-size:13.5px;color:var(--ink);margin-top:12px}
