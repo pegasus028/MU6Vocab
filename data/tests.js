@@ -35,7 +35,7 @@ window.TESTS = {
       { type: "odd", level: "B2", tests: "thigh", cluster: "body",
         prompt: "Three of these are organs inside the body. Which one is the odd one out?",
         options: ["thigh", "lungs", "liver", "kidney"], answer: 0,
-        why: "The thigh is the outside part of the leg above the knee; lungs, liver and kidneys are internal organs." },
+        why: "The thigh is the top part of the leg, above the knee; lungs, liver and kidneys are internal organs." },
       { type: "meaning", level: "B2", tests: "waist", cluster: "body",
         prompt: "Which word means the part of your body between your ribs and your hips, where a belt goes?",
         options: ["chest", "hip", "thigh", "waist"], answer: 3,
@@ -45,7 +45,7 @@ window.TESTS = {
       { type: "coll", level: "B2", tests: "xray", cluster: "injury",
         prompt: "Fah ___ an X-ray of her wrist at the hospital to check for broken bones.",
         options: ["made", "had", "did", "gave"], answer: 1,
-        why: "A patient has an X-ray; the hospital staff give one. Make and do are not used with X-ray." },
+        why: "The patient has an X-ray; the hospital staff give or do it. Fah is the patient, so had." },
       { type: "gap", level: "B2", tests: "dislocate", cluster: "injury",
         prompt: "In the judo final Bee ___ her shoulder: the bone came out of the joint, but nothing was broken.",
         options: ["dislocated", "fractured", "sprained", "bruised"], answer: 0,
@@ -83,7 +83,7 @@ window.TESTS = {
         options: ["pass out", "pass away", "pass on", "pass by"], answer: 2,
         why: "Pass something on to someone means give it to them; pass out means faint and pass away means die." },
       { type: "gap", level: "C2", tests: "infectious", cluster: "germs",
-        prompt: "Flu is highly ___, so the school asked Mint to stay at home until her fever had gone.",
+        prompt: "This new strain of flu is highly ___, so the school asked Mint to stay at home until her fever had gone.",
         options: ["infectious", "infected", "infection", "infect"], answer: 0,
         why: "Highly needs an adjective: infectious describes an illness that spreads easily. Infected describes a cut or a person." },
       { type: "meaning", level: "C2", tests: "vaccine", cluster: "germs",
@@ -105,11 +105,11 @@ window.TESTS = {
         options: ["to A and E", "to a physiotherapist", "to her GP", "to the chemist's"], answer: 3,
         why: "The chemist's sells remedies without a prescription and gives advice on minor illnesses." },
       { type: "coll", level: "B2", tests: "lower", cluster: "care",
-        prompt: "Paracetamol helps to ___ a temperature, but a doctor should see her if the fever lasts more than two days.",
+        prompt: "Paracetamol helps to ___ a temperature, but see a doctor if a fever lasts more than two days.",
         options: ["lose", "lower", "drop", "fall"], answer: 1,
         why: "You lower a temperature: the verb takes an object. Drop and fall describe what the temperature itself does." },
       { type: "sub", level: "B2", tests: "heal", cluster: "care",
-        prompt: "In a week the deep scratch on Ning's knee BECAME HEALTHY SKIN AGAIN. Which verb replaces the capitals?",
+        prompt: "In a week the deep scratch on Ning's knee CLOSED UP AND GOT BETTER. Which verb replaces the capitals?",
         options: ["treated", "recovered", "healed", "cured"], answer: 2,
         why: "Cuts and bones heal; people recover; doctors treat patients; diseases are cured." },
 
@@ -145,7 +145,7 @@ window.TESTS = {
         options: ["eyelid", "eyebrow", "forehead", "nail"], answer: 2,
         why: "The forehead is the flat part of the face above the eyebrows and below the hair." },
       { type: "gap", level: "A2", tests: "headache", cluster: "symptoms",
-        prompt: "I've got a terrible ___ from staring at my phone all evening.",
+        prompt: "I've got a terrible ___ behind my eyes from staring at my phone all evening.",
         options: ["headache", "stomach ache", "toothache", "backache"], answer: 0,
         why: "Headache is the -ache compound for pain in your head; screens and tiredness cause it." },
       { type: "coll", level: "A2", tests: "temperature", cluster: "symptoms",
@@ -158,7 +158,7 @@ window.TESTS = {
         why: "A painkiller is a medicine that reduces pain; a vaccine prevents illness and a prescription is a doctor's note." },
       { type: "meaning", level: "B1", tests: "cough", cluster: "symptoms",
         prompt: "Which word means to push air out of your throat suddenly and noisily, often when you are ill?",
-        options: ["sneeze", "cough", "ache", "sick"], answer: 1,
+        options: ["sneeze", "cough", "ache", "yawn"], answer: 1,
         why: "Cough is the throat action; a sneeze comes through the nose." },
       { type: "gap", level: "B2", tests: "sneeze", cluster: "symptoms",
         prompt: "The pepper went up Nan's nose and made her ___ three times.",
@@ -187,11 +187,11 @@ window.TESTS = {
       { type: "gap", level: "B1", tests: "flu", cluster: "germs",
         prompt: "Half the class is off school with ___ this rainy season: fever, aches and a dry cough.",
         options: ["a cold", "flu", "a headache", "hay fever"], answer: 1,
-        why: "Fever, aches and a dry cough together are flu; a cold is milder and rarely brings a fever." },
+        why: "Fever, aches and a dry cough together are flu; a cold is milder and rarely brings a high fever." },
       { type: "coll", level: "B1", tests: "ache", cluster: "symptoms",
         prompt: "Grandma says her back ___ whenever the weather changes.",
         options: ["aches", "sores", "pains", "injures"], answer: 0,
-        why: "Ache is a verb as well as a noun: a part of the body aches. Sore is only an adjective." },
+        why: "Ache is a verb as well as a noun: a part of the body aches. Sore is never a verb, and injure needs an object." },
       { type: "situation", level: "B1", tests: "physio", cluster: "care",
         prompt: "Six weeks after her knee operation, Ice goes twice a week to do special exercises that get the joint moving again. What is this called?",
         options: ["an X-ray", "a prescription", "an injection", "physiotherapy"], answer: 3,
@@ -211,7 +211,7 @@ window.TESTS = {
       { type: "coll", level: "B2", tests: "treat", cluster: "care",
         prompt: "The doctors at the clinic ___ hundreds of patients for flu every rainy season.",
         options: ["heal", "treat", "cure", "recover"], answer: 1,
-        why: "Doctors treat patients for an illness; people recover; cuts heal; cure takes the disease as its object." },
+        why: "Doctors treat patients for an illness. Cure would need of (cure someone of something); cuts heal, and recover takes no object." },
       { type: "situation", level: "B2", tests: "relief", cluster: "care",
         prompt: "Ploy's headache goes away ten minutes after she takes a tablet. What does the tablet give her?",
         options: ["an infection", "a symptom", "a fracture", "relief"], answer: 3,
@@ -303,11 +303,11 @@ window.TESTS = {
         options: ["dizzy", "dizzily", "dizziness", "dizzied"], answer: 2,
         why: "The list is of nouns, so the noun dizziness is needed; note the spelling change y to i." },
       { type: "sub", level: "B2", tests: "xray", cluster: "injury",
-        prompt: "The doctor needs A PICTURE OF THE BONES INSIDE her wrist. Which phrase replaces the capitals?",
+        prompt: "To see whether Ice's wrist is broken, the doctor needs A PICTURE OF THE BONES INSIDE IT. Which phrase replaces the capitals?",
         options: ["an operation", "an X-ray", "an injection", "a prescription"], answer: 1,
-        why: "An X-ray is a photograph of the inside of the body, used to look for broken bones." },
+        why: "An X-ray is a picture of the inside of the body, used to look for broken bones." },
       { type: "coll", level: "B2", tests: "treatment", cluster: "care",
-        prompt: "Physiotherapy is the usual ___ for a sprained ankle.",
+        prompt: "Physiotherapy is often part of the ___ for a badly sprained ankle.",
         options: ["treat", "treated", "treating", "treatment"], answer: 3,
         why: "The usual needs a noun: treatment. Treat is the verb." }
     ]
@@ -322,8 +322,8 @@ window.TESTS = {
         { type: "unscramble", tests: "hip", prompt: "iph → ___", answerText: "hip", accept: [], why: "The hip is the joint where the leg meets the body." },
         { type: "unscramble", tests: "lungs", prompt: "sgnul → ___", answerText: "lungs", accept: [], why: "Lungs: the pair of organs you breathe with. Say the final s." },
         { type: "unscramble", tests: "thigh", prompt: "ghtih → ___", answerText: "thigh", accept: [], why: "Thigh: the top part of the leg. The gh is silent." },
-        { type: "unscramble", tests: "kidney", prompt: "ydinek → ___", answerText: "kidney", accept: [], why: "Kidney: one of two organs at the back that clean the blood." },
-        { type: "unscramble", tests: "waist", prompt: "awtis → ___", answerText: "waist", accept: [], why: "Waist: the middle of the body. Not waste, which means rubbish." },
+        { type: "unscramble", tests: "kidney", prompt: "ydinek → ___", answerText: "kidney", accept: [], why: "Kidney: one of two organs at the back that remove waste from the body." },
+        { type: "unscramble", tests: "waist", prompt: "awtis → ___", answerText: "waist", accept: [], why: "Waist: the middle of the body. Not waste, as in rubbish." },
         { type: "unscramble", tests: "forehead", prompt: "adhereof → ___", answerText: "forehead", accept: [], why: "Forehead: the part of the face above the eyebrows." },
         { type: "unscramble", tests: "nail", prompt: "lian → ___", answerText: "nail", accept: [], why: "Nail: the hard part at the end of a finger or toe." },
         { type: "unscramble", tests: "muscle", prompt: "cesmul → ___", answerText: "muscle", accept: [], why: "Muscle: the c is silent, so spell it mus-c-le." }
@@ -342,7 +342,7 @@ window.TESTS = {
         { type: "define", tests: "gp", model: "A GP is a doctor who treats general health problems and sends patients to a specialist if necessary.",
           check: { options: ["a surgeon who performs operations", "a doctor who treats everyday illnesses", "a person who sells medicine in a shop", "a nurse who works in A and E"], answer: 1,
             why: "GP stands for general practitioner: the local doctor you see first, not a surgeon or a chemist." } },
-        { type: "define", tests: "chemist", model: "A chemist is a shop, or the person who works in it, which sells medicines and gives advice about minor illnesses.",
+        { type: "define", tests: "chemist", model: "A chemist is a shop where you can buy medicines and get advice about minor illnesses; the person who works there is also a chemist.",
           check: { options: ["a hospital department for accidents and emergencies", "a doctor who writes prescriptions", "a scientist who studies the body", "a shop that sells medicines and gives advice"], answer: 3,
             why: "In British English the chemist's is the shop and the chemist is the person in it; pharmacy means the same." } },
         { type: "define", tests: "prescription", model: "A prescription is a note which a doctor writes so that you can get a particular medicine from a chemist.",
@@ -358,8 +358,8 @@ window.TESTS = {
           check: { options: ["a sharp sudden pain from a cut", "a continuous pain that is not very sharp", "a very small living thing that causes disease", "a sign that shows you are ill"], answer: 1,
             why: "An ache is dull and continuous, like a headache or backache; the living thing is a germ, the sign is a symptom." } },
         { type: "define", tests: "relief", model: "Pain relief is treatment, such as a painkiller, which makes pain less or makes it go away.",
-          check: { options: ["medicine that stops germs spreading to other people", "a picture of your bones", "the department for urgent treatment", "the feeling when pain becomes less or stops"], answer: 3,
-            why: "Relief is the noun from relieve: pain relief means making pain less. Note the spelling change from v to f." } }
+          check: { options: ["medicine that stops germs spreading to other people", "a picture of your bones", "the department for urgent treatment", "treatment that makes pain less or stops it"], answer: 3,
+            why: "Pain relief is treatment that makes pain less. Relief is the noun from relieve: note the spelling change from v to f." } }
       ] },
 
     { id: "A3", part: "Test yourself 3", title: "Test yourself: idioms",
@@ -368,11 +368,11 @@ window.TESTS = {
         { type: "transform", keyword: "top", tests: "ontopofworld", prompt: "Fah is feeling fantastic after her exam results. → Fah is feeling ___ after her exam results.",
           answerText: "on top of the world", accept: [], why: "On top of the world means extremely happy." },
         { type: "transform", keyword: "down", tests: "comedownwith", prompt: "Pim has caught a bad cold. → Pim ___ a bad cold.",
-          answerText: "has come down with", accept: ["came down with", "has gone down with", "went down with"], why: "Come down with an illness means start to suffer from it; go down with is also British." },
+          answerText: "has come down with", accept: ["has gone down with", "'s come down with", "'s gone down with"], why: "Has caught is present perfect, so has come down with; has gone down with is also British." },
         { type: "transform", keyword: "last", tests: "lastlegs", prompt: "Mook was completely exhausted by the end of the hike. → Mook was ___ by the end of the hike.",
           answerText: "on her last legs", accept: [], why: "On your last legs means exhausted and about to collapse." },
         { type: "transform", keyword: "shape", tests: "keepinshape", prompt: "Nan does yoga to stay fit. → Nan does yoga to ___.",
-          answerText: "keep in shape", accept: ["stay in shape", "keep herself in shape"], why: "Keep in shape means stay fit; stay in shape is also correct." },
+          answerText: "keep in shape", accept: ["stay in shape", "keep herself in shape", "keep in good shape", "stay in good shape"], why: "Keep in shape means stay fit; stay in shape is also correct." },
         { type: "transform", keyword: "out", tests: "blackout", prompt: "Ice fainted for a few seconds in the heat. → Ice ___ for a few seconds in the heat.",
           answerText: "blacked out", accept: ["passed out"], why: "Black out means lose consciousness for a short time; pass out means the same." },
         { type: "transform", keyword: "pull", tests: "pullthrough", prompt: "The doctors believe Grandad will survive. → The doctors believe Grandad ___.",
@@ -390,7 +390,7 @@ window.TESTS = {
         { type: "mccloze", tests: "comedownwith", cluster: "idioms", prompt: "(1) half of Mint's class ___ down with flu in the same week",
           options: ["fell", "came", "took", "caught"], answer: 1, why: "The phrasal verb is come down with an illness. Caught goes directly with flu, without down." },
         { type: "mccloze", tests: "symptom", cluster: "symptoms", prompt: "(2) Her own symptoms ___ suddenly",
-          options: ["happened", "showed", "arrived", "appeared"], answer: 3, why: "Symptoms appear; happen is for events and showed would need up." },
+          options: ["happened", "raised", "rose", "appeared"], answer: 3, why: "Symptoms appear; happen is for events, raise needs an object, and rise is for levels and numbers." },
         { type: "mccloze", tests: "sore", cluster: "symptoms", prompt: "(3) a ___ throat on Monday morning",
           options: ["sore", "hurt", "ill", "sick"], answer: 0, why: "Sore throat is the fixed collocation; ill and sick describe people, not parts of the body." },
         { type: "mccloze", tests: "temperature", cluster: "symptoms", prompt: "(4) The school nurse ___ her temperature",
@@ -400,20 +400,20 @@ window.TESTS = {
         { type: "mccloze", tests: "lower", cluster: "care", prompt: "(6) paracetamol would help to ___ her temperature",
           options: ["lower", "drop", "fall", "sink"], answer: 0, why: "Lower is the verb with an object: lower a temperature. Drop and fall describe the temperature itself." },
         { type: "mccloze", tests: "fever", cluster: "symptoms", prompt: "(7) Because the fever ___ for more than two days",
-          options: ["kept", "carried", "went", "lasted"], answer: 3, why: "A fever lasts for a period of time; carried would need on. A fever of over two days in the rainy season needs a doctor." },
+          options: ["kept", "carried", "went", "lasted"], answer: 3, why: "A fever lasts for a period of time; went and carried would need on. A fever of over two days in the rainy season needs a doctor." },
         { type: "mccloze", tests: "backonfeet", cluster: "idioms", prompt: "(8) Mint was back on her ___",
           options: ["legs", "feet", "toes", "heels"], answer: 1, why: "The idiom is back on your feet, meaning well again. Legs belongs to on your last legs." }
       ] },
 
     { id: "B2", part: "Part 2", title: "B2 First Part 2 — open cloze",
       instructions: "B2 First-style practice (format unofficial). Type ONE word for each gap.",
-      passage: "Coach Nok's notes for the badminton team. (1) Even champions have to work hard to keep ____ shape. (2) If you are feeling ____ the weather, tell me before training starts. (3) Never train with a temperature: you could pass the virus ____ to the whole team. (4) Drink water in the heat, or you may black ____ on court. (5) After an injury, do your physiotherapy exercises every day; a muscle heals faster ____ you move it gently. (6) Last year Praew came down ____ dengue and missed a month of training. (7) She pulled ____ and is now fitter than ever. (8) By the final she was full ____ beans again.",
+      passage: "Coach Nok's notes for the badminton team. (1) Even champions have to work hard to keep ____ shape. (2) If you are feeling ____ the weather, tell me before training starts. (3) Never train with a temperature: you could pass the virus ____ to the whole team. (4) Drink water in the heat, or you may black ____ on court. (5) After an injury, do your physiotherapy exercises every day and you'll be on ____ of the world when you're back in the team. (6) Last year Praew came down ____ dengue and missed a month of training. (7) She pulled ____ and is now fitter than ever. (8) By the final she was full ____ beans again.",
       items: [
         { type: "opencloze", tests: "keepinshape", prompt: "(1) Even champions have to work hard to keep ___ shape.", answerText: "in", accept: [], why: "Keep in shape; the particle never changes." },
         { type: "opencloze", tests: "undertheweather", prompt: "(2) If you are feeling ___ the weather, tell me before training starts.", answerText: "under", accept: [], why: "Under the weather means slightly unwell." },
         { type: "opencloze", tests: "passon", prompt: "(3) Never train with a temperature: you could pass the virus ___ to the whole team.", answerText: "on", accept: [], why: "Pass something on to someone means give it to them." },
         { type: "opencloze", tests: "blackout", prompt: "(4) Drink water in the heat, or you may black ___ on court.", answerText: "out", accept: [], why: "Black out means lose consciousness. Out, never down." },
-        { type: "opencloze", tests: "heal", prompt: "(5) A muscle heals faster ___ you move it gently.", answerText: "if", accept: ["when", "whenever", "once"], why: "A conditional: a muscle heals faster if, or when, you move it gently." },
+        { type: "opencloze", tests: "ontopofworld", prompt: "(5) Do your exercises every day and you'll be on ___ of the world when you're back in the team.", answerText: "top", accept: [], why: "On top of the world means extremely happy; the noun top never changes in this idiom." },
         { type: "opencloze", tests: "comedownwith", prompt: "(6) Last year Praew came down ___ dengue and missed a month of training.", answerText: "with", accept: [], why: "Come down with an illness. Up would mean thinking of an idea." },
         { type: "opencloze", tests: "pullthrough", prompt: "(7) She pulled ___ and is now fitter than ever.", answerText: "through", accept: [], why: "Pull through means survive a serious illness." },
         { type: "opencloze", tests: "fullofbeans", prompt: "(8) By the final she was full ___ beans again.", answerText: "of", accept: [], why: "Full of beans means lively and energetic; of, not with." }
@@ -429,7 +429,7 @@ window.TESTS = {
         { type: "wordform", stem: "PRESCRIBE", tests: "prescription", prompt: "The pharmacist would not sell the antibiotics without a ___ from a doctor.", answerText: "prescription", accept: [], why: "A plus a noun: prescription. The b in prescribe becomes p." },
         { type: "wordform", stem: "DIZZY", tests: "dizziness", prompt: "The symptoms of heatstroke include a headache, ___ and feeling sick.", answerText: "dizziness", accept: [], why: "The list needs a noun: dizzy becomes dizziness, with y changing to i." },
         { type: "wordform", stem: "RELIEVE", tests: "relief", prompt: "A cool towel on her forehead gave Bee some ___ from the fever.", answerText: "relief", accept: [], why: "Some needs a noun: relief. The v in relieve becomes f." },
-        { type: "wordform", stem: "TREAT", tests: "treatment", prompt: "Rest and gentle exercise are the usual ___ for a sprained ankle.", answerText: "treatment", accept: [], why: "The usual needs a noun: treatment, spelt with no extra e." }
+        { type: "wordform", stem: "TREAT", tests: "treatment", prompt: "Rest and gentle exercise are the usual ___ for a sprained ankle.", answerText: "treatment", accept: ["treatments"], why: "The usual needs a noun: treatment, spelt with no extra e." }
       ] },
 
     { id: "B4", part: "Part 4", title: "B2 First Part 4 — key word transformation",
@@ -445,7 +445,7 @@ window.TESTS = {
           answerText: "came down with", accept: ["went down with"], why: "Caught is past simple, so came down with; went down with is also British." },
         { type: "transform", keyword: "UNLESS", prompt: "You won't feel better if you don't take the medicine. → You won't feel better ___ the medicine.",
           answerText: "unless you take", accept: [], why: "Unless means if not, so the verb after it is positive: unless you take." },
-        { type: "transform", keyword: "CASE", tests: "painkiller", prompt: "Take a painkiller with you because your headache might come back. → Take a painkiller with you ___ comes back.",
+        { type: "transform", keyword: "CASE", prompt: "Take a painkiller with you because your headache might come back. → Take a painkiller with you ___ comes back.",
           answerText: "in case your headache", accept: ["in case the headache", "in case it"], why: "In case plus present simple explains a precaution: in case your headache comes back." }
       ] },
 
@@ -500,7 +500,7 @@ window.TESTS = {
     { id: "D1", part: "Listening", title: "IELTS Listening — listen and spell",
       instructions: "IELTS-style practice (format unofficial). Sonia reads a sentence from a clinic or gym registration. Type the missing word. A spelling mistake scores zero, as in the real test.",
       items: [
-        { type: "listenspell", tests: "physio", say: "Please write physiotherapy on the booking form.", prompt: "Type the word you hear in: Please write ___ on the booking form.", answerText: "physiotherapy", accept: [], why: "Physiotherapy: ph, then -therapy." },
+        { type: "listenspell", tests: "physio", say: "I'd like to book an appointment for physiotherapy, please.", prompt: "Type the word you hear in: I'd like to book an appointment for ___, please.", answerText: "physiotherapy", accept: [], why: "Physiotherapy: ph, then -therapy." },
         { type: "listenspell", tests: "prescription", say: "Bring your prescription to the counter at the back.", prompt: "Type the word you hear in: Bring your ___ to the counter at the back.", answerText: "prescription", accept: [], why: "Prescription: pre-scrip-tion, with a p not a b." },
         { type: "listenspell", tests: "injection", say: "Your flu injection is booked for Thursday at ten.", prompt: "Type the word you hear in: Your flu ___ is booked for Thursday at ten.", answerText: "injection", accept: [], why: "Injection ends in -tion, like infection and operation." },
         { type: "listenspell", tests: "dizziness", say: "Tick the box if you have had any dizziness during exercise.", prompt: "Type the word you hear in: Tick the box if you have had any ___ during exercise.", answerText: "dizziness", accept: [], why: "Dizziness: double z, then i, then -ness." },
@@ -509,7 +509,7 @@ window.TESTS = {
         { type: "listenspell", tests: "ankle", say: "Please tell the trainer about any old ankle injuries.", prompt: "Type the word you hear in: Please tell the trainer about any old ___ injuries.", answerText: "ankle", accept: [], why: "Ankle: a-n-k-l-e, no c." },
         { type: "listenspell", tests: "muscle", say: "This class is for muscle strength, not for weight loss.", prompt: "Type the word you hear in: This class is for ___ strength, not for weight loss.", answerText: "muscle", accept: [], why: "Muscle has a silent c: m-u-s-c-l-e." },
         { type: "listenspell", tests: "symptom", say: "List your symptoms in the box below.", prompt: "Type the word you hear in: List your ___ in the box below.", answerText: "symptoms", accept: [], why: "Symptoms: a y after the s, and the plural s at the end." },
-        { type: "listenspell", tests: "xray", say: "The clinic will send your X-ray results by email.", prompt: "Type the word you hear in: The clinic will send your ___ results by email.", answerText: "X-ray", accept: ["xray", "x ray", "x-ray"], why: "X-ray is written with a capital X and a hyphen; it counts as one word." }
+        { type: "listenspell", tests: "xray", say: "The clinic will send your X-ray results by email.", prompt: "Type the word you hear in: The clinic will send your ___ results by email.", answerText: "X-ray", accept: [], why: "X-ray is written with a hyphen and usually a capital X; it counts as one word." }
       ] },
 
     { id: "D2", part: "Speaking", title: "IELTS Speaking",
@@ -519,7 +519,7 @@ window.TESTS = {
         { type: "speak", part: "Part 1", prompt: "How often do you do exercise, and do you enjoy it?", tip: "Name the sport, the place and how you feel afterwards.", why: "Give a reason and an example: badminton at the weekend, a run in Benjakitti Park." },
         { type: "speak", part: "Part 2", prompt: "Describe a time when you were ill. Say what the symptoms were, what you did about it, how long it took to get better, and how you felt.", tip: "Use symptoms, a temperature, the chemist's, got better, back on my feet.", why: "A Part 2 answer tells a story in order: symptoms, treatment, recovery." },
         { type: "speak", part: "Part 2", prompt: "Describe a sport you would like to learn. Say what it is, why you want to learn it, how you would learn it, and how it would help you keep in shape.", tip: "Mention which muscles it uses and any injury risk.", why: "Future forms and would help here: I would learn it at a club near home." },
-        { type: "speak", part: "Part 3", prompt: "Should doctors be paid more than top sports stars? Why, or why not?", tip: "Part 3 wants neutral words: treat patients, save lives, entertain millions.", why: "Keep idioms out of Part 3 and essays; use neutral vocabulary and give two sides." },
+        { type: "speak", part: "Part 3", prompt: "Should doctors be paid more than top sports stars? Why, or why not?", tip: "Part 3 wants neutral words: treat patients, save lives, entertain millions.", why: "Part 3 is abstract: use neutral vocabulary, give two sides and a reason for each." },
         { type: "speak", part: "Part 3", prompt: "Does traditional medicine, such as herbal remedies, still matter today?", tip: "Think of ยาดม and willow bark, which led to aspirin.", why: "Balance the answer: remedies for minor problems, a doctor and proper treatment for serious ones." }
       ] }
   ],
@@ -527,9 +527,9 @@ window.TESTS = {
   /* ---------------------------------------------------------- */
   clinicShift: [
     /* keys 0,2,1,3,3,1,0,2,2,0,3,1 · routes: ae ×3, gp ×3, chemist ×3, home ×3 */
-    { id: "cs1", patient: "I fell off my bike on the way to school. My wrist is swollen, it looks a strange shape and I can't move my fingers without crying.", route: "ae", word: "fracture",
-      options: ["fracture", "dislocate", "infection", "stiffness"], answer: 0,
-      why: "A swollen wrist that looks the wrong shape may be a fracture, a broken bone: an emergency for A and E. Call 1669." },
+    { id: "cs1", patient: "I fell off my bike on the way to school. I heard a crack in my wrist, it's swollen and I can't move it without crying.", route: "ae", word: "fracture",
+      options: ["fracture", "fever", "infection", "stiffness"], answer: 0,
+      why: "A crack, swelling and no movement suggest a fracture, a broken bone: an emergency, so A and E, where an X-ray will check it." },
     { id: "cs2", patient: "I was standing in the sun at assembly, everything went dark, and I woke up on the ground with the nurse beside me.", route: "ae", word: "blackout",
       options: ["pass on", "come down with", "black out", "pull through"], answer: 2,
       why: "Losing consciousness is blacking out. Anyone who has blacked out needs checking at A and E, even if she feels fine now." },
@@ -552,16 +552,16 @@ window.TESTS = {
       options: ["fracture", "exhaustion", "headache", "dizziness"], answer: 2,
       why: "A headache from screens and revision is minor: the chemist can suggest a painkiller and rest. No doctor needed." },
     { id: "cs9", patient: "Since yesterday I've had a fever, aches all over and a dry cough. I want something to lower my temperature and some advice.", route: "chemist", word: "flu",
-      options: ["cough", "fever", "flu", "headache"], answer: 2,
-      why: "Sudden fever, aches and a dry cough are flu. One day in, the chemist can advise a remedy; see a doctor if the fever passes two days." },
+      options: ["stiffness", "fracture", "flu", "dizziness"], answer: 2,
+      why: "Sudden fever, aches and a dry cough are flu. One day in, the chemist can advise a remedy; see a doctor if the fever lasts more than two days." },
     { id: "cs10", patient: "I did my first gym class yesterday and today my legs are so tight I can hardly bend them. Nothing is swollen.", route: "home", word: "stiff",
-      options: ["stiff", "sore", "dizzy", "sick"], answer: 0,
+      options: ["stiff", "broken", "dizzy", "sick"], answer: 0,
       why: "Muscles that are hard to bend the day after exercise are stiff; the stiffness goes with rest and gentle movement at home." },
     { id: "cs11", patient: "I stayed up every night this week for exams. I'm completely worn out, but I have no fever and nothing hurts.", route: "home", word: "exhaustion",
       options: ["headache", "fever", "infection", "exhaustion"], answer: 3,
       why: "Extreme tiredness with no other symptoms is exhaustion; sleep, food and water at home are the treatment." },
     { id: "cs12", patient: "I skipped breakfast and felt the room spin at morning assembly. After water and ten minutes in the shade I'm fine again.", route: "home", word: "dizzy",
       options: ["stiff", "dizzy", "sore", "sick"], answer: 1,
-      why: "The spinning feeling is being dizzy, from heat and no breakfast. She recovered quickly, so rest at home and eat breakfast tomorrow." }
+      why: "The spinning feeling is being dizzy, from heat and no breakfast. She recovered quickly, so no doctor is needed: rest, water and breakfast tomorrow." }
   ]
 };
