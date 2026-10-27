@@ -26,7 +26,7 @@ window.STORY = {
       pages: [
         {
           art: "🏸", tint: "bright",
-          img: "",
+          img: "art/ch1p1.webp",
           alt: "Praew and three teammates in plain team kit stretching in a line on the Benjakitti Park skywalk at dawn, Coach Nok with a whistle demonstrating a hip stretch, grey rainy-season sky, Praew turned to chat to a friend instead of stretching.",
           prompt: "Dawn on the elevated skywalk in Benjakitti Forest Park, Bangkok, under a grey rainy-season sky with wet green wetlands below. Coach Nok, a fit Thai woman in her thirties with short black hair, a plain navy tracksuit and a whistle, stands at the front demonstrating a stretch with her hands on her hips. Four schoolgirls in plain white sports shirts and navy shorts (no crest, no logos) stretch in a line. Praew, thirteen, with a long black plait tied with a red ribbon, is at the end of the line, half-turned to chat to the girl beside her instead of stretching. Warm, clean, modern picture-book style. No readable text or logos anywhere.",
           grammar: "Zero conditional: *If you don't warm up, your muscles get stiff.*",
@@ -34,7 +34,7 @@ window.STORY = {
         },
         {
           art: "💥", tint: "cool",
-          img: "",
+          img: "art/ch1p2.webp",
           alt: "A badminton court in a school gym: Praew mid-dive towards a shuttle near the net, her doubles partner Bua behind her with her hand to her mouth, the opposing pair in a different plain kit on the far side, a scoreboard with blank squares.",
           prompt: "Indoor badminton court in a Bangkok school gym, bright overhead lights, green court. Praew, thirteen, long black plait with a red ribbon, plain white sports shirt and navy shorts, is frozen mid-dive, stretched out horizontally towards a shuttlecock just over the net, racket extended, one shoulder about to touch the floor. Behind her, her doubles partner Bua (same kit, short bobbed hair, slightly taller) has a hand over her mouth. On the far side of the net two opposing girls in plain pale-blue kit watch. A simple scoreboard on the wall shows blank squares. Dynamic but not violent; no injury shown; no blood. Warm, clean, modern picture-book style. No readable text, numbers or logos.",
           grammar: "First conditional: *If I win this point, we'll be in the final.*",
@@ -49,7 +49,7 @@ window.STORY = {
       pages: [
         {
           art: "🚑", tint: "cool",
-          img: "",
+          img: "art/ch2p1.webp",
           alt: "Praew sitting on the gym floor holding her arm awkwardly, Coach Nok kneeling in front of her checking her eyes with a small torch, Bua behind them on a phone; through the open gym doors a white ambulance with a blank side panel.",
           prompt: "Inside the same school gym, by the open double doors. Praew, thirteen, long black plait with a red ribbon, plain white sports shirt and navy shorts, sits on the floor looking pale and tearful, cradling her right arm against her body in an awkward position. Coach Nok (Thai woman in her thirties, short black hair, plain navy tracksuit, whistle) kneels in front of her, gently lifting Praew's chin and looking into her eyes with a small pen torch. Bua (short bobbed hair, same kit) stands behind holding a phone to her ear. Through the doors, a white ambulance with a plain unmarked side waits in the rain. No blood, no visible wound, no close-up of injury. Warm, clean, modern picture-book style. No readable text or logos.",
           grammar: "*in case*: *We'll call 1669 in case something is broken.*",
@@ -57,16 +57,16 @@ window.STORY = {
         },
         {
           art: "🩻", tint: "cool",
-          img: "",
-          alt: "A hospital A and E bay: Dr Ploy in a white coat holding up a grey X-ray film of a shoulder against a lightbox, Praew on the bed in a hospital gown looking relieved, her mother beside the bed holding her good hand.",
+          img: "art/ch2p2.webp",
+          alt: "A hospital A and E bay: Dr Ploy in a white coat holding up a grey X-ray film of a shoulder against a lightbox, Praew in her sports kit sitting on the bed looking relieved, her mother on a chair beside the bed.",
           prompt: "A calm hospital A and E bay in Bangkok, pale green curtains, soft light. Dr Ploy, a Thai woman doctor in her forties with black hair in a neat low ponytail, a white coat over a plain blue blouse and a stethoscope, holds a grey shoulder X-ray film up against a glowing lightbox and points at it with a reassuring smile. Praew, thirteen, long black plait with a red ribbon, sits up on the bed in a plain pale hospital gown, looking relieved and slightly sheepish. Her mother, a Thai woman in her forties in a plain cream blouse, sits beside the bed holding Praew's left hand. The X-ray shows a simple schematic shoulder, nothing graphic. No needles, no blood. Warm, clean, modern picture-book style. No readable text or logos.",
           grammar: "*unless* and *provided that*: *You won't need an operation unless it keeps happening. And it probably won't, provided that you do your exercises.*",
           text: "Dr Ploy had a calm voice and a ponytail. First she checked my head, because I had blacked out: she shone a little torch in my eyes and asked me what day it was. (Tuesday. Nearly a trick question.) Then she sent me for an {{xray|X-ray}}.\n\n\"Good news,\" she said, holding the grey picture up to the light. \"No {{broken|broken}} bones, no {{fracture|fracture}}, and your {{ribs|ribs}} are fine. Your shoulder has simply popped out of its socket. I'm going to put it back.\"\n\nShe did, in about two seconds, and I made a noise like a kettle. After that she gave me a {{painkiller|painkiller}} and explained the rules. \"You won't need an {{operation|operation}} unless it keeps happening. And it probably won't, provided that you do your exercises.\" Ratchanok Intanon is recovering from a knee injury this year, I told her, and she's still playing. \"Then be like Ratchanok,\" said Dr Ploy."
         },
         {
           art: "🦜", tint: "warm",
-          img: "",
-          alt: "Evening in the back of a Bangkok taxi: Praew with her right arm in a blue cloth sling, a sticker on her gown collar, staring out at neon-lit rain, her mother beside her holding a plastic bag of leaflets.",
+          img: "art/ch2p3.webp",
+          alt: "Evening in the back of a Bangkok taxi: Praew with her right arm in a blue cloth sling, a gold star sticker on her T-shirt, staring out at neon-lit rain, her mother beside her holding a plastic bag of papers.",
           prompt: "Night-time back seat of a pink Bangkok taxi in the rain, city lights blurred through the wet window. Praew, thirteen, long black plait with a red ribbon, now in a plain white blouse, sits with her right arm in a plain blue triangular cloth sling, a small round star sticker on her collar, looking out of the window with a thoughtful, slightly regretful face. Her mother (Thai woman in her forties, plain cream blouse) sits beside her holding a plastic bag of folded leaflets and gently patting Praew's knee. Cosy, warm interior light. Warm, clean, modern picture-book style. No readable text or logos; the taxi has no markings.",
           grammar: "Third conditional and *I wish*: *If I had done the shoulder stretches, I might not have dislocated it. I wish I had stretched my shoulders.*",
           text: "The {{relief|relief}} when the pain stopped was enormous. I almost cried again, which was embarrassing, because the nurse had just given me a sticker.\n\nDr Ploy put my arm in a {{sling|sling}}, a blue triangle of cloth that made me look like a pirate who had lost a fight. \"Keep it in the sling for a few weeks,\" she said. \"The shoulder will feel {{stiff|stiff}}, and that's normal. Then physiotherapy.\" She let me go home that evening with Mum and a plastic bag of instructions.\n\nIn the taxi I did the maths. No badminton for six weeks. One arm. Bua would need a new partner. How was I going to {{cope|cope}} with homework, hair-washing and buttons? If I had done the shoulder stretches, I might not have dislocated it. If I had listened to Coach instead of talking about that drama, I would be practising tomorrow. I wish I had stretched my shoulders. The drama wasn't even good."
@@ -80,24 +80,24 @@ window.STORY = {
       pages: [
         {
           art: "🌡️", tint: "warm",
-          img: "",
-          alt: "A family living room in Bangkok: eight-year-old Mali lying limply on the sofa with a pink flushed face and a blanket, their mother reading a digital thermometer, Praew with her sling watching from an armchair.",
+          img: "art/ch3p1.webp",
+          alt: "A family living room in Bangkok: eight-year-old Mali curled up on the sofa in a blanket with a mug, their mother reading a digital thermometer beside her, Praew in home clothes with her sling watching from an armchair.",
           prompt: "A cosy Bangkok family living room, evening, rain on the window. Mali, an eight-year-old Thai girl with two short black bunches tied with yellow bands, in plain pink pyjamas, lies limply along the sofa under a light blanket with a flushed pink face and half-closed eyes. Her mother (Thai woman in her forties, plain cream blouse) sits on the edge of the sofa frowning gently at a plain digital thermometer in her hand. Praew, thirteen, long black plait with a red ribbon, plain white blouse, right arm in a blue sling, watches worriedly from an armchair. A box of tissues on the table. Warm, clean, modern picture-book style. No readable text, numbers or logos; the thermometer display is a blank glow.",
           grammar: "*unless* in a first conditional: *Unless her temperature comes down within two days, we'll take her to the clinic.*",
           text: "Two weeks later, I was an expert at one-handed everything, and then my little sister Mali, who is eight and never quiet, went quiet. \"I feel a bit {{undertheweather|under the weather}},\" she said, which she had learned from me, and lay on the sofa like a dropped scarf.\n\nBy the evening she had properly {{comedownwith|come down with}} {{flu|flu}}. Every {{symptom|symptom}} arrived at once, which is how flu works: a {{headache|headache}}, an {{ache|ache}} in her legs and her back, and a {{fever|fever}} that made her face hot and pink. Mum put the thermometer under her arm: 38.9°C. Mali definitely had {{temperature|a temperature}}. Anything from 38 up counts as a fever, Mum said.\n\nIt was the rainy season, when half of Bangkok seems to catch flu, and Mum knows the rule. \"Unless her temperature comes down within two days, we'll take her to the clinic,\" she said, and went to find the children's paracetamol."
         },
         {
           art: "🤧", tint: "bright",
-          img: "",
-          alt: "Praew's bedroom: Mali sitting on Praew's bed mid-sneeze with a tissue, Praew's English essay flying off the bed, Praew with her sling pulling a horrified face and holding a mask out towards her sister.",
+          img: "art/ch3p2.webp",
+          alt: "A study corner at home: Mali at the desk mid-sneeze with a tissue, homework sheets flying off the desk, Praew with her sling pulling a horrified face and holding a mask out towards her sister.",
           prompt: "A teenage girl's bedroom in Bangkok, daytime, posters as plain coloured rectangles. Mali, eight, two short black bunches with yellow bands, plain pink pyjamas, sits cross-legged on the bed mid-sneeze with her eyes squeezed shut and a tissue in her hand, cheeks flushed. Sheets of homework paper fly off the bed. Praew, thirteen, long black plait with a red ribbon, plain white blouse, right arm in a blue sling, stands by the desk with a horrified, comic expression, holding out a plain white face mask towards her sister with her good hand. A glass of water and a box of tissues on the bedside table. Warm, clean, modern picture-book style. No readable text or logos; the homework pages carry only faint lines.",
           grammar: "*I wish* + *would* for an annoying habit: *I wish Mali wouldn't sneeze on my books!*",
           text: "Mali's flu moved in with me. She did her homework on my bed, which meant she did her {{cough|coughing}} on my bed, and she managed to {{sneeze|sneeze}} directly onto my English essay. Twice. I wish Mali wouldn't sneeze on my books!\n\nHer throat was so {{sore|sore}} that she could only whisper, and whispering made her even more annoying, somehow. On the second night she said she felt {{sick|sick}}, and a minute later she {{sick|was sick}} in the bathroom. (In British English that means she vomited, which Mali thinks is a hilarious thing for a language to do.) After that she felt {{dizzy|dizzy}} whenever she stood up, and the {{dizziness|dizziness}} scared her more than the fever did.\n\nHer {{tiredness|tiredness}} on day one had become real {{exhaustion|exhaustion}} by day two. She slept for fourteen hours. I checked on her six times. With one arm."
         },
         {
           art: "💊", tint: "cool",
-          img: "",
-          alt: "Inside a small Bangkok pharmacy: Khun Dao in a white pharmacist's coat behind the counter explaining with a box in her hand, Praew with her sling listening and nodding, shelves of plain boxes behind, a green round sticker on the glass door.",
+          img: "art/ch3p3.webp",
+          alt: "Inside a small Bangkok pharmacy: Khun Dao in a white pharmacist's coat behind the counter explaining with a box in her hand, Praew in a T-shirt and denim skirt, her arm in a sling, listening and nodding, shelves of plain boxes behind, a green round sticker on the glass door.",
           prompt: "Inside a small, bright neighbourhood pharmacy in a Bangkok soi, white shelves of plain unlabelled boxes and bottles, a glass door with a small round green sticker on it. Khun Dao, a Thai woman pharmacist in her thirties with black hair in a bun, round glasses and a white coat over a plain lilac blouse, leans over the counter explaining kindly, holding a plain small white box in one hand and a face mask in the other. Praew, thirteen, long black plait with a red ribbon, plain white blouse, right arm in a blue sling, listens and nods, a small shopping basket on the counter beside her. Warm, clean, modern picture-book style. No readable text, brand names or logos anywhere; all packaging is plain colour.",
           grammar: "*as long as* and *provided that*: *As long as everyone wears a mask, she probably won't pass it on to the whole family. She'll be fine, provided that she rests.*",
           text: "On day two, Mum sent me to the {{chemist|chemist's}} on our soi, the one with the green \"My Quality Pharmacy\" sticker on the door. Khun Dao, the pharmacist, listened to the whole story.\n\n\"You don't need a {{prescription|prescription}} for flu,\" she said. \"To {{treat|treat}} it, Mali needs rest, lots of water, and paracetamol to {{lower|lower}} her temperature. Not aspirin for a child, and no ibuprofen either, because in the rainy season a fever can also be dengue. She'll be fine, provided that she rests.\" She gave me a cough {{remedy|remedy}} and some ORS sachets.\n\n\"Same rule as your mum's: if the fever lasts more than two days, or she keeps being sick, she sees the doctor at the clinic.\" In Thailand that's the nearest thing to a {{gp|GP}}. Flu is very {{infectious|infectious}}: every cough fires {{germ|germs}} into the air. \"As long as everyone wears a mask, she probably won't {{passon|pass it on}} to the whole family. Including you, Praew.\""
