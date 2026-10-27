@@ -81,7 +81,9 @@ if (W) {
         if (!w[k] || typeof w[k] !== "object") return E(f, tag + ": " + k + " object");
         ["B1","B2","C1"].forEach(l => { const v = w[k][l]; if (v !== null && v !== undefined && !isStr(v)) E(f, tag + ": " + k + "." + l); });
         const n = ["B1","B2","C1"].filter(l => isStr(w[k][l])).length;
-        if (n < 2) E(f, tag + ": " + k + " needs at least 2 of B1/B2/C1");
+        // body parts (and sneeze/cough) have few true synonyms: an honest single one beats an invented second
+        if (k === "syn" && (CLUSTER_OF[w.id] === "body" || ["sneeze","cough"].includes(w.id))) { if (n < 1) Wn(f, tag + ": no synonym listed"); }
+        else if (n < 2) E(f, tag + ": " + k + " needs at least 2 of B1/B2/C1");
       });
       if (!Array.isArray(w.colls) || w.colls.length < 3) E(f, tag + ": colls needs 3+");
       if (!Array.isArray(w.family) || w.family.length < 1) E(f, tag + ": family");
@@ -91,6 +93,13 @@ if (W) {
       if (AREAS.body.includes(w.id)) { if (!["outside","inside"].includes(w.layer)) E(f, tag + ": body parts need layer outside|inside"); }
       else if (w.layer) E(f, tag + ": only body parts carry layer");
       if (w.tip !== undefined && typeof w.tip !== "string") E(f, tag + ": tip must be a string");
+      /* fields the Story picture card shows (Trail Mix card set) */
+      if (!isStr(w.emoji)) E(f, tag + ": emoji");
+      if (/noun/.test(w.pos) && !["C","U","C/U"].includes(w.count)) E(f, tag + ": nouns need count C|U|C/U");
+      ["grammar","say"].forEach(k => { if (!isStr(w[k])) E(f, tag + ": " + k + " line for the story card"); });
+      ["ukus","fact"].forEach(k => { if (w[k] != null && typeof w[k] !== "string") E(f, tag + ": " + k + " must be a string"); });
+      if (!Array.isArray(w.related) || w.related.length < 3) E(f, tag + ": related needs 3+ ids");
+      else w.related.forEach(r => { if (!ALL_IDS.includes(r) || r === w.id) E(f, tag + ": related id " + r); });
     });
     ALL_IDS.forEach(id => { if (!BY[id]) E(f, "missing entry for fixed id " + id); });
     if (W.length !== 80) E(f, "expected 80 entries, found " + W.length);
@@ -115,6 +124,21 @@ if (LEX) {
     const t = w[k] && w[k][l]; if (isStr(t) && !LEX[t]) E(f, "no entry for " + k + " " + l + ' "' + t + '" of ' + w.id);
   })));
   if (!LEX["willow bark"]) Wn(f, 'spec asks for a "willow bark" entry (p.71)');
+}
+
+/* ================= images.js (one picture per word for the Story card) ================= */
+const IMGS = need("images.js", "IMAGES");
+if (IMGS) {
+  const f = "images.js";
+  Object.keys(IMGS).forEach(id => {
+    const im = IMGS[id], tag = "image " + id;
+    if (!ALL_IDS.includes(id)) E(f, tag + ": not one of the 80 ids");
+    if (!im || !isStr(im.src) || !fs.existsSync(path.join(__dirname, "..", im.src))) E(f, tag + ": src file missing");
+    if (!isStr(im.credit) || !isStr(im.link) || !/^https:\/\/commons\.wikimedia\.org\//.test(im.link)) E(f, tag + ": credit and Commons link");
+    if (!isStr(im.licence) || /\bNC\b|\bND\b|fair use/i.test(im.licence)) E(f, tag + ": licence must be CC0/PD/CC BY/CC BY-SA");
+  });
+  const missing = ALL_IDS.filter(id => !IMGS[id]);
+  if (missing.length) Wn(f, missing.length + " word(s) show their emoji instead of a picture: " + missing.join(", "));
 }
 
 /* ================= story.js ================= */

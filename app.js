@@ -8,7 +8,7 @@
 const W = window.WORDS || [], LEX = window.LEXICON || {}, STORY = window.STORY || { title: "", blurb: "", chapters: [] },
       PATS = window.PATTERNS || [], BODY = window.BODY || { views: {}, regions: [], findPrompts: [], hurtCases: [] },
       TESTS = window.TESTS || {}, WRITING = window.WRITING || { missions: [], errorFlags: [] },
-      ROLEPLAY = window.ROLEPLAY || { MATCH: {}, SCENE: null }, MEDIA = window.MEDIA || {};
+      ROLEPLAY = window.ROLEPLAY || { MATCH: {}, SCENE: null }, MEDIA = window.MEDIA || {}, IMG = window.IMAGES || {};
 const BY = {}; W.forEach(w => BY[w.id] = w);
 const TARGETS = W.filter(w => w.group !== "bonus");          // the 70
 const TOTAL = TARGETS.length || 70;
@@ -42,6 +42,7 @@ const KEY = "mu6vocab.v1";
 const FRESH = () => ({ learned: [], pts: 0, ch: 0, pg: 0, read: [], tests: {}, focus: [], rp: null, theme: null,
   ward: {}, writing: {}, badges: [], days: {}, body: {}, pats: [], exam: {}, clinic: null, wardLog: [] });
 let S = FRESH();
+let PATOPEN = null;                                          // a pattern card to open when the Patterns tab draws
 function load() {
   try { const r = localStorage.getItem(KEY); if (r) S = Object.assign(FRESH(), JSON.parse(r)); } catch (e) {}
   ["learned", "read", "focus", "badges", "pats", "wardLog"].forEach(k => { if (!Array.isArray(S[k])) S[k] = []; });
@@ -228,17 +229,20 @@ function closeSheet() { if (/^say:/.test(RD.owner)) stopSpeech(); scrim.classLis
 scrim.addEventListener("click", e => { if (e.target === scrim) closeSheet(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && scrim.classList.contains("on")) closeSheet(); });
 function openWord(id, push) { if (!BY[id]) return; if (push !== false) stack.push({ t: "w", id }); mark(id, true); renderSheet(); }
+/* the Story tab's picture card (same facts as Trail Mix's story card, plus a photo); "Full study card" opens openWord */
+function openStory(id, push) { if (!BY[id]) return; if (push !== false) stack.push({ t: "s", id }); mark(id, true); renderSheet(); }
 function openTerm(term, push) { if (!LEX[term]) return; if (push !== false) stack.push({ t: "l", id: term }); renderSheet(); }
 function goBack() { stack.pop(); if (!stack.length) { closeSheet(); return; } renderSheet(); }
 function renderSheet() {
   const top = stack[stack.length - 1]; if (!top) return closeSheet();
-  sheet.innerHTML = top.t === "w" ? wordSheet(BY[top.id]) : termSheet(top.id, LEX[top.id]);
+  sheet.innerHTML = top.t === "w" ? wordSheet(BY[top.id]) : top.t === "s" ? storySheet(BY[top.id]) : termSheet(top.id, LEX[top.id]);
+  sheet.classList.toggle("pic", top.t === "s");
   scrim.classList.add("on"); document.body.style.overflow = "hidden"; sheet.scrollTop = 0; wire();
 }
+function backLabel() { const prev = stack[stack.length - 2]; return prev.t === "l" ? prev.id : BY[prev.id].word; }
 function backBar() {
   if (stack.length < 2) return "";
-  const prev = stack[stack.length - 2], label = prev.t === "w" ? BY[prev.id].word : prev.id;
-  return '<button class="backbtn" data-act="back">← back to <b>' + esc(label) + "</b></button>";
+  return '<button class="backbtn" data-act="back">← back to <b>' + esc(backLabel()) + "</b></button>";
 }
 function lvlBadge(c) { return c ? '<span class="badge b-' + c + '">' + c + "</span>" : '<span class="badge b-NG" title="Not graded in the English Vocabulary Profile">not graded</span>'; }
 function lvlRows(obj) {
@@ -251,10 +255,10 @@ function lvlRows(obj) {
 }
 function wordSheet(w) {
   const med = mediaForWord(w.id), area = AREAS[w.cluster] || AREAS.bonus;
-  return '<div class="shead"><div class="t">' + backBar() +
+  return '<div class="shead"><div class="sthumb' + (IMG[w.id] && IMG[w.id].src ? "" : " noimg") + '">' + picHTML(w) + '</div><div class="t">' + backBar() +
     '<h3 id="sheetTitle">' + esc(w.word) + " " + speakBtn(w.word) + "</h3>" +
     '<div class="meta">' + lvlBadge(w.cefr) +
-      '<span class="badge b-' + w.group + '">' + (w.group === "core" ? "word" : w.group === "phrasal" ? "phrasal verb" : w.group) + "</span>" +
+      '<span class="badge b-' + w.group + '">' + groupName(w.group) + "</span>" +
       '<span class="pos">' + esc(w.pos) + "</span>" +
       (w.ipa ? '<span class="ipa">' + esc(w.ipa) + "</span>" : "") +
       "<span>·</span><span>" + area.icon + " " + esc(area.name) + "</span>" +
@@ -279,6 +283,47 @@ function wordSheet(w) {
       '<div class="spacer" style="flex:1"></div>' +
       '<button class="btn ghost sm" data-act="next" data-id="' + w.id + '">Next word →</button>' +
     "</div>";
+}
+const COUNTNAME = { C: "countable", U: "uncountable", "C/U": "countable + uncountable" };
+function groupName(g) { return g === "core" ? "word" : g === "phrasal" ? "phrasal verb" : g; }
+function picHTML(w, cls) {
+  const im = IMG[w.id];
+  return im && im.src ? '<img class="' + (cls || "") + '" src="' + esc(im.src) + '" alt="' + esc(im.alt || w.word) + '" loading="lazy">'
+                      : '<span class="em" aria-hidden="true">' + esc(w.emoji || (AREAS[w.cluster] || AREAS.bonus).icon) + "</span>";
+}
+function patternsFor(id) { return PATS.filter(p => (p.items || []).indexOf(id) > -1); }
+function storySheet(w) {
+  const im = IMG[w.id], area = AREAS[w.cluster] || AREAS.bonus, pats = patternsFor(w.id);
+  const sec = (title, html) => html ? '<div class="fact"><h4>' + title + "</h4>" + html + "</div>" : "";
+  const txt = s => s ? "<p>" + bold(s) + "</p>" : "";
+  const rel = (w.related || []).filter(r => BY[r] && r !== w.id);
+  return '<div class="sphoto' + (im && im.src ? "" : " noimg") + '">' + picHTML(w) +
+      (im && im.credit ? '<a class="credit" href="' + esc(im.link || "#") + '" target="_blank" rel="noopener">📷 ' + esc(im.credit) + (im.licence ? " · " + esc(im.licence) : "") + "</a>" : "") +
+      (stack.length > 1 ? '<button class="pback" data-act="back">← ' + esc(backLabel()) + "</button>" : "") +
+      '<button class="px" data-act="close" aria-label="Close">✕</button></div>' +
+    '<div class="sin">' +
+      '<div class="stitle"><h3 id="sheetTitle">' + (w.emoji ? '<span class="semo" aria-hidden="true">' + esc(w.emoji) + "</span> " : "") + esc(w.word) + "</h3>" +
+        (w.ipa ? '<span class="ipa">' + esc(w.ipa) + "</span>" : "") + speakBtn(w.word, "Say it") + "</div>" +
+      '<div class="stags">' + '<span class="tag">' + esc(w.pos) + "</span>" + (w.count && COUNTNAME[w.count] ? '<span class="tag">' + COUNTNAME[w.count] + "</span>" : "") +
+        lvlBadge(w.cefr) + '<span class="badge b-' + w.group + '">' + groupName(w.group) + "</span>" + '<span class="tag">' + area.icon + " " + esc(area.name) + "</span></div>" +
+      '<p class="sdef">' + esc(w.def) + " " + speakBtn(w.def) + "</p>" +
+      '<div class="facts">' +
+        sec("Examples", "<ul>" + (w.ex || []).map(x => "<li>" + esc(x) + " " + speakBtn(x) + "</li>").join("") + "</ul>") +
+        sec("Goes with", (w.colls || []).length ? '<div class="colls">' + w.colls.map(c => '<span class="coll">' + esc(c) + "</span>").join("") + "</div>" : "") +
+        sec("Grammar", txt(w.grammar)) +
+        sec("Word family", (w.family || []).length ? '<div class="fam">' + w.family.map(esc).join("<i>·</i>") + "</div>" : "") +
+        sec("Say it right", txt(w.say)) +
+        sec("British / American", txt(w.ukus)) +
+        sec("Watch out", txt(w.trap)) +
+        sec("Did you know?", txt(w.fact)) +
+        sec("Thai and English", w.thai ? '<div class="thaibox">' + bold(w.thai) + "</div>" : "") +
+        sec("In your textbook", txt(w.textbook)) +
+        sec("Related words", rel.length ? '<div class="itemchips" style="margin:0">' + rel.map(r => '<button class="itemchip" data-sword="' + r + '">' + (BY[r].emoji ? esc(BY[r].emoji) + " " : "") + esc(BY[r].word) + "</button>").join("") + "</div>" : "") +
+        sec("Patterns", pats.length ? '<div class="itemchips" style="margin:0">' + pats.map(p => '<button class="patchip" data-pat="' + p.id + '">' + p.icon + " " + esc(p.title) + "</button>").join("") + "</div>" : "") +
+      "</div></div>" +
+    '<div class="sfoot"><span class="pill" style="color:var(--green)">✓ collected</span><div class="spacer" style="flex:1"></div>' +
+      (w.cluster === "body" ? '<button class="btn ghost sm" data-act="bodymap" data-id="' + w.id + '">🧍 Body map</button>' : "") +
+      '<button class="btn sm" data-act="full" data-id="' + w.id + '">📇 Full study card</button></div>';
 }
 function termSheet(term, e) {
   return '<div class="shead"><div class="t">' + backBar() +
@@ -312,7 +357,10 @@ function wire() {
     else if (a === "back") goBack();
     else if (a === "bodymap") { closeSheet(); BM.mode = "explore"; BM.lit = regionsFor(b.dataset.id); location.hash = "#/body"; }
     else if (a === "next") { const i = W.findIndex(x => x.id === b.dataset.id); stack = []; openWord(W[(i + 1) % W.length].id); }
+    else if (a === "full") openWord(b.dataset.id);
   });
+  sheet.querySelectorAll("[data-sword]").forEach(b => b.onclick = () => openStory(b.dataset.sword));
+  sheet.querySelectorAll("[data-pat]").forEach(b => b.onclick = () => { PATOPEN = b.dataset.pat; closeSheet(); if (cur === "patterns") drawPatterns(); else go("patterns"); });
   sheet.querySelectorAll("[data-term]").forEach(b => b.onclick = () => openTerm(b.dataset.term));
   sheet.querySelectorAll("[data-word]").forEach(b => b.onclick = () => openWord(b.dataset.word));
   wireSpeak(sheet); refreshMarks();
@@ -475,7 +523,7 @@ function drawStory() {
         '<button class="btn sm" id="nextP"' + (S.ch === chs.length - 1 && S.pg === ch.pages.length - 1 ? " disabled" : "") + ">Next ▶</button></div></div>" +
     (gp === 11 && ROLEPLAY.SCENE ? '<div class="notice" style="margin-top:12px">🎭 <b>Boss unlocked.</b> The Comeback Interview is set between this page and the final. <button class="chip" data-go="roleplay">Play it</button></div>' : "") +
     '<p class="muted" style="text-align:center;margin-top:13px">Every gold word is tappable. A tick means it is in your collection.</p>';
-  document.querySelectorAll("#v-story .kw").forEach(k => k.onclick = () => { stack = []; openWord(k.dataset.w); });
+  document.querySelectorAll("#v-story .kw").forEach(k => k.onclick = () => { stack = []; openStory(k.dataset.w); });
   document.querySelectorAll("#v-story .chapbtn").forEach(b => b.onclick = () => { stopSpeech(); S.ch = +b.dataset.ch; S.pg = 0; save(); drawStory(); });
   document.querySelectorAll("#v-story .dot").forEach(d => d.onclick = () => { S.pg = +d.dataset.pg; save(); stopSpeech(); drawStory(); });
   document.querySelectorAll("#v-story [data-go]").forEach(b => b.onclick = () => go(b.dataset.go));
@@ -714,6 +762,10 @@ function drawPatterns() {
       .concat([{ text: "Try it now. " + (p.drill || ""), el: card.querySelector(".drill") }]), { label: p.title, bar: true });
   });
   paintReader();
+  if (PATOPEN) {                                   // opened from a word's "Patterns" chip
+    const card = document.querySelector('#v-patterns .pat[data-id="' + PATOPEN + '"]'); PATOPEN = null;
+    if (card) { if (card.dataset.open !== "1") card.querySelector(".pathead").click(); setTimeout(() => card.scrollIntoView({ behavior: "smooth", block: "start" }), 350); }
+  }
 }
 function drawGame(p) {
   const el = document.getElementById("game-" + p.id); if (!el) return;

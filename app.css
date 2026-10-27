@@ -431,3 +431,33 @@ body.reader-on main{padding-bottom:84px}
 body.reader-on .toast{bottom:96px}
 @media(max-width:420px){.rdbtn{width:34px;height:34px}.rdbtn.main{width:42px;height:42px}.rdin{gap:6px;padding:8px}}
 @media(prefers-reduced-motion:reduce){.rdwave.on i,.speak.on{animation:none!important}}
+
+/* ---------- Story picture card (photo header, Trail Mix style) ---------- */
+.sheet.pic{padding:0}
+.sphoto{position:relative;aspect-ratio:16/10;background:var(--paper2);overflow:hidden;border-radius:20px 20px 0 0}
+@media(min-width:640px){.sphoto{border-radius:19px 19px 0 0}}
+.sphoto img{display:block;width:100%;height:100%;object-fit:cover}
+.sphoto.noimg{aspect-ratio:16/7;display:grid;place-items:center;background:linear-gradient(135deg,var(--green-bg),var(--amber-bg))}
+.sphoto .em{font-size:84px;line-height:1}
+.sphoto .credit{position:absolute;right:8px;bottom:8px;max-width:calc(100% - 16px);background:rgba(12,18,15,.72);color:#fff;font-size:11px;border-radius:6px;padding:3px 8px;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sphoto .px{position:absolute;right:10px;top:10px;width:38px;height:38px;border-radius:50%;background:rgba(12,18,15,.72);color:#fff;font-size:17px;display:grid;place-items:center}
+.sphoto .pback{position:absolute;left:10px;top:10px;max-width:calc(100% - 70px);background:rgba(12,18,15,.72);color:#fff;border-radius:999px;padding:8px 13px;font-weight:700;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sin{padding:16px 18px 18px}
+.stitle{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.stitle h3{margin:0;font-family:var(--disp);font-size:28px;font-weight:700;letter-spacing:-.4px;line-height:1.15}
+.stitle .semo{font-size:26px}
+.stitle .ipa{font-size:15px}
+.stags{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:9px 0 12px}
+.stags .tag{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--paper2);border:1px solid var(--line);color:var(--ink2)}
+.sdef{font-size:18px;line-height:1.55;margin:0 0 4px;color:var(--ink)}
+.facts{display:grid;gap:13px;margin-top:12px}
+.fact h4{margin:0 0 4px;font-size:10.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--ink3)}
+.fact p{margin:0;font-size:14.5px;line-height:1.6;color:var(--ink)}
+.fact p b{color:var(--coral)}
+.fact ul{margin:0;padding-left:19px;font-family:var(--serif);font-size:15px;line-height:1.65;color:var(--ink2)}
+.fact li{margin-bottom:3px}
+.patchip{font-size:12.5px;font-weight:700;padding:5px 11px;border-radius:999px;background:var(--lav-bg);color:var(--lav);border:1px solid transparent;transition:.15s}
+.patchip:hover{border-color:var(--lav)}
+.shead .sthumb{flex:none;width:58px;height:58px;border-radius:12px;overflow:hidden;background:var(--paper2);border:1px solid var(--line);display:grid;place-items:center}
+.shead .sthumb img{width:100%;height:100%;object-fit:cover}
+.shead .sthumb .em{font-size:30px}
