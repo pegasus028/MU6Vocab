@@ -91,7 +91,11 @@ function toast(msg) { const t = document.getElementById("toast"); t.textContent 
 function norm(s) { return String(s || "").replace(/[‘’ʼ]/g, "'").replace(/[“”]/g, '"').replace(/–|—/g, "-").replace(/\s+/g, " ").trim().toLowerCase().replace(/[.!]+$/, "").trim(); }
 function typedOk(input, q) { const n = norm(input); if (!n) return false; return [q.answerText].concat(q.accept || []).some(a => norm(a) === n); }
 
-/* ---------- read-aloud: recorded Sonia MP3s, browser voice only as fallback ---------- */
+/* ---------- read-aloud: recorded Sonia MP3s, browser voice only as fallback ----------
+   Every 🔊 goes through one player (RD): a queue of parts, one shared <audio> element (so iPad Safari keeps
+   playing from part to part), pause / resume / stop, a mini-player bar for longer reads, and the part being read
+   highlighted on the page. Text is cleaned by speechText() (tts-clean.js) before keying, exactly as
+   tools/tts-list.js does when recording. */
 const TTS_VOICE = /sonia/i;
 function pickVoice() {
   let vs = []; try { vs = speechSynthesis.getVoices() || []; } catch (e) { return null; }
@@ -102,23 +106,105 @@ function pickVoice() {
 try { if (window.speechSynthesis) { speechSynthesis.getVoices(); speechSynthesis.addEventListener("voiceschanged", pickVoice); } } catch (e) {}
 function ttsNorm(s) { return String(s || "").replace(/\s+/g, " ").trim(); }
 function ttsKey(s) { s = ttsNorm(s); let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return ("0000000" + h.toString(16)).slice(-8); }
+const sayText = raw => ttsNorm(window.speechText ? window.speechText(raw) : raw);
 const TTS_SET = {}; ((window.TTS && window.TTS.keys) || []).forEach(k => TTS_SET[k] = 1);
-let ttsAudio = null;
-function hasClip(text) { return !!TTS_SET[ttsKey(text)]; }
-function stopSpeech() { try { if (ttsAudio) { ttsAudio.pause(); ttsAudio = null; } if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {} }
-function speakSynth(text) { try { const u = new SpeechSynthesisUtterance(text); u.lang = "en-GB"; u.rate = .9; const v = pickVoice(); if (v) { u.voice = v; u.lang = v.lang; } speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) { toast("Sound is not available in this browser."); } }
-function speak(text, onEnd) {
-  stopSpeech(); const k = ttsKey(text);
-  if (!TTS_SET[k]) return speakSynth(text);
-  const a = new Audio(((window.TTS && window.TTS.dir) || "audio/tts/") + k + ".mp3"); let fell = false; ttsAudio = a;
-  const fallback = () => { if (fell || ttsAudio !== a) return; fell = true; ttsAudio = null; speakSynth(text); };
-  a.addEventListener("error", fallback);
-  if (onEnd) a.addEventListener("ended", () => { if (ttsAudio === a) onEnd(); });
-  try { const p = a.play(); if (p && p.catch) p.catch(e => { if (!e || e.name !== "AbortError") fallback(); }); } catch (e) { fallback(); }
+const TTS_DIR = (window.TTS && window.TTS.dir) || "audio/tts/";
+function hasClip(text) { return !!TTS_SET[ttsKey(sayText(text))]; }
+const RD = { parts: [], i: 0, state: "idle", owner: "", label: "", onEnd: null, bar: false, gen: 0, synth: false, el: null };
+function rdAudio() { if (!RD.el) { try { RD.el = new Audio(); RD.el.preload = "auto"; } catch (e) { RD.el = null; } } return RD.el; }
+function rdMark(on) { const p = RD.parts[RD.i]; if (p && p.el) p.el.classList.toggle("reading", on); }
+function rdSynth(text, gen) {
+  try {
+    const u = new SpeechSynthesisUtterance(text); u.lang = "en-GB"; u.rate = .9; const v = pickVoice(); if (v) { u.voice = v; u.lang = v.lang; }
+    u.onend = () => { if (gen === RD.gen) rdNext(); };
+    u.onerror = e => { if (gen === RD.gen && e.error !== "interrupted" && e.error !== "canceled") rdNext(); };
+    RD.synth = true; speechSynthesis.cancel(); speechSynthesis.speak(u);
+  } catch (e) { toast("Sound is not available in this browser."); stopSpeech(); }
+}
+function rdPlay() {
+  const gen = RD.gen, part = RD.parts[RD.i]; if (!part) return rdFinish();
+  rdMark(true); RD.state = "playing"; RD.synth = false; paintReader();
+  if (part.el && RD.bar) { const r = part.el.getBoundingClientRect(); if (r.top < 70 || r.bottom > innerHeight - 90) part.el.scrollIntoView({ block: "center", behavior: "smooth" }); }
+  const k = ttsKey(part.text), a = TTS_SET[k] ? rdAudio() : null;
+  if (!a) return rdSynth(part.text, gen);
+  let fell = false;
+  const fallback = () => { if (fell || gen !== RD.gen) return; fell = true; rdSynth(part.text, gen); };
+  a.onended = () => { if (gen === RD.gen && !RD.synth) rdNext(); };
+  a.onerror = fallback;
+  try { a.src = TTS_DIR + k + ".mp3"; const p = a.play(); if (p && p.catch) p.catch(e => { if (!e || e.name !== "AbortError") fallback(); }); } catch (e) { fallback(); }
+}
+function rdNext() { rdMark(false); RD.i++; if (RD.i < RD.parts.length) rdPlay(); else rdFinish(); }
+function rdFinish() { const cb = RD.onEnd; rdMark(false); RD.gen++; RD.state = "idle"; RD.owner = ""; RD.onEnd = null; RD.parts = []; paintReader(); if (cb) cb(); }
+function rdHalt() {
+  try { if (RD.el) { RD.el.onended = RD.el.onerror = null; RD.el.pause(); } if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {}
+}
+/* readAloud(parts, {owner, label, onEnd, bar}): parts are strings or {text, el}; el is highlighted while read */
+function readAloud(parts, opts) {
+  opts = opts || {}; stopSpeech();
+  RD.parts = (parts || []).map(p => typeof p === "string" ? { text: sayText(p) } : { text: sayText(p.text), el: p.el || null }).filter(p => p.text);
+  if (!RD.parts.length) return;
+  RD.i = 0; RD.gen++; RD.owner = opts.owner || "say:" + ttsKey(RD.parts[0].text); RD.label = opts.label || "";
+  RD.onEnd = opts.onEnd || null; RD.bar = opts.bar != null ? !!opts.bar : (RD.parts.length > 1 || RD.parts[0].text.length > 90);
+  rdPlay();
+}
+function pauseSpeech() {
+  if (RD.state !== "playing") return; RD.state = "paused";
+  try { if (RD.synth) speechSynthesis.pause(); else if (RD.el) RD.el.pause(); } catch (e) {}
+  paintReader();
+}
+function resumeSpeech() {
+  if (RD.state !== "paused") return; RD.state = "playing";
+  try { if (RD.synth) speechSynthesis.resume(); else if (RD.el) { const p = RD.el.play(); if (p && p.catch) p.catch(() => {}); } } catch (e) {}
+  paintReader();
+}
+function stopSpeech() { rdHalt(); rdMark(false); RD.gen++; RD.state = "idle"; RD.owner = ""; RD.onEnd = null; RD.parts = []; RD.synth = false; paintReader(); }
+function skipPart(d) { if (RD.state === "idle") return; const j = RD.i + d; if (j < 0 || j >= RD.parts.length) return; rdHalt(); rdMark(false); RD.gen++; RD.i = j; rdPlay(); }
+/* one button = play, then pause / resume while it owns the player */
+function toggleRead(owner, start) {
+  if (RD.owner === owner && RD.state === "playing") return pauseSpeech();
+  if (RD.owner === owner && RD.state === "paused") return resumeSpeech();
+  start();
+}
+function speak(text, onEnd) { readAloud([text], { onEnd }); }
+function paintReader() {
+  document.querySelectorAll("[data-rd]").forEach(b => {
+    const mine = b.dataset.rd === RD.owner && RD.state !== "idle", st = mine ? RD.state : "idle";
+    b.classList.toggle("on", st === "playing"); b.classList.toggle("paused", st === "paused");
+    const lab = b.dataset.label, ic = st === "playing" ? "⏸" : st === "paused" ? "▶" : "🔊";
+    b.textContent = lab ? ic + " " + (st === "playing" ? "Pause" : st === "paused" ? "Resume" : lab) : ic;
+    b.setAttribute("aria-label", st === "playing" ? "Pause" : st === "paused" ? "Resume" : "Listen" + (lab ? ": " + lab : ""));
+  });
+  const bar = document.getElementById("reader"); if (!bar) return;
+  const show = RD.bar && RD.state !== "idle";
+  document.body.classList.toggle("reader-on", show);
+  if (!show) { bar.hidden = true; return; }
+  bar.hidden = false;
+  const n = RD.parts.length, multi = n > 1;
+  bar.innerHTML = '<div class="rdin"><span class="rdwave' + (RD.state === "playing" ? " on" : "") + '" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' +
+    '<div class="rdtxt"><b>' + esc(RD.label || "Reading aloud") + '</b><span>' + (RD.state === "paused" ? "Paused" : "Sonia is reading") + (multi ? " · part " + (RD.i + 1) + " of " + n : "") + "</span></div>" +
+    (multi ? '<button class="rdbtn" id="rdPrev" aria-label="Previous part"' + (RD.i === 0 ? " disabled" : "") + ">⏮</button>" : "") +
+    '<button class="rdbtn main" id="rdToggle" aria-label="' + (RD.state === "playing" ? "Pause" : "Resume") + '">' + (RD.state === "playing" ? "⏸" : "▶") + "</button>" +
+    (multi ? '<button class="rdbtn" id="rdNext" aria-label="Next part"' + (RD.i >= n - 1 ? " disabled" : "") + ">⏭</button>" : "") +
+    '<button class="rdbtn" id="rdStop" aria-label="Stop">■</button></div>';
+  document.getElementById("rdToggle").onclick = () => RD.state === "playing" ? pauseSpeech() : resumeSpeech();
+  document.getElementById("rdStop").onclick = stopSpeech;
+  const pv = document.getElementById("rdPrev"), nx = document.getElementById("rdNext");
+  if (pv) pv.onclick = () => skipPart(-1); if (nx) nx.onclick = () => skipPart(1);
 }
 window.addEventListener("hashchange", stopSpeech);
-function speakBtn(text, label) { return '<button class="speak' + (label ? " lg" : "") + '" data-say="' + esc(text) + '" aria-label="Listen">🔊' + (label ? " " + esc(label) : "") + "</button>"; }
-function wireSpeak(root) { (root || document).querySelectorAll("[data-say]").forEach(b => b.onclick = e => { e.stopPropagation(); speak(b.dataset.say); }); }
+document.addEventListener("visibilitychange", () => { if (document.hidden && RD.synth) pauseSpeech(); });
+function speakBtn(text, label) {
+  const own = "say:" + ttsKey(sayText(text));
+  return '<button class="speak' + (label ? " lg" : "") + '" data-say="' + esc(text) + '" data-rd="' + own + '"' + (label ? ' data-label="' + esc(label) + '"' : "") + ' aria-label="Listen">🔊' + (label ? " " + esc(label) : "") + "</button>";
+}
+/* a button that reads a group of parts (a story page, a pattern card); wire it with wireRead() */
+function readBtn(owner, label) { return '<button class="speak lg" data-rd="' + esc(owner) + '" data-label="' + esc(label) + '" aria-label="Listen: ' + esc(label) + '">🔊 ' + esc(label) + "</button>"; }
+function wireRead(btn, partsFn, opts) { if (!btn) return; btn.onclick = e => { e.stopPropagation(); toggleRead(btn.dataset.rd, () => readAloud(partsFn(), Object.assign({ owner: btn.dataset.rd }, opts || {}))); }; }
+function wireSpeak(root) {
+  (root || document).querySelectorAll("[data-say]").forEach(b => b.onclick = e => { e.stopPropagation();
+    toggleRead(b.dataset.rd, () => readAloud([b.dataset.say], { owner: b.dataset.rd, label: b.dataset.label || "" })); });
+  paintReader();
+}
 
 /* ---------- media lookup ---------- */
 function allMedia() {
@@ -138,7 +224,7 @@ const MICON = { podcast: "🎧", video: "▶️", extra: "🔗" };
    ================================================================== */
 let stack = [];
 const scrim = document.getElementById("scrim"), sheet = document.getElementById("sheet");
-function closeSheet() { scrim.classList.remove("on"); stack = []; document.body.style.overflow = ""; }
+function closeSheet() { if (/^say:/.test(RD.owner)) stopSpeech(); scrim.classList.remove("on"); stack = []; document.body.style.overflow = ""; }
 scrim.addEventListener("click", e => { if (e.target === scrim) closeSheet(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && scrim.classList.contains("on")) closeSheet(); });
 function openWord(id, push) { if (!BY[id]) return; if (push !== false) stack.push({ t: "w", id }); mark(id, true); renderSheet(); }
@@ -176,16 +262,16 @@ function wordSheet(w) {
     "</div></div>" +
     '<button class="xbtn" data-act="close" aria-label="Close">✕</button></div>' +
     '<div class="sbody">' +
-      '<div class="blk"><div class="lbl">Meaning</div><p class="def">' + esc(w.def) + "</p></div>" +
+      '<div class="blk"><div class="lbl">Meaning</div><p class="def">' + esc(w.def) + " " + speakBtn(w.def) + "</p></div>" +
       '<div class="blk"><div class="lbl">In use</div>' + (w.ex || []).map(x => '<div class="ex"><span>' + esc(x) + "</span>" + speakBtn(x) + "</div>").join("") + "</div>" +
-      (w.textbook ? '<div class="blk"><div class="lbl">In your textbook</div><p class="def" style="font-size:14px">' + bold(w.textbook) + "</p></div>" : "") +
+      (w.textbook ? '<div class="blk"><div class="lbl">In your textbook</div><p class="def" style="font-size:14px">' + bold(w.textbook) + " " + speakBtn(w.textbook) + "</p></div>" : "") +
       '<div class="blk"><div class="lbl">Synonyms <span class="muted" style="font-weight:500;letter-spacing:0;text-transform:none">tap one to study it fully</span></div>' + lvlRows(w.syn) + "</div>" +
       '<div class="blk"><div class="lbl">Antonyms and contrasts <span class="muted" style="font-weight:500;letter-spacing:0;text-transform:none">tap one to study it fully</span></div>' + lvlRows(w.ant) + "</div>" +
       '<div class="blk"><div class="lbl">Goes with</div><div class="colls">' + (w.colls || []).map(c => '<span class="coll">' + esc(c) + "</span>").join("") + "</div></div>" +
       (w.family && w.family.length ? '<div class="blk"><div class="lbl">Word family</div><div class="fam">' + w.family.map(esc).join("<i>·</i>") + "</div></div>" : "") +
       (w.thai ? '<div class="blk"><div class="lbl">Thai and English</div><div class="thaibox">' + bold(w.thai) + "</div></div>" : "") +
-      (w.trap ? '<div class="blk"><div class="lbl">Trap</div><div class="tipbox">' + bold(w.trap) + "</div></div>" : "") +
-      (w.tip ? '<div class="blk"><div class="lbl">Watch out</div><div class="tipbox">' + bold(w.tip) + "</div></div>" : "") +
+      (w.trap ? '<div class="blk"><div class="lbl">Trap</div><div class="tipbox">' + bold(w.trap) + " " + speakBtn(w.trap) + "</div></div>" : "") +
+      (w.tip ? '<div class="blk"><div class="lbl">Watch out</div><div class="tipbox">' + bold(w.tip) + " " + speakBtn(w.tip) + "</div></div>" : "") +
     "</div>" +
     '<div class="sfoot">' +
       '<span class="pill" style="color:var(--green)">✓ collected</span>' +
@@ -201,10 +287,10 @@ function termSheet(term, e) {
       '<span>·</span><span class="muted">linked entry</span></div></div>' +
     '<button class="xbtn" data-act="close" aria-label="Close">✕</button></div>' +
     '<div class="sbody">' +
-      '<div class="blk"><div class="lbl">Meaning</div><p class="def">' + esc(e.def) + "</p></div>" +
-      '<div class="blk"><div class="lbl">In use</div>' + (e.ex || []).map(x => '<div class="ex"><span>' + esc(x) + "</span></div>").join("") + "</div>" +
+      '<div class="blk"><div class="lbl">Meaning</div><p class="def">' + esc(e.def) + " " + speakBtn(e.def) + "</p></div>" +
+      '<div class="blk"><div class="lbl">In use</div>' + (e.ex || []).map(x => '<div class="ex"><span>' + esc(x) + "</span>" + speakBtn(x) + "</div>").join("") + "</div>" +
       ((e.colls || []).length ? '<div class="blk"><div class="lbl">Goes with</div><div class="colls">' + e.colls.map(c => '<span class="coll">' + esc(c) + "</span>").join("") + "</div></div>" : "") +
-      (e.note ? '<div class="blk"><div class="lbl">Note</div><div class="tipbox">' + bold(e.note) + "</div></div>" : "") +
+      (e.note ? '<div class="blk"><div class="lbl">Note</div><div class="tipbox">' + bold(e.note) + " " + speakBtn(e.note) + "</div></div>" : "") +
       relatedBlock(term) +
     "</div>" +
     '<div class="sfoot">' + (stack.length > 1 ? '<button class="btn ghost" data-act="back">← Back</button>' : "") +
@@ -348,17 +434,24 @@ function fallbackCopy(text, done) { const ta = document.createElement("textarea"
 /* ==================================================================
    STORYBOOK
    ================================================================== */
+function storyParas(text) { return String(text || "").split(/\n\s*\n/); }
 function storyHTML(text) {
-  return "<p>" + esc(text).replace(/\n\n/g, "</p><p>")
+  return "<p>" + storyParas(text).map(esc).join("</p><p>")
     .replace(/\{\{([a-z]+)\|([^}]*)\}\}/g, (m, id, sur) => '<button class="kw' + (isGot(id) ? " got" : "") + '" data-w="' + id + '">' + sur + "</button>") + "</p>";
 }
-function pageSpeech(text) { return text.split(/\n\s*\n/).map(p => p.replace(/\{\{([a-z]+)\|([^}]*)\}\}/g, "$2")).join(" "); }
+function pageParts(text) { const ps = document.querySelectorAll("#v-story .ptext p"); return storyParas(text).map((t, i) => ({ text: t, el: ps[i] || null })); }
+function storyNext() { const chs = STORY.chapters, ch = chs[S.ch]; if (S.pg < ch.pages.length - 1) S.pg++; else if (S.ch < chs.length - 1) { S.ch++; S.pg = 0; } else return false; save(); return true; }
+function readPage(auto) {
+  const page = STORY.chapters[S.ch].pages[S.pg], own = "story:" + S.ch + "." + S.pg;
+  readAloud(pageParts(page.text), { owner: own, bar: true, label: "Chapter " + STORY.chapters[S.ch].n + " · page " + globalPage(S.ch, S.pg),
+    onEnd: () => { if (S.autoRead && cur === "story" && storyNext()) { drawStory(); readPage(true); window.scrollTo({ top: 0, behavior: "smooth" }); } } });
+}
 function globalPage(ci, pi) { let n = 0; for (let i = 0; i < ci; i++) n += STORY.chapters[i].pages.length; return n + pi + 1; }
 function markRead(ci, pi) { const k = ci + "." + pi; if (S.read.indexOf(k) < 0) { S.read.push(k); S.pts += 3; touchDay(); save(); hud(); if (S.read.length >= storyPageCount()) award("story_done"); } }
 function drawStory() {
   const chs = STORY.chapters;
   if (!chs.length) { document.getElementById("v-story").innerHTML = '<h2 class="sec">Story</h2><p class="lede">No story loaded yet.</p>'; return; }
-  if (P.length >= 2 && !isNaN(P[0])) { S.ch = Math.max(0, Math.min(chs.length - 1, +P[0] - 1)); S.pg = Math.max(0, +P[1] - 1); }
+  if (P.length >= 2 && !isNaN(P[0])) { S.ch = Math.max(0, Math.min(chs.length - 1, +P[0] - 1)); S.pg = Math.max(0, +P[1] - 1); P = []; }   // a deep link is read once, so Next still works
   const ch = chs[S.ch] || chs[0]; if (S.pg >= ch.pages.length) S.pg = 0;
   const page = ch.pages[S.pg];
   const chWords = new Set(); ch.pages.forEach(p => (p.text.match(/\{\{([a-z]+)\|/g) || []).forEach(m => chWords.add(m.slice(2, -1))));
@@ -373,21 +466,24 @@ function drawStory() {
     '<div class="page"><div class="art ' + (page.tint || "warm") + (page.img ? " hasimg" : "") + '">' +
       (page.img ? '<img class="bg" src="' + esc(page.img) + '" alt="" aria-hidden="true"><img class="fg" src="' + esc(page.img) + '" alt="' + esc(page.alt || "") + '" loading="lazy">' : esc(page.art || "📖")) +
       '<span class="plate">Chapter ' + ch.n + " · page " + gp + " of " + storyPageCount() + "</span></div>" +
-      '<div class="row" style="padding:12px 22px 0"><button class="speak lg" id="listenPage">🔊 Listen to this page</button></div>' +
+      '<div class="row" style="padding:12px 22px 0;flex-wrap:wrap">' + readBtn("story:" + S.ch + "." + S.pg, "Listen to this page").replace("<button", '<button id="listenPage"') +
+        '<label class="autoread"><input type="checkbox" id="autoRead"' + (S.autoRead ? " checked" : "") + '> Turn the pages for me</label></div>' +
       '<div class="ptext">' + storyHTML(page.text) + "</div>" +
-      (page.grammar ? '<div class="gramline"><b>Grammar in this page:</b> ' + bold(page.grammar) + "</div>" : "") +
+      (page.grammar ? '<div class="gramline"><b>Grammar in this page:</b> ' + bold(page.grammar) + " " + speakBtn(page.grammar) + "</div>" : "") +
       '<div class="pnav"><button class="btn ghost sm" id="prevP"' + (S.ch === 0 && S.pg === 0 ? " disabled" : "") + ">◀ Prev</button>" +
         '<div class="dots">' + ch.pages.map((_, i) => '<button class="dot' + (S.read.indexOf(S.ch + "." + i) > -1 ? " read" : "") + '" data-pg="' + i + '" aria-current="' + (i === S.pg) + '" aria-label="Page ' + (i + 1) + '"></button>').join("") + "</div>" +
         '<button class="btn sm" id="nextP"' + (S.ch === chs.length - 1 && S.pg === ch.pages.length - 1 ? " disabled" : "") + ">Next ▶</button></div></div>" +
     (gp === 11 && ROLEPLAY.SCENE ? '<div class="notice" style="margin-top:12px">🎭 <b>Boss unlocked.</b> The Comeback Interview is set between this page and the final. <button class="chip" data-go="roleplay">Play it</button></div>' : "") +
     '<p class="muted" style="text-align:center;margin-top:13px">Every gold word is tappable. A tick means it is in your collection.</p>';
   document.querySelectorAll("#v-story .kw").forEach(k => k.onclick = () => { stack = []; openWord(k.dataset.w); });
-  document.querySelectorAll("#v-story .chapbtn").forEach(b => b.onclick = () => { S.ch = +b.dataset.ch; S.pg = 0; save(); drawStory(); });
+  document.querySelectorAll("#v-story .chapbtn").forEach(b => b.onclick = () => { stopSpeech(); S.ch = +b.dataset.ch; S.pg = 0; save(); drawStory(); });
   document.querySelectorAll("#v-story .dot").forEach(d => d.onclick = () => { S.pg = +d.dataset.pg; save(); stopSpeech(); drawStory(); });
   document.querySelectorAll("#v-story [data-go]").forEach(b => b.onclick = () => go(b.dataset.go));
-  document.getElementById("listenPage").onclick = () => speak(pageSpeech(page.text));
-  document.getElementById("prevP").onclick = () => { stopSpeech(); if (S.pg > 0) S.pg--; else if (S.ch > 0) { S.ch--; S.pg = chs[S.ch].pages.length - 1; } save(); drawStory(); };
-  document.getElementById("nextP").onclick = () => { stopSpeech(); if (S.pg < ch.pages.length - 1) S.pg++; else if (S.ch < chs.length - 1) { S.ch++; S.pg = 0; } save(); drawStory(); };
+  const lp = document.getElementById("listenPage"); lp.onclick = e => { e.stopPropagation(); toggleRead(lp.dataset.rd, () => readPage()); };
+  document.getElementById("autoRead").onchange = e => { S.autoRead = e.target.checked; save(); };
+  wireSpeak(document.getElementById("v-story"));
+  document.getElementById("prevP").onclick = () => { stopSpeech(); window.scrollTo({ top: 0, behavior: "smooth" }); if (S.pg > 0) S.pg--; else if (S.ch > 0) { S.ch--; S.pg = chs[S.ch].pages.length - 1; } save(); drawStory(); };
+  document.getElementById("nextP").onclick = () => { stopSpeech(); storyNext(); drawStory(); };
 }
 function readPage11() { return S.read.some(k => { const [c, p] = k.split(".").map(Number); return globalPage(c, p) >= 11; }); }
 
@@ -429,7 +525,7 @@ function bmExplore() {
     panel.innerHTML = '<div class="row"><button class="chip" data-l="outside" aria-pressed="' + (BM.layer === "outside") + '">Outside</button><button class="chip" data-l="inside" aria-pressed="' + (BM.layer === "inside") + '">Inside</button></div>' +
       '<div class="prompt-card"><div class="big-word">' + esc(w.word) + " " + speakBtn(w.word) + "</div>" +
       '<div class="meta" style="margin:4px 0 8px">' + lvlBadge(w.cefr) + ' <span class="ipa">' + esc(w.ipa || "") + "</span></div>" +
-      '<p class="def" style="font-size:15px">' + esc(w.def) + "</p>" +
+      '<p class="def" style="font-size:15px">' + esc(w.def) + " " + speakBtn(w.def) + "</p>" +
       '<div class="row" style="margin-top:10px"><button class="btn sm" data-word="' + w.id + '">Open the card</button></div></div>';
     wireLayer(); panel.querySelector("[data-word]").onclick = () => { stack = []; openWord(w.id); };
     wireSpeak(panel); speak(w.word); mark(w.id, true);
@@ -522,7 +618,8 @@ function bmHurt() {
     }
     const c = r.qs[r.i], need = REG[c.region]; BM.view = need.view; BM.layer = need.layer; r.stage = 0;
     panel.innerHTML = '<div class="muted">Where does it hurt? · ' + (r.i + 1) + " / " + r.qs.length + "</div>" +
-      '<div class="prompt-card"><p class="q">“' + esc(c.text) + "”</p>" + '<p class="muted" id="step">Step 1: tap where it hurts.</p><div id="opts"></div><div id="fb"></div></div>';
+      '<div class="prompt-card"><p class="q">“' + esc(c.text) + "” " + speakBtn(c.text) + "</p>" + '<p class="muted" id="step">Step 1: tap where it hurts.</p><div id="opts"></div><div id="fb"></div></div>';
+    wireSpeak(panel);
     paintFigure({ layer: BM.layer, lit: [] }, id => {
       if (r.stage !== 0) return;
       const hit = REG[id]; r.stage = 1;
@@ -534,8 +631,8 @@ function bmHurt() {
         const pick = +b.dataset.i, ok = pick === c.answer;
         document.querySelectorAll("#opts .opt").forEach((x, i) => { x.disabled = true; if (i === c.answer) x.classList.add("right"); else if (i === pick) x.classList.add("wrong"); });
         if (ok && okHit) { r.right++; S.pts += 6; } else if (c.answer != null && BY[c.tests || ""]) wardAdd(c.tests);
-        document.getElementById("fb").innerHTML = '<div class="why' + (ok ? "" : " bad") + '"><b>' + (ok ? "Correct." : "Not quite.") + "</b> " + esc(c.why || "") + '</div><div class="row" style="margin-top:10px"><button class="btn" id="nx">Next →</button></div>';
-        save(); hud(); document.getElementById("nx").onclick = () => { r.i++; draw(); };
+        document.getElementById("fb").innerHTML = '<div class="why' + (ok ? "" : " bad") + '"><b>' + (ok ? "Correct." : "Not quite.") + "</b> " + esc(c.why || "") + " " + speakBtn(c.why || "") + '</div><div class="row" style="margin-top:10px"><button class="btn" id="nx">Next →</button></div>';
+        wireSpeak(panel); save(); hud(); document.getElementById("nx").onclick = () => { r.i++; draw(); };
       });
     });
   };
@@ -596,7 +693,8 @@ function drawPatterns() {
     PATS.map((p, i) => {
       const med = mediaForPattern(p.id);
       return '<div class="card pat" data-i="' + i + '" data-id="' + p.id + '" data-open="0"><button class="pathead"><span class="ic">' + p.icon + '</span><span class="tt"><span class="k">' + esc(p.kind) + "</span><h3>" + esc(p.title) + '</h3></span><span class="car">▶</span></button>' +
-        '<div class="patbody"><p class="insight">' + bold(p.insight) + "</p>" + (p.examples || []).map(x => '<div class="exline">' + bold(x) + "</div>").join("") +
+        '<div class="patbody"><div class="row" style="margin-bottom:10px">' + readBtn("pat:" + p.id, "Listen to this card") + "</div>" +
+        '<p class="insight">' + bold(p.insight) + "</p>" + (p.examples || []).map(x => '<div class="exline">' + bold(x) + "</div>").join("") +
         '<div class="itemchips">' + (p.items || []).filter(id => BY[id]).map(id => '<button class="itemchip" data-word="' + id + '">' + esc(BY[id].word) + "</button>").join("") + "</div>" +
         '<div class="drill"><b>Try it now:</b> ' + bold(p.drill) + "</div>" +
         (p.game ? '<div class="game" id="game-' + p.id + '"></div>' : "") +
@@ -604,10 +702,18 @@ function drawPatterns() {
     }).join("");
   document.querySelectorAll("#v-patterns .pathead").forEach(h => h.onclick = () => {
     const p = h.parentElement; p.dataset.open = p.dataset.open === "1" ? "0" : "1";
+    if (p.dataset.open === "0" && RD.owner === "pat:" + p.dataset.id) stopSpeech();
     if (p.dataset.open === "1") { if (S.pats.indexOf(p.dataset.id) < 0) { S.pats.push(p.dataset.id); S.pts += 2; touchDay(); save(); hud(); if (S.pats.length >= PATS.length) award("patterns"); }
       const pat = PATS.find(x => x.id === p.dataset.id); if (pat && pat.game) drawGame(pat); }
   });
   document.querySelectorAll("#v-patterns [data-word]").forEach(b => b.onclick = e => { e.stopPropagation(); stack = []; openWord(b.dataset.word); });
+  document.querySelectorAll("#v-patterns .pat").forEach(card => {
+    const p = PATS.find(x => x.id === card.dataset.id); if (!p) return;
+    wireRead(card.querySelector("[data-rd]"), () => [{ text: p.title, el: card.querySelector(".pathead h3") }, { text: p.insight, el: card.querySelector(".insight") }]
+      .concat([...card.querySelectorAll(".exline")].map((el, i) => ({ text: (p.examples || [])[i], el })))
+      .concat([{ text: "Try it now. " + (p.drill || ""), el: card.querySelector(".drill") }]), { label: p.title, bar: true });
+  });
+  paintReader();
 }
 function drawGame(p) {
   const el = document.getElementById("game-" + p.id); if (!el) return;
@@ -637,7 +743,8 @@ function drawGame(p) {
       '<div class="' + (g.kind === "scale" ? "scale" : "slots") + '">' + g.slots.map((s, si) => '<div class="slot" data-slot="' + si + '"><h5>' + esc(s) + "</h5>" +
         items.filter(it => placed[it.id] === si).map(it => '<button class="tile' + (it.mark || "") + '" data-tile="' + it.id + '">' + esc(BY[it.id].word) + "</button>").join("") + "</div>").join("") + "</div>" +
       '<div class="row" style="margin-top:10px"><button class="btn sm" id="g-chk">Check</button><button class="btn ghost sm" id="g-reset">Reset</button><span class="muted" id="g-res"></span></div>' +
-      (g.reveal ? '<div class="why" id="g-reveal" style="display:none">' + bold(g.reveal) + "</div>" : "");
+      (g.reveal ? '<div class="why" id="g-reveal" style="display:none">' + bold(g.reveal) + " " + speakBtn(g.reveal) + "</div>" : "");
+    wireSpeak(el);
     el.querySelectorAll("[data-tile]").forEach(b => b.onclick = e => { e.stopPropagation(); sel = sel === b.dataset.tile ? null : b.dataset.tile; draw(); });
     el.querySelectorAll("[data-slot]").forEach(s => s.onclick = () => { if (sel == null) return; placed[sel] = +s.dataset.slot; const it = items.find(x => x.id === sel); it.mark = ""; sel = null; draw(); });
     document.getElementById("g-chk").onclick = () => { let ok = 0; items.forEach(it => { if (placed[it.id] == null) return; it.mark = placed[it.id] === it.slot ? " ok" : " bad"; if (it.mark === " ok") ok++; else wardAdd(it.id); });
@@ -906,8 +1013,8 @@ function startClinic() {
     }
     const c = cards[i];
     v.innerHTML = '<div class="qwrap"><div class="qtop"><button class="btn ghost sm" id="quit">✕ Quit</button><div class="bar" style="flex:1"><i style="width:' + Math.round(i / cards.length * 100) + '%"></i></div><span class="n">' + (i + 1) + " / " + cards.length + '</span></div>' +
-      '<div class="qcard"><div class="qtype">Clinic Shift · patient ' + (i + 1) + '</div><p class="qprompt">“' + esc(c.patient) + '”</p><p class="muted" style="margin:-8px 0 10px">Step 1: where should she go?</p><div class="routebtns" id="routes">' + ROUTES.map(r => '<button class="routebtn" data-r="' + r[0] + '">' + r[1] + "<small>" + r[2] + "</small></button>").join("") + '</div><div id="step2"></div><div id="fb"></div></div></div>';
-    document.getElementById("quit").onclick = drawTests;
+      '<div class="qcard"><div class="qtype">Clinic Shift · patient ' + (i + 1) + '</div><p class="qprompt">“' + esc(c.patient) + '” ' + speakBtn(c.patient) + '</p><p class="muted" style="margin:-8px 0 10px">Step 1: where should she go?</p><div class="routebtns" id="routes">' + ROUTES.map(r => '<button class="routebtn" data-r="' + r[0] + '">' + r[1] + "<small>" + r[2] + "</small></button>").join("") + '</div><div id="step2"></div><div id="fb"></div></div></div>';
+    document.getElementById("quit").onclick = drawTests; wireSpeak(v);
     document.querySelectorAll("#routes .routebtn").forEach(b => b.onclick = () => {
       const okR = b.dataset.r === c.route; if (okR) score++;
       document.querySelectorAll("#routes .routebtn").forEach(x => { x.disabled = true; if (x.dataset.r === c.route) x.classList.add("right"); else if (x === b) x.classList.add("wrong"); });
@@ -915,7 +1022,7 @@ function startClinic() {
       document.querySelectorAll("#opts .opt").forEach(ob => ob.onclick = () => {
         const pick = +ob.dataset.i, ok = pick === c.answer; if (ok) score++; else wardAdd(c.word);
         document.querySelectorAll("#opts .opt").forEach((x, k) => { x.disabled = true; if (k === c.answer) x.classList.add("right"); else if (k === pick) x.classList.add("wrong"); });
-        document.getElementById("fb").innerHTML = '<div class="why' + (ok && okR ? "" : " bad") + '"><b>' + (ok ? "Correct." : "Not quite.") + "</b> " + esc(c.why) + '</div><div class="row" style="margin-top:12px"><button class="btn" id="nx">Next patient →</button></div>';
+        document.getElementById("fb").innerHTML = '<div class="why' + (ok && okR ? "" : " bad") + '"><b>' + (ok ? "Correct." : "Not quite.") + "</b> " + esc(c.why) + " " + speakBtn(c.why) + '</div><div class="row" style="margin-top:12px"><button class="btn" id="nx">Next patient →</button></div>'; wireSpeak(v);
         document.getElementById("nx").onclick = () => { i++; draw(); }; save();
       });
     });
@@ -948,7 +1055,7 @@ function drawWriting() {
   }
   const d = S.writing[m.id] || { text: "" };
   v.innerHTML = '<div class="row"><button class="btn ghost sm" id="backW">← All missions</button></div>' +
-    '<h2 class="sec" style="margin-top:10px">' + esc(m.id) + " · " + esc(m.title) + '</h2><p class="lede">' + esc(m.brief) + "</p>" +
+    '<h2 class="sec" style="margin-top:10px">' + esc(m.id) + " · " + esc(m.title) + '</h2><p class="lede">' + esc(m.brief) + " " + speakBtn(m.brief) + "</p>" +
     '<div class="notice" style="margin-bottom:12px"><b>' + esc(m.type) + "</b> · " + m.min + "–" + m.max + " words · grammar to show: " + bold(m.grammar) + "</div>" +
     '<div class="lbl">Words to use · tap to study</div><div class="itemchips" style="margin:0 0 12px" id="must">' + (m.mustUse || []).filter(x => BY[x]).map(x => '<button class="itemchip" data-word="' + x + '">' + esc(BY[x].word) + "</button>").join("") + "</div>" +
     '<textarea class="wtext" id="wIn" placeholder="Type here… (saved on this device as you go)">' + esc(d.text) + "</textarea>" +
@@ -969,9 +1076,9 @@ function drawWriting() {
     if (ta.value.trim() && a.wc >= m.min) award("mission");
   };
   ta.oninput = paint; paint(); touchDay();
-  document.getElementById("backW").onclick = () => go("writing");
+  document.getElementById("backW").onclick = () => go("writing"); wireSpeak(v);
   document.getElementById("clearW").onclick = () => { if (confirm("Clear this draft?")) { ta.value = ""; paint(); } };
-  document.getElementById("showModel").onclick = () => { document.getElementById("model").innerHTML = '<div class="lbl">A model answer · read it after you have written yours</div><div class="model">' + esc(m.model) + "</div>"; };
+  document.getElementById("showModel").onclick = () => { const md = document.getElementById("model"); md.innerHTML = '<div class="lbl">A model answer · read it after you have written yours</div><div class="model">' + esc(m.model) + '</div><div class="row" style="margin-top:8px">' + speakBtn(m.model, "Listen to the model") + "</div>"; wireSpeak(md); };
   document.getElementById("copyW").onclick = () => {
     const a = analyse(m, ta.value);
     const summary = ["Writing Clinic " + m.id + " · " + m.title + " · " + today(), "", ta.value.trim(), "", "— Summary —", "Words: " + a.wc + " (band " + m.min + "–" + m.max + ")",
@@ -993,14 +1100,15 @@ function drawRoleplay() {
   const turns = SC.turns, them = (SC.speakers && SC.speakers.them) || "Coach";
   if (!S.rp) S.rp = { log: [{ who: "them", name: turns[0].who, text: turns[0].text }], turn: 0, used: [], done: false };
   const r = S.rp, used = r.used;
-  v.innerHTML = '<div class="rp"><div class="rphead"><h3>🎭 ' + esc(SC.title) + '</h3><div class="muted" style="font-weight:700;margin-bottom:7px">' + esc(SC.sub) + "</div><p style='margin:0;font-size:14px'>" + esc(SC.brief) + "</p>" +
+  v.innerHTML = '<div class="rp"><div class="rphead"><h3>🎭 ' + esc(SC.title) + '</h3><div class="muted" style="font-weight:700;margin-bottom:7px">' + esc(SC.sub) + "</div><p style='margin:0;font-size:14px'>" + esc(SC.brief) + " " + speakBtn(SC.brief) + "</p>" +
       '<div class="row" style="margin-top:11px"><div class="bar" style="flex:1"><i style="width:' + Math.min(100, Math.round(used.length / SC.target * 100)) + '%"></i></div><span class="muted">Items used: <b>' + used.length + "</b> / " + TOTAL + " · target " + SC.target + "</span></div></div>" +
     '<div class="chatlog" id="log">' + r.log.map(m => m.who === "sys" ? '<div class="msg sys">' + esc(m.text) + "</div>"
-      : '<div class="msg ' + m.who + '"><span class="who">' + esc(m.who === "them" ? (m.name || them) : "You, as Praew") + "</span>" + esc(m.text) + (m.hits && m.hits.length ? '<div class="hits">' + m.hits.map(h => '<span class="hit">' + esc(BY[h].word) + "</span>").join("") + "</div>" : "") + "</div>").join("") + "</div>" +
+      : '<div class="msg ' + m.who + '"><span class="who">' + esc(m.who === "them" ? (m.name || them) : "You, as Praew") + "</span>" + esc(m.text) + (m.who === "them" ? " " + speakBtn(m.text) : "") + (m.hits && m.hits.length ? '<div class="hits">' + m.hits.map(h => '<span class="hit">' + esc(BY[h].word) + "</span>").join("") + "</div>" : "") + "</div>").join("") + "</div>" +
     (r.done ? '<div class="row" style="justify-content:center"><button class="btn ghost" id="rsRP">↺ Start again</button></div>'
       : '<div class="composer"><textarea id="rpIn" rows="2" maxlength="700" placeholder="Answer in two or three sentences…"></textarea><button class="btn" id="rpSend">Send ➤</button></div><div class="row" style="margin-top:9px;justify-content:space-between"><span class="muted" id="cc">0 / 700</span><button class="btn ghost sm" id="rsRP">↺ Restart</button></div>') +
     '<div style="margin-top:16px"><div class="lbl">The 70 items · green means you have used it</div><div class="wordwall">' + TARGETS.map(w => '<span class="ww' + (used.indexOf(w.id) > -1 ? " used" : "") + '">' + esc(w.word) + "</span>").join("") + "</div></div></div>";
-  const rs = document.getElementById("rsRP"); if (rs) rs.onclick = () => { S.rp = null; save(); drawRoleplay(); };
+  const rs = document.getElementById("rsRP"); if (rs) rs.onclick = () => { stopSpeech(); S.rp = null; save(); drawRoleplay(); };
+  wireSpeak(v);
   const ta = document.getElementById("rpIn");
   if (ta) { ta.focus(); ta.oninput = () => { document.getElementById("cc").textContent = ta.value.length + " / 700"; ta.style.height = "auto"; ta.style.height = Math.min(150, ta.scrollHeight) + "px"; };
     ta.onkeydown = e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) sendRP(); }; document.getElementById("rpSend").onclick = sendRP; }

@@ -51,9 +51,9 @@ const fs = require("fs"), path = require("path");
     if (synth) errs.push("story audio fell back to browser voice " + synth + " times");
     const paused = await p.evaluate(() => true);
     await shot(p, theme + "_story"); await overflow("story");
-    const missing = await p.evaluate(() => { const need = []; const K = s => { s = String(s || "").replace(/\s+/g, " ").trim(); let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return ("0000000" + h.toString(16)).slice(-8); };
-      const set = {}; (TTS.keys || []).forEach(k => set[k] = 1); WORDS.forEach(w => { if (!set[K(w.word)]) need.push(w.id); w.ex.forEach(e => { if (!set[K(e)]) need.push(w.id + ":ex"); }); });
-      STORY.chapters.forEach((c, ci) => c.pages.forEach((pg, pi) => { const t = pg.text.split(/\n\s*\n/).map(x => x.replace(/\{\{([a-z]+)\|([^}]*)\}\}/g, "$2")).join(" "); if (!set[K(t)]) need.push("page " + (ci + 1) + "." + (pi + 1)); })); return need; });
+    const missing = await p.evaluate(() => { const need = [];   // same cleaning and keys as the app (hasClip → speechText → ttsKey)
+      WORDS.forEach(w => { if (!hasClip(w.word)) need.push(w.id); w.ex.forEach(e => { if (!hasClip(e)) need.push(w.id + ":ex"); }); if (!hasClip(w.def)) need.push(w.id + ":def"); });
+      STORY.chapters.forEach((c, ci) => c.pages.forEach((pg, pi) => storyParas(pg.text).forEach((t, k) => { if (!hasClip(t)) need.push("page " + (ci + 1) + "." + (pi + 1) + " para " + (k + 1)); }))); return need; });
     if (missing.length) errs.push("clips missing in manifest: " + missing.slice(0, 8).join(", ") + (missing.length > 8 ? " +" + (missing.length - 8) : ""));
 
     // 3. Body map: Find it and Name it

@@ -24,9 +24,11 @@ MU6Vocab/
 ├── README.md
 ├── .nojekyll
 ├── art/              story illustrations (empty until the Gemini art run; see docs/)
-├── audio/tts/        one Sonia MP3 per spoken text (words, examples, story pages, lexicon headwords, listening items)
+├── tts-clean.js      turns on-screen text into spoken text (shared by the app and the recorder)
+├── audio/tts/        one Sonia MP3 per spoken text (see Read-aloud recordings)
 ├── docs/             SOURCE-Praew-Art-Brief.md — the prompts for the 12 pages and the cover
-├── tools/            validate.js, load.js, tts-list.js, make-audio.py, smoke.js, flow.js
+├── tools/            validate.js, load.js, tts-list.js, make-audio.py, smoke.js, flow.js, audio-test.js
+├── .github/workflows/record-audio.yml   records new or changed texts automatically on every push
 └── data/
     ├── words.js      80 entries (70 targets + 10 bonus), fully defined
     ├── lexicon.js    every synonym and antonym as a full clickable entry
@@ -98,20 +100,37 @@ automatically.
 
 ## Read-aloud recordings (Sonia)
 
-Every 🔊 plays a recording in Microsoft Sonia (British English, `en-GB-SoniaNeural`, rate −10%) so it sounds the same on
-every device, including iPad Safari. The browser's own voice is only a fallback for a missing clip. Recorded: the 80 words,
-their examples, the 12 story pages, every lexicon headword, the Find-it prompts and the Exam Room listening sentences.
+Every 🔊 plays a pre-recorded clip in Microsoft Sonia (British English, `en-GB-SoniaNeural`, rate −10%), so it sounds
+the same on every device, including iPad Safari. The browser's own voice is only a fallback for a missing clip.
 
-Any edit to a spoken word, example or page needs a re-record in the same commit, or that item silently drops to the browser voice:
+**What is read aloud:** the story (paragraph by paragraph, with the paragraph being read highlighted) and each page's
+grammar line; all 16 pattern cards (title, insight, examples, drill, and the reveal after a drill); every word card
+(word, meaning, both examples, textbook line, trap, tip) and every linked synonym/antonym card (headword, meaning,
+examples, note); the Body Map definitions, Find-it prompts and Where-does-it-hurt cases with their explanations; the
+Clinic Shift patients and explanations; the Writing Clinic briefs and model answers; the roleplay brief and every line
+Coach Nok and Khun Fern say; the Exam Room listening sentences. Test questions stay silent on purpose (except the
+listening items), so audio never gives an answer away. The Thai-contrast card is recorded with the Thai phrases in a
+Thai voice (Premwadee) joined to Sonia's English.
+
+**Controls:** tap a 🔊 to play; tap it again to pause, again to resume. Longer reads (story pages, pattern cards,
+model answers, briefs) open a player bar at the bottom: pause/resume, ⏮ ⏭ between parts, ■ stop. On the story,
+"Turn the pages for me" keeps reading page after page. Changing tab or page stops the voice.
+
+**Re-recording:** any change to a spoken text needs a new clip, or that item drops to the browser voice. This happens
+by itself: `.github/workflows/record-audio.yml` runs `make-audio.py` on every push that touches `data/`, records only new
+or changed texts, deletes orphans and commits `audio/` and `data/tts.js` back to `main` (check the Actions tab). To do it
+by hand instead:
 
 ```
-pip install edge-tts
+pip install edge-tts          # ffmpeg is also needed, only for the clips that mix Thai and English
 python tools/make-audio.py --prune      # records new or changed texts, deletes orphans, rewrites data/tts.js
 git add audio data/tts.js && git commit
 ```
 
 `tools/tts-list.js` prints exactly what the app speaks (and the key of each clip); `make-audio.py` rejects clips that come
-back cut off and retries. From a proxied network set `TTS_CA_BUNDLE=<ca file>`.
+back cut off and retries. From a proxied network set `TTS_CA_BUNDLE=<ca file>`. If you change what a screen reads, change
+`tools/tts-list.js` to match, and run `node tools/audio-test.js` (with `python3 -m http.server 8077` running) to check
+that every 🔊 has a clip and that pause/resume/stop work.
 
 ## Story illustrations (the one Gemini step)
 
