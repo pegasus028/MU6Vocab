@@ -31,7 +31,7 @@ window.PATTERNS = [
   examples: [
     "Praew: cause (she *dislocated* her shoulder) → symptoms (*painful*, she *blacked out*) → A and E → an *X-ray* → a *painkiller* and a *sling* → *relief* → *physiotherapy* → the shoulder *heals* and she is *back on her feet*.",
     "Mali: cause (a *germ*, highly *infectious*) → symptoms (a *fever*, a *cough*, *exhaustion*) → the *chemist* → a *remedy* to *lower* her temperature → she *gets better* → next year, a flu *vaccine*.",
-    "Two roads at stage 3: a sore throat goes to the chemist, a fever that lasts two days goes to the GP or clinic, a bone that might be broken goes to A and E."
+    "Two roads at stage 3: a sore throat goes to the chemist, a fever that lasts more than two days goes to the GP or clinic, a bone that might be broken goes to A and E."
   ],
   drill: "Say the nine stages aloud from memory (cause, symptoms, where you go, finding out, treatment, effect, rehab, outcome, prevention), then sort the twelve words below into them.",
   game: {
@@ -61,8 +61,8 @@ window.PATTERNS = [
   items: ["forehead", "eyebrow", "eyelid", "eyelash", "nail", "chest", "waist", "hip", "thigh", "ankle", "heel", "ribs", "lungs", "liver", "kidney", "muscle", "fracture", "dislocate", "stiff", "broken"],
   examples: [
     "Surface: a cut above the *eyebrow*, a broken *nail*, a sore *heel*. Bones and joints: a *fractured* rib, a *dislocated* hip, a twisted *ankle*. Organs: *lungs* that cough, a *liver* that cleans the blood, *kidneys* that make urine. Tissue: a pulled *muscle* in the *thigh*.",
-    "The hip is in two layers at once: the area below your waist (surface) and the joint that connects your leg to your body (bone). Old people fracture a hip; athletes dislocate one.",
-    "Wrong: *she fractured her muscle*, *he dislocated his rib*. A muscle has no bone to break, and a rib has no joint to come out of."
+    "The hip is in two layers at once: the area below your waist (surface) and the joint that connects your leg to your body (bone). Older people often fracture a hip in a fall; a dislocated hip is rare and needs a huge force.",
+    "Wrong: *she fractured her muscle*, *she dislocated her thigh*. A muscle has no bone to break, and the thigh is not a joint: you dislocate a hip or a knee."
   ],
   drill: "Point to your own body and say one thing that can go wrong at each layer: skin (a cut), bone (a fracture), joint (a dislocation), organ (an infection), muscle (a pull). Four layers, five sentences, under a minute."
 },
@@ -221,7 +221,7 @@ window.PATTERNS = [
   icon: "🧑‍⚕️",
   title: "Who fixes what",
   kind: "contrast",
-  insight: "Each recovery verb has its own subject, and once you match them the sentences write themselves. *Doctors treat patients* (and treat an injury or an illness): treating means giving care, whether or not it works. *Doctors and drugs cure a disease*: cure means the disease goes away. *Wounds and bones heal*: the body does it by itself, so *the cut healed*, never *the cut recovered*. *People recover* or *get better*: *she is getting better*, *he recovered from flu*. *Medicine lowers a temperature* and *brings relief*: the medicine is the subject, the symptom is the object. A *remedy* is a treatment that works, often a simple one: ginger tea, a ya dom inhaler, rest. Mix the subjects and English speakers notice at once: a cut cannot recover, and a patient cannot heal a doctor.",
+  insight: "Each recovery verb has its own subject, and once you match them the sentences write themselves. *Doctors treat patients* (and treat an injury or an illness): treating means giving care, whether or not it works. *Doctors and drugs cure a disease*: cure means the disease goes away. *Wounds and bones heal*: the body does it by itself, so *the cut healed*, never *the cut recovered*. *People recover* or *get better*: *she is getting better*, *he recovered from flu*. *Medicine lowers a temperature* and *brings relief*: the medicine is the subject, the symptom is the object. A *remedy* is something used to treat a minor illness, often a simple one: ginger tea, a ya dom inhaler, rest. Mix the subjects and English speakers notice at once: a cut cannot recover, and a patient cannot heal a doctor.",
   items: ["treat", "treatment", "heal", "getbetter", "relief", "lower", "remedy"],
   examples: [
     "Doctors: Dr Ploy *treated* Praew's shoulder; the *treatment* took six weeks. Khun Dao explained how to *treat* flu at home.",

@@ -261,14 +261,14 @@ window.BODY = {
       why: "A bone that comes out of its joint is dislocated. To fracture is to crack or break it, and treat and heal describe what happens afterwards.",
       tests: "dislocate" },
 
-    { text: "I walked straight into the glass door at the mall and hit the front of my head. There's a bump above my eyebrows and my head has been throbbing ever since.",
+    { text: "I walked straight into the glass door at the mall and hit the front of my head. There's a bump above my eyebrows and my head throbbed for the rest of the afternoon.",
       region: "forehead", options: ["headache", "fever", "cough", "dizziness"], answer: 0,
       why: "A throbbing head is a headache. Nobody mentions feeling hot, coughing, or the room spinning, so fever, cough and dizziness do not fit.",
       tests: "headache" },
 
-    { text: "The PM2.5 is terrible this week. For three days my lungs have been fighting the dust: I keep barking like a seal, and it is worse at night when I lie down.",
+    { text: "The PM2.5 is terrible this week. For three days my lungs have been fighting the dust: I keep making a dry, hacking noise from my chest, and it is worse at night when I lie down.",
       region: "lungs", options: ["sneeze", "headache", "dizziness", "cough"], answer: 3,
-      why: "A barking noise from the lungs, worse at night, is a cough. A sneeze comes from the nose, and a headache or dizziness is felt in the head.",
+      why: "A dry, hacking noise from the chest, worse at night, is a cough. A sneeze comes from the nose, and a headache or dizziness is felt in the head.",
       tests: "cough" },
 
     { text: "A teammate's elbow caught me in the side during a crowded warm-up. It hurts to laugh or take a deep breath, and the X-ray shows that one of the curved bones has snapped.",
