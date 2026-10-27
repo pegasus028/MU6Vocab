@@ -13,6 +13,9 @@
      examples  worked lines to read aloud
      drill     one thing to do in under a minute
      game      only on journey (sort), thermometer (scale), sounds (listen)
+     img       art/patterns/<id>.svg, an SVG drawn in code (no image generator);
+               the engine inlines it so it follows the light and dark themes
+     alt       one-sentence description of the picture
    Sources: research/lexical_patterns.md sections 1, 3, 4, 5, 6, 8 and 9;
    research/teaching_methods.md section 3; SPEC.md section 3.
    Origins marked "one possible story" are unverified (lexical_patterns.md
@@ -26,12 +29,14 @@ window.PATTERNS = [
   icon: "🗺️",
   title: "One patient, nine stages",
   kind: "journey",
+  img: "art/patterns/journey.svg",
+  alt: "A road with nine numbered stops: cause, symptoms, where you go, finding out, treatment, effect, rehab, outcome, prevention.",
   insight: "These are not 43 separate medical words. They are one story that every patient goes through, in order: *cause* (a germ, an infection, an accident), *symptoms* (a temperature, a cough, aches), *where you go* (the chemist for advice, the GP for things that are not urgent, A and E for emergencies), *finding out* (an X-ray), *treatment* (a prescription, a painkiller, an injection, an operation), *effect* (a lower temperature, relief), *rehab* (physiotherapy), *outcome* (a bone heals, a person gets better, a serious case pulls through) and *prevention* (a vaccine, keeping in shape, not passing germs on). If you know which stage a word belongs to, you already know its job, and you know which words cannot swap with it. An X-ray never treats anything; a painkiller never finds anything out.",
   items: ["germ", "infection", "injure", "fracture", "fever", "cough", "chemist", "gp", "ae", "xray", "prescription", "painkiller", "injection", "operation", "lower", "relief", "physio", "heal", "getbetter", "pullthrough", "vaccine", "passon"],
   examples: [
     "Praew: cause (she *dislocated* her shoulder) → symptoms (*painful*, she *blacked out*) → A and E → an *X-ray* → a *painkiller* and a *sling* → *relief* → *physiotherapy* → the shoulder *heals* and she is *back on her feet*.",
     "Mali: cause (a *germ*, highly *infectious*) → symptoms (a *fever*, a *cough*, *exhaustion*) → the *chemist* → a *remedy* to *lower* her temperature → she *gets better* → next year, a flu *vaccine*.",
-    "Two roads at stage 3: a sore throat goes to the chemist, a fever that lasts two days goes to the GP or clinic, a bone that might be broken goes to A and E."
+    "Two roads at stage 3: a sore throat goes to the chemist, a fever that lasts more than two days goes to the GP or clinic, a bone that might be broken goes to A and E."
   ],
   drill: "Say the nine stages aloud from memory (cause, symptoms, where you go, finding out, treatment, effect, rehab, outcome, prevention), then sort the twelve words below into them.",
   game: {
@@ -57,12 +62,14 @@ window.PATTERNS = [
   icon: "🧅",
   title: "The body in layers",
   kind: "layers",
+  img: "art/patterns/layers.svg",
+  alt: "A body seen in layers: skin on the surface, ribs and hip joints, lungs inside the ribs, the liver under the lowest ribs on her right, kidneys at the back by the spine, muscle all around.",
   insight: "The sixteen body parts sit in four layers, and the layer tells you which injury verb goes with the word. On the *surface* are forehead, eyebrow, eyelid, eyelash, nail, chest, waist, hip, thigh, ankle and heel: things you can see and touch. Under them are *bones and joints*: the ribs, and the hip and ankle, which are joints as well as places. Deeper still are the *organs*: the lungs inside the rib cage, the liver on your right under the lowest ribs, and the kidneys at the back either side of the spine. Everywhere there is *tissue*: muscle. Now the verbs sort themselves. You *fracture* or *break* a bone, you *dislocate* a joint (the bone comes out of its socket, nothing breaks), and you *pull* or *strain* a muscle, which then feels *stiff*.",
   items: ["forehead", "eyebrow", "eyelid", "eyelash", "nail", "chest", "waist", "hip", "thigh", "ankle", "heel", "ribs", "lungs", "liver", "kidney", "muscle", "fracture", "dislocate", "stiff", "broken"],
   examples: [
     "Surface: a cut above the *eyebrow*, a broken *nail*, a sore *heel*. Bones and joints: a *fractured* rib, a *dislocated* hip, a twisted *ankle*. Organs: *lungs* that cough, a *liver* that cleans the blood, *kidneys* that make urine. Tissue: a pulled *muscle* in the *thigh*.",
-    "The hip is in two layers at once: the area below your waist (surface) and the joint that connects your leg to your body (bone). Old people fracture a hip; athletes dislocate one.",
-    "Wrong: *she fractured her muscle*, *he dislocated his rib*. A muscle has no bone to break, and a rib has no joint to come out of."
+    "The hip is in two layers at once: the area below your waist (surface) and the joint that connects your leg to your body (bone). Older people often fracture a hip in a fall; a dislocated hip is rare and needs a huge force.",
+    "Wrong: *she fractured her muscle*, *she dislocated her thigh*. A muscle has no bone to break, and the thigh is not a joint: you dislocate a hip or a knee."
   ],
   drill: "Point to your own body and say one thing that can go wrong at each layer: skin (a cut), bone (a fracture), joint (a dislocation), organ (an infection), muscle (a pull). Four layers, five sentences, under a minute."
 },
@@ -72,6 +79,8 @@ window.PATTERNS = [
   icon: "↕️",
   title: "Healthy is up, ill is down",
   kind: "metaphor",
+  img: "art/patterns/updown.svg",
+  alt: "An arrow: a happy girl with arms up at the top, an ill girl in bed at the bottom, with the up idioms and the down idioms beside it.",
   insight: "Six of the idioms are one picture, not six. Lakoff and Johnson, who wrote the famous book on metaphor in 1980, showed that English treats *health as up* and *illness as down*, because a serious illness makes you lie down and a healthy person stands up. Their own example is *He came down with the flu*. So you come *down* with flu, you feel *under* the weather, and when you are well again you are *up* and about and back *on* your feet. Happy is up as well, which is why a thrilled person is on *top* of the world. Consciousness is up too: you wake *up*, and when you *black out* the lights go out and you fall down. Once you see the direction, the particle is no longer something to memorise: it is something you can predict.",
   items: ["comedownwith", "undertheweather", "backonfeet", "upandabout", "ontopofworld", "blackout"],
   examples: [
@@ -87,6 +96,8 @@ window.PATTERNS = [
   icon: "🌡️",
   title: "The idiom thermometer",
   kind: "scale",
+  img: "art/patterns/thermometer.svg",
+  alt: "A thermometer marked from on top of the world down to black out, with a recovery ladder: pull through, up and about, back on your feet.",
   insight: "Put all twelve expressions on one thermometer and they stop being a list. At the top: *on top of the world*, *full of beans*, *the picture of health*, *in shape*. Then the slide down: *out of shape*, *under the weather*, *come down with* something, *on your last legs*, and at the bottom *black out*. Recovery climbs back up a second ladder: *pull through* (you survived something serious), *up and about* (out of bed), *back on your feet* (fully active again). Two traps catch most students. *On top of the world* is about *mood*: Cambridge defines it as *extremely happy*, so you can be on top of the world with a broken arm. And *out of shape* is about *fitness*, not illness: an unfit person is perfectly well, they just cannot run for the bus.",
   items: ["ontopofworld", "fullofbeans", "pictureofhealth", "keepinshape", "outofshape", "undertheweather", "comedownwith", "lastlegs", "blackout", "pullthrough", "upandabout", "backonfeet"],
   examples: [
@@ -122,6 +133,8 @@ window.PATTERNS = [
   icon: "⛽",
   title: "Fuel, shape and journeys",
   kind: "metaphor",
+  img: "art/patterns/fuel.svg",
+  alt: "Three pictures: a jar full of beans, a firm ball and a saggy one, a path through a storm and a wobbly old table.",
   insight: "Five idioms that do not fit the up-and-down picture fit three other pictures. *Energy is fuel in a container*: a person *full of beans* has a tank full of energy. One possible story, from a single book published in 1955, is that horses fed on beans were lively, but nobody has proved it, so treat it as a memory hook, not a fact. *The body is an object with a proper shape*: you *keep in shape* by exercising, and if you stop you go *out of* shape, the way a machine goes *out of order*. *Life is a journey*: you *pull through* a crisis, getting through to the other side, and your legs, which carry you along the road, wear out until you are *on your last legs*. That last one is old: the phrase is recorded in the 1590s, when it meant near the end of life.",
   items: ["fullofbeans", "keepinshape", "outofshape", "pullthrough", "lastlegs"],
   examples: [
@@ -138,6 +151,8 @@ window.PATTERNS = [
   icon: "🧱",
   title: "-ness turns a feeling into a thing",
   kind: "family",
+  img: "art/patterns/ness.svg",
+  alt: "Toy bricks: dizzy, tired and stiff join a -ness brick to make dizziness, tiredness and stiffness.",
   insight: "Three nouns in this unit are built by one rule: adjective + *-ness* = noun. *Dizzy* becomes *dizziness* (the y turns into i, as in happy → happiness), *tired* becomes *tiredness*, *stiff* becomes *stiffness*. The rule works on most short adjectives: *ill* → *illness*, *fit* → *fitness*, *sick* → *sickness*, *weak* → *weakness*. The noun is useful when a symptom becomes a thing you list: a doctor writes *dizziness and tiredness* on a form, not *feeling dizzy and tired*. One warning: the adjective and the noun are not interchangeable in a sentence. *I feel dizzy* (adjective after feel) but *the dizziness lasted an hour* (noun as subject).",
   items: ["dizzy", "dizziness", "tiredness", "stiff", "stiffness", "exhaustion"],
   examples: [
@@ -154,6 +169,8 @@ window.PATTERNS = [
   icon: "⚙️",
   title: "-tion turns an action into a thing",
   kind: "family",
+  img: "art/patterns/tion.svg",
+  alt: "Syllable bricks: operate becomes operation, vaccinate becomes vaccination, infect becomes infection, with a dot on the stressed syllable.",
   insight: "Five of the unit's nouns come from verbs with the suffix *-tion* (or *-sion*): *infect* → *infection*, *inject* → *injection*, *operate* → *operation*, *exhaust* → *exhaustion*, *prescribe* → *prescription*. The same rule gives you *vaccinate* → *vaccination* and *dislocate* → *dislocation*. Two things change on the way. A final *-e* drops (operate → operation), and the stress moves onto the syllable before -tion: OPerate but opeRAtion, VACcine but vacciNAtion. Thai speakers often stress the last syllable, so practise saying the stress jump out loud. Exam papers love this family: the B2 First word-formation part gives you the verb in capitals and expects the noun, spelled perfectly.",
   items: ["infection", "injection", "operation", "exhaustion", "prescription", "vaccine", "dislocate"],
   examples: [
@@ -170,6 +187,8 @@ window.PATTERNS = [
   icon: "✏️",
   title: "The spelling changes exams love",
   kind: "family",
+  img: "art/patterns/spellchange.svg",
+  alt: "Letter tiles: prescribe to prescription (b to p), relieve to relief (v to f), exhaust to exhaustion (keep the t), injure to uninjured (keep the e).",
   insight: "Some word families change a letter in the middle, and those are exactly the ones examiners pick. *Prescribe* becomes *prescription*: the *b* turns into *p*, just as describe → description and subscribe → subscription. *Relieve* becomes *relief*: the *v* turns into *f*, just as believe → belief and prove → proof. *Exhaustion* keeps its *t* (not exhausion), and the *h* is silent. *Injure* gives *injury* and *injured*, and the negative is *uninjured*, which exams use because everybody expects the sentence to be bad news. One pair that looks like a family but is not: *heal* /hiːl/ and *health* /helθ/ share an ancient root meaning whole, but the dictionary treats *health* as the noun of *whole*, not of *heal*, so hear the vowel change as a sound note and never expect HEAL → health as a word-formation answer.",
   items: ["prescription", "relief", "relieve", "heal", "injury", "injure", "exhaustion"],
   examples: [
@@ -187,6 +206,8 @@ window.PATTERNS = [
   icon: "🩹",
   title: "Hurt, injure, damage, wound",
   kind: "contrast",
+  img: "art/patterns/hurtinjure.svg",
+  alt: "Four mini scenes: hurt is pain, injure is an accident at badminton, damage is a cracked phone and lungs, wound is weapons and formal.",
   insight: "Thai เจ็บ covers both pain and harm, so these four English verbs feel like one word, but each has its own job. *Hurt* is about the pain: *my ankle hurts*, *did you hurt yourself?* *Injure* is harm to a part of the body in an accident: *she injured her knee playing badminton*, and the noun is *an injury*. *Damage* is most natural for things and for organs inside you: *damage to the lungs*, *liver damage*, a damaged phone. *Wound* is for weapons and attacks, is rather formal, and is usually passive: *soldiers were wounded*. Oxford puts it simply: injure emphasises the damage, hurt emphasises the pain. The exam trap is *wound* in a sports sentence, and the learner trap is using *injury* as a verb.",
   items: ["injure", "injury", "broken", "painful"],
   examples: [
@@ -204,6 +225,8 @@ window.PATTERNS = [
   icon: "🤕",
   title: "Ache, pain, sore, painful",
   kind: "contrast",
+  img: "art/patterns/ache.svg",
+  alt: "Four mini scenes: a headache, a pain in my chest, a sore throat and a painful shoulder in a sling.",
   insight: "Four words for one feeling, each with its own grammar. *Ache* makes compounds with a body part: *headache*, *stomach ache*, *toothache*, *backache*, *earache*. Headache takes *a* (*I have got a headache*), and *ache* is also a verb: *my legs ache*, never *my legs are ache*. For other places you use the noun *pain* with *in*: *a pain in my chest*, *a sharp pain in my knee*. *Sore* goes before a part that hurts because of infection or overuse: *a sore throat*, *sore eyes*, *sore muscles*, never *a sick throat*. *Painful* describes the injury or the treatment, not the person: *a painful knee*, *a painful injection*. *My head is painful* is grammatical but sounds like a textbook; a real speaker says *I have got a headache* or *my head hurts*.",
   items: ["ache", "headache", "sore", "painful", "painkiller"],
   examples: [
@@ -221,7 +244,9 @@ window.PATTERNS = [
   icon: "🧑‍⚕️",
   title: "Who fixes what",
   kind: "contrast",
-  insight: "Each recovery verb has its own subject, and once you match them the sentences write themselves. *Doctors treat patients* (and treat an injury or an illness): treating means giving care, whether or not it works. *Doctors and drugs cure a disease*: cure means the disease goes away. *Wounds and bones heal*: the body does it by itself, so *the cut healed*, never *the cut recovered*. *People recover* or *get better*: *she is getting better*, *he recovered from flu*. *Medicine lowers a temperature* and *brings relief*: the medicine is the subject, the symptom is the object. A *remedy* is a treatment that works, often a simple one: ginger tea, a ya dom inhaler, rest. Mix the subjects and English speakers notice at once: a cut cannot recover, and a patient cannot heal a doctor.",
+  img: "art/patterns/whofixes.svg",
+  alt: "Five rows: doctors treat patients, bones heal, people get better, medicine lowers a temperature, drugs cure a disease.",
+  insight: "Each recovery verb has its own subject, and once you match them the sentences write themselves. *Doctors treat patients* (and treat an injury or an illness): treating means giving care, whether or not it works. *Doctors and drugs cure a disease*: cure means the disease goes away. *Wounds and bones heal*: the body does it by itself, so *the cut healed*, never *the cut recovered*. *People recover* or *get better*: *she is getting better*, *he recovered from flu*. *Medicine lowers a temperature* and *brings relief*: the medicine is the subject, the symptom is the object. A *remedy* is something used to treat a minor illness, often a simple one: ginger tea, a ya dom inhaler, rest. Mix the subjects and English speakers notice at once: a cut cannot recover, and a patient cannot heal a doctor.",
   items: ["treat", "treatment", "heal", "getbetter", "relief", "lower", "remedy"],
   examples: [
     "Doctors: Dr Ploy *treated* Praew's shoulder; the *treatment* took six weeks. Khun Dao explained how to *treat* flu at home.",
@@ -238,6 +263,8 @@ window.PATTERNS = [
   icon: "🇬🇧",
   title: "British health English",
   kind: "culture",
+  img: "art/patterns/british.svg",
+  alt: "Two columns of signs: A and E, a GP, the chemist's and a flu jab in British English beside the ER, a family doctor, the drugstore and a flu shot in American English.",
   insight: "Your textbook speaks British English, and so do IELTS and Cambridge examiners, so learn the British forms first and keep the American ones as labelled contrasts. *A and E* (Accident and Emergency) is the hospital emergency department; Americans say *the ER*. A *GP* (general practitioner) is the local family doctor you see first; Thailand has no GP system, so for you it is the clinic or outpatient doctor. *The chemist* or *the chemist's* is the shop and the person; *pharmacy* is also fine. To *have a temperature* means to have a fever: both are correct, so no exam will ever make you choose between them. The big one is *sick*: in British English *to be sick* means to vomit and *to feel sick* means to feel you are about to, while *to be ill* means unwell; *off sick* means away from school because you are ill. And *flu* and *the flu* are both fine in British English.",
   items: ["ae", "gp", "chemist", "sick", "temperature", "flu", "physio"],
   examples: [
@@ -254,6 +281,8 @@ window.PATTERNS = [
   icon: "📜",
   title: "Words with stories inside",
   kind: "culture",
+  img: "art/patterns/stories.svg",
+  alt: "Four word stories: a little mouse in a flexed arm (muscle), a cow (vaccine), stars over a girl with flu (influenza) and an X for the unknown (X-ray).",
   insight: "A word with a story is a word you cannot forget. *Muscle* comes from Latin *musculus*, little mouse: flex your biceps and watch the mouse run under the skin. *Vaccine* comes from Latin *vacca*, cow, because Edward Jenner protected people from smallpox with cowpox in the 1790s. *Influenza*, which gives us *flu*, is Italian for influence: people blamed the stars. *X-ray* was named by Röntgen in 1895 with the X that maths uses for an unknown, because he did not know what the rays were. *Fracture* shares a root with *fragile* and *fragment*: all of them break. *Lungs* and *relief* both go back to a word meaning light: lungs are the light organ (they float), and relief lifts a weight off you. *Injury* once meant not right, like *injustice*; *prescription* is written before; and a *symptom* is Greek for things that fall together. Two words whose origins nobody is sure of are *kidney* and *thigh*, so if you hear a story about those, call it one possible story.",
   items: ["muscle", "vaccine", "flu", "xray", "fracture", "lungs", "relief", "injury", "prescription", "symptom"],
   examples: [
@@ -270,6 +299,8 @@ window.PATTERNS = [
   icon: "🧲",
   title: "Frozen idioms, moving particles",
   kind: "family",
+  img: "art/patterns/particles.svg",
+  alt: "The grammar around an idiom moves (is, was, has been) but the idiom is frozen in ice, with six idioms and their particles in ice blocks.",
   insight: "An idiom is stored in your brain as one long word, so nothing inside it can change: not the noun, not the particle, not the order. Only the grammar *around* it moves: *she is / was / has been feeling under the weather*. That is why exams test the particle: it is the one piece a learner is most likely to swap. The five errors on p.73 are the classic ones: keep *in* shape (not on), black *out* (not down), come *down with* (not up with, which means invent an idea), full *of* beans (not with), *under* the weather (not out of). Add *on* top of the world, *on* your last legs, pull *through* and back *on* your feet. Three frames cover the grammar: *be / feel / look* + idiom for the adjective ones; *come down with* + an illness; and *black out* and *pull through* take no object at all.",
   items: ["keepinshape", "blackout", "comedownwith", "fullofbeans", "undertheweather", "ontopofworld", "lastlegs", "pullthrough", "backonfeet", "outofshape", "pictureofhealth", "upandabout"],
   examples: [
@@ -286,6 +317,8 @@ window.PATTERNS = [
   icon: "🔊",
   title: "Silent letters and sound-alikes",
   kind: "sound",
+  img: "art/patterns/sounds.svg",
+  alt: "Mouths and sound waves: silent letters in muscle and thigh, ch sounds k in ache and chemist, gh sounds f in cough, and heel, heal and he'll sound the same.",
   insight: "Eight of these words are spelled one way and said another, which is where IELTS Listening takes marks away. *Ache* is /eɪk/, with ch as k, and so is *chemist* /ˈkem.ɪst/. *Muscle* /ˈmʌs.əl/ has a silent c: never mus-kle. *Thigh* /θaɪ/ has a silent gh and the th that Thai speakers turn into t or s. *Cough* /kɒf/ turns gh into f. *Forehead* can be /ˈfɒr.ɪd/, which hides the head, or /ˈfɔː.hed/. Then the twins: *heel*, *heal* and *he'll* all sound /hiːl/, and *waist* sounds exactly like *waste*, so only spelling tells them apart. Last, say the final sounds that Thai drops: che*st*, ri*bs* /rɪbz/, lu*ngs* /lʌŋz/, and the final l in ank*le* and musc*le*.",
   items: ["ache", "muscle", "thigh", "chemist", "cough", "forehead", "heel", "waist", "chest", "ribs", "lungs", "ankle"],
   examples: [
@@ -307,6 +340,8 @@ window.PATTERNS = [
   icon: "🐘",
   title: "Where Thai and English cut differently",
   kind: "culture",
+  img: "art/patterns/thai.svg",
+  alt: "Thai phrases in speech bubbles, the word-for-word English crossed out, and the natural English: take medicine, I have got a headache, a fever, a cold.",
   insight: "Most health mistakes Thai learners make are not vocabulary gaps; they are Thai sentences wearing English words. กินยา is literally eat medicine, but English *takes* medicine. ไม่สบาย comes out as *I am not comfortable*, but a British speaker says *I do not feel well* or *I am ill*. ปวดหัว is a state in Thai, so *I am headache* feels natural; English needs *I have got a headache* with the article. เป็นไข้ gives *I have fever*, but English says *I have got a fever* or *a temperature*. เป็นหวัด is the dangerous one: *I am cold* means you need a jumper; a cold is *I have got a cold*. เป็นลม is *black out* or *faint*, ฉีดยา is *have an injection* (the nurse gives it, you have it), and because Thailand has no GP system, when the book says *GP* think of the clinic doctor you see first, not the hospital.",
   items: ["sick", "fever", "temperature", "headache", "injection", "blackout", "gp", "chemist", "flu"],
   examples: [

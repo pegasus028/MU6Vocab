@@ -542,16 +542,21 @@ function readPage11() { return S.read.some(k => { const [c, p] = k.split(".").ma
 const BM = { mode: "explore", view: "front", layer: "outside", lit: [], run: null };
 const REG = {}; (BODY.regions || []).forEach(r => REG[r.id] = r);
 function regionsFor(wordId) { return (BODY.regions || []).filter(r => r.word === wordId).map(r => r.id); }
+let bmSeq = 0;
 function bodySVG(view, opts) {
   opts = opts || {}; const v = (BODY.views || {})[view]; if (!v) return '<p class="muted">Body map not loaded.</p>';
-  const regs = (BODY.regions || []).filter(r => r.view === view && (!opts.layer || r.layer === opts.layer));
-  return '<svg viewBox="' + esc(v.viewBox) + '" role="img" aria-label="Body map, ' + view + ' view">' + v.base +
-    regs.map(r => '<path class="region' + ((opts.lit || []).indexOf(r.id) > -1 ? " lit" : "") + ((opts.ok || []).indexOf(r.id) > -1 ? " ok" : "") + (opts.interactive === false ? " muted" : "") + '" d="' + esc(r.path) + '" data-region="' + r.id + '"><title>' + (opts.labels ? esc(BY[r.word] ? BY[r.word].word : r.word) : "") + "</title></path>").join("") +
-    (opts.labels ? regs.map(r => '<text class="lbl" x="' + r.label[0] + '" y="' + r.label[1] + '" text-anchor="middle">' + esc(BY[r.word] ? BY[r.word].word : r.word) + "</text>").join("") : "") + "</svg>";
+  // the base holds both layers (bm-out / bm-in); show the asked layer, else the layer of the lit part
+  const first = (opts.lit || [])[0], layer = opts.layer || (first && REG[first] ? REG[first].layer : "outside");
+  const regs = (BODY.regions || []).filter(r => r.view === view && r.layer === layer);
+  const nm = r => esc(BY[r.word] ? BY[r.word].word : r.word), seen = {};
+  const n = ++bmSeq;   // filter and clip-path ids must be unique when two figures share a page
+  return '<svg class="bm-' + layer + (opts.labels ? " bm-labels" : "") + '" viewBox="' + esc(v.viewBox) + '" role="img" aria-label="Body map, ' + view + " view, " + layer + '">' + v.base.replace(/bmf-/g, "bmf" + n + "-") +
+    regs.map(r => '<path class="region' + ((opts.lit || []).indexOf(r.id) > -1 ? " lit" : "") + ((opts.ok || []).indexOf(r.id) > -1 ? " ok" : "") + (opts.interactive === false ? " muted" : "") + '" d="' + esc(r.path) + '" data-region="' + r.id + '"><title>' + (opts.labels ? nm(r) : "") + "</title></path>").join("") +
+    (opts.labels ? regs.filter(r => { const k = r.word + r.label.join(); return seen[k] ? false : (seen[k] = 1); }).map(r => '<text class="lbl' + (regs.some(x => x.word === r.word && x.label.join() === r.label.join() && (opts.lit || []).indexOf(x.id) > -1) ? " on" : "") + '" x="' + r.label[0] + '" y="' + r.label[1] + '" text-anchor="middle">' + nm(r) + "</text>").join("") : "") + "</svg>";
 }
 function drawBody() {
   if (!(BODY.regions || []).length) { document.getElementById("v-body").innerHTML = '<h2 class="sec">Body Map</h2><p class="lede">No body map loaded yet.</p>'; return; }
-  if (P[0] && ["explore", "find", "name", "hurt"].indexOf(P[0]) > -1 && P[0] !== BM.mode) { BM.mode = P[0]; BM.run = null; BM.lit = []; }  // a deep link to another mode starts a fresh round
+  if (P[0] && ["explore", "find", "name", "hurt"].indexOf(P[0]) > -1) { if (BM.mode !== P[0]) { BM.run = null; BM.lit = []; } BM.mode = P[0]; }
   const modeBtn = (m, l) => '<button class="chip" data-mode="' + m + '" aria-pressed="' + (BM.mode === m) + '">' + l + "</button>";
   document.getElementById("v-body").innerHTML =
     '<h2 class="sec">Body Map</h2><p class="lede">Sixteen places on a body. Left and right always mean <i>her</i> left and right: she faces you, so her left is on your right.</p>' +
@@ -562,8 +567,8 @@ function drawBody() {
 }
 function paintFigure(opts, onTap) {
   const fig = document.getElementById("figure");
-  fig.innerHTML = bodySVG(BM.view, opts) +
-    '<div class="vtog"><button class="chip" data-v="front" aria-pressed="' + (BM.view === "front") + '">Front</button><button class="chip" data-v="back" aria-pressed="' + (BM.view === "back") + '">Back</button></div>';
+  fig.innerHTML = '<div class="vtog"><span class="vcap">' + (BM.view === "front" ? "She faces you: her right is on <b>your left</b>." : "Her back: her right is on <b>your right</b>.") + "</span>" +
+    '<button class="chip" data-v="front" aria-pressed="' + (BM.view === "front") + '">Front</button><button class="chip" data-v="back" aria-pressed="' + (BM.view === "back") + '">Back</button></div>' + bodySVG(BM.view, opts);
   fig.querySelectorAll("[data-v]").forEach(b => b.onclick = () => { BM.view = b.dataset.v; paintFigure(opts, onTap); });
   if (onTap) fig.querySelectorAll(".region").forEach(p => p.onclick = () => onTap(p.dataset.region));
 }
@@ -667,7 +672,7 @@ function bmHurt() {
     }
     const c = r.qs[r.i], need = REG[c.region]; BM.view = need.view; BM.layer = need.layer; r.stage = 0;
     panel.innerHTML = '<div class="muted">Where does it hurt? · ' + (r.i + 1) + " / " + r.qs.length + "</div>" +
-      '<div class="prompt-card"><p class="q">“' + esc(c.text) + "” " + speakBtn(c.text) + "</p>" + '<p class="muted" id="step">Step 1: tap where it hurts.</p><div id="opts"></div><div id="fb"></div></div>';
+      '<div class="prompt-card">' + (c.pic ? '<img class="hurtpic" src="' + esc(c.pic) + '" alt="" width="320" height="140">' : "") + '<p class="q">“' + esc(c.text) + "” " + speakBtn(c.text) + "</p>" + '<p class="muted" id="step">Step 1: tap where it hurts.</p><div id="opts"></div><div id="fb"></div></div>';
     wireSpeak(panel);
     paintFigure({ layer: BM.layer, lit: [] }, id => {
       if (r.stage !== 0) return;
@@ -742,7 +747,7 @@ function drawPatterns() {
     PATS.map((p, i) => {
       const med = mediaForPattern(p.id);
       return '<div class="card pat" data-i="' + i + '" data-id="' + p.id + '" data-open="0"><button class="pathead"><span class="ic">' + p.icon + '</span><span class="tt"><span class="k">' + esc(p.kind) + "</span><h3>" + esc(p.title) + '</h3></span><span class="car">▶</span></button>' +
-        '<div class="patbody"><div class="row" style="margin-bottom:10px">' + readBtn("pat:" + p.id, "Listen to this card") + "</div>" +
+        '<div class="patbody"><div class="row" style="margin-bottom:10px">' + readBtn("pat:" + p.id, "Listen to this card") + "</div>" + (p.img ? '<figure class="patart" data-src="' + esc(p.img) + '" data-alt="' + esc(p.alt || p.title) + '"></figure>' : "") +
         '<p class="insight">' + bold(p.insight) + "</p>" + (p.examples || []).map(x => '<div class="exline">' + bold(x) + "</div>").join("") +
         '<div class="itemchips">' + (p.items || []).filter(id => BY[id]).map(id => '<button class="itemchip" data-word="' + id + '">' + esc(BY[id].word) + "</button>").join("") + "</div>" +
         '<div class="drill"><b>Try it now:</b> ' + bold(p.drill) + "</div>" +
@@ -753,6 +758,7 @@ function drawPatterns() {
     const p = h.parentElement; p.dataset.open = p.dataset.open === "1" ? "0" : "1";
     if (p.dataset.open === "0" && RD.owner === "pat:" + p.dataset.id) stopSpeech();
     if (p.dataset.open === "1") { if (S.pats.indexOf(p.dataset.id) < 0) { S.pats.push(p.dataset.id); S.pts += 2; touchDay(); save(); hud(); if (S.pats.length >= PATS.length) award("patterns"); }
+      loadPatArt(p.querySelector(".patart"));
       const pat = PATS.find(x => x.id === p.dataset.id); if (pat && pat.game) drawGame(pat); }
   });
   document.querySelectorAll("#v-patterns [data-word]").forEach(b => b.onclick = e => { e.stopPropagation(); stack = []; openWord(b.dataset.word); });
@@ -767,6 +773,25 @@ function drawPatterns() {
     const card = document.querySelector('#v-patterns .pat[data-id="' + PATOPEN + '"]'); PATOPEN = null;
     if (card) { if (card.dataset.open !== "1") card.querySelector(".pathead").click(); setTimeout(() => card.scrollIntoView({ behavior: "smooth", block: "start" }), 350); }
   }
+}
+/* Pattern pictures are SVGs drawn in code that colour themselves with the page's CSS variables, so they are
+   inlined (an <img> SVG cannot see page CSS). Loaded only when a card is first opened; cached for redraws.
+   If fetch fails (e.g. opened from file://), fall back to a plain lazy <img> in the light palette. */
+const PAT_ART = {};
+function loadPatArt(fig) {
+  if (!fig || fig.dataset.done) return;
+  fig.dataset.done = "1";
+  const src = fig.dataset.src, alt = fig.dataset.alt || "";
+  const put = txt => {
+    fig.innerHTML = txt.replace(/<script[\s\S]*?<\/script>/gi, "").replace(/^[\s\S]*?(?=<svg)/, "");
+    const s = fig.querySelector("svg"); if (s) { s.setAttribute("aria-label", alt); s.removeAttribute("width"); s.removeAttribute("height"); }
+  };
+  const img = () => { fig.innerHTML = '<img src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" decoding="async">'; };
+  if (PAT_ART[src]) return put(PAT_ART[src]);
+  if (!window.fetch) return img();
+  fetch(src).then(r => r.ok ? r.text() : Promise.reject(r.status))
+    .then(t => { if (!/<svg[\s>]/.test(t)) throw 0; PAT_ART[src] = t; put(t); })
+    .catch(img);
 }
 function drawGame(p) {
   const el = document.getElementById("game-" + p.id); if (!el) return;
