@@ -1,7 +1,7 @@
 /* ============================================================
    BACK ON YOUR FEET — lexicon.js: every synonym and antonym named in words.js as a FULL entry
    (part of speech, level, real definition, two examples, collocations, note). Never "a synonym of X".
-   329 entries. Any term added here becomes tappable wherever words.js names it.
+   306 entries. Any term added here becomes tappable wherever words.js names it.
    ============================================================ */
 window.LEXICON = {
   "abdomen": {
@@ -139,15 +139,6 @@ window.LEXICON = {
     colls: ["make antibodies","produce antibodies","antibodies against a virus"],
     note: "Usually plural."
   },
-  "atishoo": {
-    pos: "exclamation",
-    cefr: null,
-    ipa: "/əˈtɪʃ.uː/",
-    def: "A word used, especially in writing, to show the sound of a sneeze.",
-    ex: ["'Atishoo!' went Mali, right onto my English essay.","In the cartoon, the dog sneezed with a huge 'Atishoo!'"],
-    colls: ["a loud atishoo"],
-    note: "British. Americans usually write achoo. It shows the sound; the verb is sneeze."
-  },
   "attend to": {
     pos: "phrasal verb",
     cefr: null,
@@ -159,7 +150,7 @@ window.LEXICON = {
   },
   "attribute": {
     pos: "noun",
-    cefr: null,
+    cefr: "C2",
     ipa: "/ˈæt.rɪ.bjuːt/",
     def: "An attribute is a quality or feature that someone or something has.",
     ex: ["Speed is her greatest attribute on the badminton court.","The herb's main attribute is its cooling effect."],
@@ -195,7 +186,7 @@ window.LEXICON = {
   },
   "bandage": {
     pos: "noun",
-    cefr: "B2",
+    cefr: "A2",
     ipa: "/ˈbæn.dɪdʒ/",
     def: "A bandage is a long strip of cloth that you wrap around an injured part of the body to protect or support it.",
     ex: ["The nurse wrapped a bandage around Bua's twisted ankle.","Keep the bandage clean and dry until you see the doctor again."],
@@ -247,15 +238,6 @@ window.LEXICON = {
     colls: ["a broken bone","break a bone","strong bones","bone marrow"],
     note: "Muscles move the bones; joints are where two bones meet."
   },
-  "brawn": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/brɔːn/",
-    def: "Brawn is physical strength and big muscles, especially compared with intelligence.",
-    ex: ["The game needs brains as well as brawn.","Rowing takes brawn, but it also takes good timing."],
-    colls: ["brains and brawn","brains, not brawn","pure brawn"],
-    note: "Usually in *brains and brawn* (or *brains, not brawn*). In British English it is also a cold meat dish."
-  },
   "break": {
     pos: "noun and verb",
     cefr: "A2",
@@ -264,15 +246,6 @@ window.LEXICON = {
     ex: ["She broke her arm falling off a wall.","The doctor said it was a clean break and would heal well."],
     colls: ["break your arm","a clean break","a bad break","break a bone"],
     note: "Verb forms: *break – broke – broken*. As a noun, *a break* in a bone = a fracture."
-  },
-  "breast": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/brest/",
-    def: "Breast is a literary word for the front of a person's chest; it also means either of the two soft parts of a woman's chest that produce milk, and the front of a bird's body.",
-    ex: ["The robin has an orange-red breast that makes it easy to spot.","In the old poem, the princess holds the letter close to her breast."],
-    colls: ["a red breast","chicken breast","close to her breast"],
-    note: "In everyday English, say *chest* for this part of the body. *Breast* is mostly used in poems and stories, for birds, and for meat such as *chicken breast*."
   },
   "breastbone": {
     pos: "noun",
@@ -337,15 +310,6 @@ window.LEXICON = {
     colls: ["suffer from burnout","avoid burnout","risk of burnout","exam burnout"],
     note: "Usually about long-term stress, not one tiring day."
   },
-  "calcaneus": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/kælˈkeɪ.ni.əs/",
-    def: "The calcaneus is the medical name for the heel bone, the biggest bone in the foot.",
-    ex: ["The X-ray showed that her calcaneus was not broken.","The calcaneus takes your weight every time you walk."],
-    colls: ["a fracture of the calcaneus","the calcaneus bone"],
-    note: "Very technical; in normal speech say *heel* or *heel bone*."
-  },
   "calf": {
     pos: "noun",
     cefr: "C2",
@@ -357,12 +321,12 @@ window.LEXICON = {
   },
   "care for": {
     pos: "phrasal verb",
-    cefr: null,
+    cefr: "B1",
     ipa: "/ˈkeər fɔːr/",
     def: "To care for someone is to look after them, especially when they are ill, very young or very old.",
     ex: ["After Grandma's operation, the family took turns to care for her at home.","Trained nurses care for the patients in the hospital's intensive care unit."],
     colls: ["care for a patient","care for the sick","be cared for at home"],
-    note: "Care for can also mean 'like' in formal or old-fashioned English: Would you care for some tea?"
+    note: "In the medical sense it means looking after a patient; it can also mean 'like' in formal or old-fashioned English: Would you care for some tea?"
   },
   "casualty": {
     pos: "noun",
@@ -402,7 +366,7 @@ window.LEXICON = {
   },
   "characteristic": {
     pos: "noun",
-    cefr: null,
+    cefr: "B2",
     ipa: "/ˌkær.ək.təˈrɪs.tɪk/",
     def: "A characteristic is a typical quality or feature of something or someone.",
     ex: ["A high fever is one characteristic of flu.","The plant's main characteristic is its strong smell."],
@@ -427,15 +391,6 @@ window.LEXICON = {
     colls: ["chin up","rest your chin","a double chin"],
     note: "*Keep your chin up* = stay positive when things are hard. The forehead is the top of the face; the chin is the bottom."
   },
-  "cilium": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/ˈsɪl.i.əm/",
-    def: "In medicine, cilium is a technical word for an eyelash; in biology, cilia are also tiny hairs on cells that move in waves.",
-    ex: ["Tiny cilia in your airways sweep dust out of your lungs.","The biology textbook showed cilia on cells under a microscope."],
-    colls: ["cilia in the lungs","tiny cilia"],
-    note: "A technical word, usually plural (*cilia*). In daily life say *eyelash*."
-  },
   "claw": {
     pos: "noun",
     cefr: null,
@@ -445,21 +400,12 @@ window.LEXICON = {
     colls: ["sharp claws","a cat's claws","retract its claws"],
     note: "People have nails; many animals and birds have claws."
   },
-  "clear your throat": {
-    pos: "verb phrase",
-    cefr: null,
-    ipa: "/ˌklɪə jə ˈθrəʊt/",
-    def: "To give a small cough, often to get ready to speak or to get attention.",
-    ex: ["Before her speech, she cleared her throat and smiled at the class.","The teacher cleared his throat loudly until everyone stopped talking."],
-    colls: ["clear your throat loudly","clear your throat nervously"],
-    note: "Usually a small, controlled cough, not a sign of illness."
-  },
   "clear-headed": {
     pos: "adjective",
     cefr: null,
     ipa: "/ˌklɪəˈhed.ɪd/",
     def: "Able to think clearly and sensibly.",
-    ex: ["After a good night's sleep, she felt clear-headed for the exam.","Fresh air helped him feel clear-headed again."],
+    ex: ["After a good night's sleep, she felt clear-headed for the exam.","Fresh air helped her feel clear-headed again."],
     colls: ["feel clear-headed","stay clear-headed"],
     note: "Noun phrase: a clear head."
   },
@@ -717,7 +663,7 @@ window.LEXICON = {
   },
   "distress": {
     pos: "noun",
-    cefr: null,
+    cefr: "C1",
     ipa: "/dɪˈstres/",
     def: "Distress is a feeling of great worry, sadness or physical pain.",
     ex: ["The little girl was in obvious distress after falling off her bike.","Losing her phone on the BTS caused Bua a lot of distress."],
@@ -744,7 +690,7 @@ window.LEXICON = {
   },
   "dubious": {
     pos: "adjective",
-    cefr: null,
+    cefr: "C2",
     ipa: "/ˈdʒuː.bi.əs/",
     def: "Something dubious is probably not safe, honest or good.",
     ex: ["The hotel's tap water looked dubious, so we bought bottled water.","Be careful of dubious health advice on social media."],
@@ -759,15 +705,6 @@ window.LEXICON = {
     ex: ["A warm compress eased the pain in her neck.","Ginger tea can ease a sore throat for a while."],
     colls: ["ease the pain","ease symptoms","help to ease"],
     note: "Also a noun: with ease = easily."
-  },
-  "effect": {
-    pos: "noun",
-    cefr: "B1",
-    ipa: "/ɪˈfekt/",
-    def: "An effect is a change or result that something causes.",
-    ex: ["The medicine had a quick effect on her fever.","Too much screen time can have an effect on your sleep."],
-    colls: ["have an effect on","a positive effect","side effects"],
-    note: "Effect is the noun; affect is the verb."
   },
   "elated": {
     pos: "adjective",
@@ -888,7 +825,7 @@ window.LEXICON = {
   },
   "fatal": {
     pos: "adjective",
-    cefr: "C1",
+    cefr: "B2",
     ipa: "/ˈfeɪ.təl/",
     def: "Something fatal causes death, or leads to failure.",
     ex: ["The crash was not fatal, but two people were badly injured.","Heatstroke can be fatal, so call 1669 straight away."],
@@ -945,9 +882,9 @@ window.LEXICON = {
     cefr: "A2",
     ipa: "/fɪt/",
     def: "Healthy and strong, especially because you exercise regularly.",
-    ex: ["She trains every morning to stay fit for the badminton season.","After six weeks in a sling, it took her a month to get fit again."],
-    colls: ["keep fit","stay fit","fit and healthy","get fit"],
-    note: "Noun: fitness. keep fit is also a noun for exercise classes in British English."
+    ex: ["My aunt is very fit because she runs at Lumphini Park every morning.","You need to be fit to play three badminton matches in one day."],
+    colls: ["keep fit","very fit","fit and healthy","physically fit"],
+    note: "Comparative *fitter*, superlative *fittest*. The noun is *fitness*: *a fitness test*."
   },
   "flexibility": {
     pos: "noun",
@@ -972,7 +909,7 @@ window.LEXICON = {
     cefr: null,
     ipa: "/ˈfræk.tʃəd/",
     def: "A fractured bone is cracked or broken.",
-    ex: ["Yai slipped on the wet path and ended up with a fractured wrist.","A fractured rib can make it painful to breathe deeply."],
+    ex: ["Fah's aunt slipped on the wet path and ended up with a fractured wrist.","A fractured rib can make it painful to breathe deeply."],
     colls: ["a fractured wrist","a fractured rib","a fractured skull"],
     note: "More medical than *broken*."
   },
@@ -1012,15 +949,6 @@ window.LEXICON = {
     colls: ["build something from the ground up","design from the ground up"],
     note: ""
   },
-  "frons": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/frɒnz/",
-    def: "Frons is the medical Latin word for the forehead.",
-    ex: ["The anatomy book labelled the forehead as the frons.","In biology, an insect's frons is the front of its head."],
-    colls: ["the frons of the skull","an insect's frons"],
-    note: "Very technical; say *forehead* in everyday English."
-  },
   "gall bladder": {
     pos: "noun",
     cefr: null,
@@ -1059,7 +987,7 @@ window.LEXICON = {
   },
   "get well": {
     pos: "verb phrase",
-    cefr: "A2",
+    cefr: null,
     ipa: "/ɡet ˈwel/",
     def: "To get well is to become healthy again after an illness.",
     ex: ["We made Mali a card that said 'Get well soon!'","Rest at home and you'll get well faster."],
@@ -1068,7 +996,7 @@ window.LEXICON = {
   },
   "get worse": {
     pos: "verb phrase",
-    cefr: "A2",
+    cefr: "B1",
     ipa: "/ɡet ˈwɜːs/",
     def: "To get worse is to become more ill, more painful or more serious than before.",
     ex: ["If the pain gets worse, go back to the doctor.","Her cough got worse at night, so Mum took her to the clinic."],
@@ -1089,7 +1017,7 @@ window.LEXICON = {
     cefr: null,
     ipa: "/ˈɡɪd.i/",
     def: "Feeling as if everything is turning round and you might fall; also very happy and excited.",
-    ex: ["Spinning round on the office chair made the little boy giddy.","She felt giddy with excitement when her name was called for the team."],
+    ex: ["Spinning round on the office chair made the little girl giddy.","She felt giddy with excitement when her name was called for the team."],
     colls: ["feel giddy","giddy with excitement","a giddy feeling"],
     note: "In everyday use giddy is now more common for excitement than for dizziness."
   },
@@ -1104,7 +1032,7 @@ window.LEXICON = {
   },
   "give up": {
     pos: "phrasal verb",
-    cefr: "B1",
+    cefr: "B2",
     ipa: "/ɡɪv ˈʌp/",
     def: "To give up is to stop trying to do something because it is too difficult.",
     ex: ["The physio exercises were boring, but Praew didn't give up.","She nearly gave up on the last lap of the race."],
@@ -1156,15 +1084,6 @@ window.LEXICON = {
     colls: ["completely harmless","harmless to humans","a harmless joke"],
     note: ""
   },
-  "haunch": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/hɔːntʃ/",
-    def: "Your haunches are your hips, bottom and the tops of your legs; the word is most often used about animals.",
-    ex: ["The dog sat back on its haunches and waited for the ball.","We squatted on our haunches round the campfire."],
-    colls: ["sit on your haunches","squat on your haunches","a haunch of venison"],
-    note: "Mostly used in the phrase *on your haunches* (= squatting), or for animals and meat."
-  },
   "head pain": {
     pos: "noun phrase",
     cefr: null,
@@ -1210,24 +1129,6 @@ window.LEXICON = {
     colls: ["cause heartache","a lot of heartache","years of heartache"],
     note: "Not a medical word: it is about feelings, not about a real pain in the heart."
   },
-  "heel bone": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/ˈhiːl ˌbəʊn/",
-    def: "The heel bone is the large bone at the back of the foot that forms the heel.",
-    ex: ["Landing badly from a high jump can bruise the heel bone.","Your Achilles tendon joins your calf muscle to your heel bone."],
-    colls: ["the heel bone","a bruised heel bone"],
-    note: "Doctors call it the *calcaneus*."
-  },
-  "hepatic": {
-    pos: "adjective",
-    cefr: null,
-    ipa: "/hepˈæt.ɪk/",
-    def: "Hepatic means connected with the liver; it is a medical word.",
-    ex: ["The doctor checked the patient's hepatic function with a blood test.","Hepatic is to liver what renal is to kidney."],
-    colls: ["hepatic function","hepatic disease"],
-    note: "Medical only; related to *hepatitis* (an illness that affects the liver)."
-  },
   "hiccup": {
     pos: "noun",
     cefr: null,
@@ -1251,7 +1152,7 @@ window.LEXICON = {
     cefr: null,
     ipa: "/ˈhɪp ˌdʒɔɪnt/",
     def: "The hip joint is the ball-and-socket joint where the top of your thigh bone fits into the pelvis.",
-    ex: ["Yai had her worn hip joint replaced last year.","The hip joint lets your leg move forwards, backwards and out to the side."],
+    ex: ["My great-aunt had her worn hip joint replaced last year, and now she walks without a stick.","The hip joint lets your leg move forwards, backwards and out to the side."],
     colls: ["a hip joint replacement","a healthy hip joint"],
     note: ""
   },
@@ -1280,7 +1181,7 @@ window.LEXICON = {
     def: "Not well because you have a disease or feel unwell.",
     ex: ["Mali was too ill to go to school on Monday.","If you feel ill during the exam, tell the teacher straight away."],
     colls: ["feel ill","fall ill","be taken ill","seriously ill"],
-    note: "In British English, ill is the usual word for 'not well'; it normally comes after a verb (She's ill), not before a noun."
+    note: "In British English, *ill* is the usual word for 'not well' (She's ill), and it normally comes after a verb. Don't mix it up with *feel sick* (about to vomit) and *be sick* (vomit)."
   },
   "illness": {
     pos: "noun",
@@ -1320,7 +1221,7 @@ window.LEXICON = {
   },
   "in bed": {
     pos: "adjective phrase",
-    cefr: "A2",
+    cefr: null,
     ipa: "/ɪn ˈbed/",
     def: "Someone who is in bed is lying in bed, often because they are ill.",
     ex: ["Mali spent two whole days in bed with flu.","The doctor told her to stay in bed until her temperature came down."],
@@ -1390,15 +1291,6 @@ window.LEXICON = {
     colls: ["an influenza virus","influenza A","seasonal influenza"],
     note: "Used by doctors and in news reports; in everyday speech people say flu."
   },
-  "ingredient": {
-    pos: "noun",
-    cefr: "B1",
-    ipa: "/ɪnˈɡriː.di.ənt/",
-    def: "An ingredient is one of the things that are mixed together to make something, such as food or medicine.",
-    ex: ["Menthol is one of the ingredients in a ya dom inhaler.","Check the ingredients on the label if you have an allergy."],
-    colls: ["the main ingredient","an active ingredient","natural ingredients"],
-    note: ""
-  },
   "inoculation": {
     pos: "noun",
     cefr: null,
@@ -1431,7 +1323,7 @@ window.LEXICON = {
     cefr: null,
     ipa: "/ˌkiːp ˈfɪt/",
     def: "To stay healthy and strong, especially by doing exercise regularly.",
-    ex: ["Dao keeps fit by swimming three times a week at the school pool.","Dancing to K-pop videos is a fun way to keep fit at home."],
+    ex: ["Kaew keeps fit by swimming three times a week at the school pool.","Dancing to K-pop videos is a fun way to keep fit at home."],
     colls: ["keep fit by + -ing","try to keep fit","help you keep fit","a keep-fit class"],
     note: "British; *a keep-fit class* is an exercise class, often for older people."
   },
@@ -1543,15 +1435,6 @@ window.LEXICON = {
     colls: ["a lively child","a lively class","lively and cheerful","a lively discussion"],
     note: "Despite the -ly ending, *lively* is an adjective, not an adverb: *a lively girl*, never *she played lively*."
   },
-  "look after": {
-    pos: "phrasal verb",
-    cefr: "A2",
-    ipa: "/lʊk ˈɑːf.tər/",
-    def: "To look after someone is to take care of them and make sure they have what they need.",
-    ex: ["Praew looked after her little sister while Mum went to the chemist's.","Nurses look after patients day and night on the children's ward."],
-    colls: ["look after a patient","look after yourself","look after a sick child"],
-    note: "British; American English often prefers take care of."
-  },
   "loose": {
     pos: "adjective",
     cefr: null,
@@ -1605,6 +1488,15 @@ window.LEXICON = {
     ex: ["Thanks to good medical care, Mali left hospital after one night.","People in remote villages sometimes have to travel hours for medical care."],
     colls: ["receive medical care","need medical care","emergency medical care","access to medical care"],
     note: "Uncountable: not a medical care."
+  },
+  "medication": {
+    pos: "noun",
+    cefr: "C2",
+    ipa: "/ˌmed.ɪˈkeɪ.ʃən/",
+    def: "Medication is a medicine, or a set of medicines, that a doctor has given someone for an illness or condition.",
+    ex: ["Grandma keeps her medication in a box with the days of the week on it.","Tell the doctor about any medication you are already taking before she prescribes something new."],
+    colls: ["take medication","be on medication","prescribed medication","your regular medication"],
+    note: "Close to prescription only in its second meaning, the medicine itself: collect your prescription or collect your medication. The paper or electronic order from the doctor is only ever a prescription."
   },
   "medicine": {
     pos: "noun",
@@ -1669,15 +1561,6 @@ window.LEXICON = {
     colls: ["have an MRI","an MRI scan","MRI results"],
     note: "Short for *magnetic resonance imaging*. MRIs show soft parts like muscles and ligaments in detail."
   },
-  "musculature": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/ˈmʌs.kjə.lə.tʃər/",
-    def: "Musculature is the set of muscles in a body or one part of a body, and the way they are arranged.",
-    ex: ["The anatomy poster shows the musculature of the human leg.","Swimming builds the musculature of the shoulders and back."],
-    colls: ["the musculature of the back","strong musculature"],
-    note: "Formal or scientific."
-  },
   "nasal spray": {
     pos: "noun",
     cefr: null,
@@ -1692,13 +1575,13 @@ window.LEXICON = {
     cefr: null,
     ipa: "/ˈnɔː.zi.əs/",
     def: "Feeling as if you are going to vomit.",
-    ex: ["The medicine made her feel nauseous, so she called the doctor.","Long car journeys make him nauseous unless he looks out of the window."],
+    ex: ["The medicine made her feel nauseous, so she called the doctor.","Long car journeys make her nauseous unless she looks out of the window."],
     colls: ["feel nauseous","become nauseous","nauseous and dizzy"],
     note: "More formal than feel sick. Noun: nausea /ˈnɔː.zi.ə/."
   },
   "neglect": {
     pos: "verb",
-    cefr: null,
+    cefr: "C1",
     ipa: "/nɪˈɡlekt/",
     def: "To neglect someone or something is not to give them the care or attention they need.",
     ex: ["If you neglect a small cut, it can become infected.","She neglected her stretching exercises and her shoulder became stiff again."],
@@ -1768,15 +1651,6 @@ window.LEXICON = {
     colls: ["a knee op","after the op","have an op"],
     note: "Informal British English."
   },
-  "organ": {
-    pos: "noun",
-    cefr: "C1",
-    ipa: "/ˈɔː.ɡən/",
-    def: "An organ is a part of the body, such as the heart, lungs, liver or kidneys, that has a particular job to do.",
-    ex: ["The liver is one of the largest organs in the body.","Doctors can sometimes take an organ from one person and give it to another."],
-    colls: ["internal organs","vital organs","organ donation","an organ donor"],
-    note: "*organ* is the general word: the kidneys, liver and lungs are all organs. It also means a big musical instrument."
-  },
   "out of bed": {
     pos: "adjective phrase",
     cefr: null,
@@ -1809,7 +1683,7 @@ window.LEXICON = {
     cefr: "B2",
     ipa: "/ˌəʊ.və ðə ˈmuːn/",
     def: "Extremely pleased and happy about something that has happened.",
-    ex: ["Fern was over the moon when she got a place in the school badminton team.","My grandparents were over the moon about their first trip to Japan."],
+    ex: ["Joy was over the moon when she got a place in the school badminton team.","My grandparents were over the moon about their first trip to Japan."],
     colls: ["be over the moon about","be over the moon with","absolutely over the moon"],
     note: "Informal and especially common in British English; *about* or *with* introduces the reason."
   },
@@ -1849,15 +1723,6 @@ window.LEXICON = {
     colls: ["completely painless","quick and painless","a painless procedure"],
     note: "-less means without: *painless* = without pain. It can also mean easy: *a painless way to learn*."
   },
-  "palpebra": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/ˈpæl.pɪ.brə/",
-    def: "Palpebra is the medical Latin word for an eyelid.",
-    ex: ["The eye doctor wrote that the lower palpebra was swollen.","Medical students learn words like palpebra, but patients just say eyelid."],
-    colls: ["the upper palpebra","the lower palpebra"],
-    note: "Very technical; plural *palpebrae*. You will almost never need it outside medicine."
-  },
   "pass out": {
     pos: "phrasal verb",
     cefr: "B2",
@@ -1896,7 +1761,7 @@ window.LEXICON = {
   },
   "pharmacy": {
     pos: "noun",
-    cefr: "B2",
+    cefr: "B1",
     ipa: "/ˈfɑː.mə.si/",
     def: "A pharmacy is a shop, or a part of a hospital, where medicines are prepared and sold.",
     ex: ["There is a 24-hour pharmacy next to the BTS station near our condo.","After the appointment, take this form to the hospital pharmacy on the ground floor."],
@@ -1939,6 +1804,15 @@ window.LEXICON = {
     colls: ["feel poorly","a bit poorly","poorly with a cold"],
     note: "Informal British, often used by parents about children. As an adverb it means badly: *a poorly written essay*."
   },
+  "possession": {
+    pos: "noun",
+    cefr: "B2",
+    ipa: "/pəˈzeʃ.ən/",
+    def: "A possession is something that you own, such as a phone, a bag or a bike.",
+    ex: ["Please keep your possessions with you on the BTS at all times.","Her most treasured possession is the racket her aunt gave her for her birthday."],
+    colls: ["personal possessions","a treasured possession","your most valuable possession"],
+    note: "Usually plural. The other meaning of property is close to this (things you own: lost property), so in a health text ask yourself: does it mean something you own, or a quality a substance has?"
+  },
   "prescribed medicine": {
     pos: "noun phrase",
     cefr: null,
@@ -1946,11 +1820,11 @@ window.LEXICON = {
     def: "Prescribed medicine is medicine that a doctor has ordered for a particular patient.",
     ex: ["Keep prescribed medicine for one person only; never share it with a friend.","The nurse checked Grandma's bag to see which prescribed medicine she was taking."],
     colls: ["take prescribed medicine","prescribed medicine only","a bag of prescribed medicine"],
-    note: ""
+    note: "Matches prescription in its second meaning, the medicine itself: the chemist's makes up your prescription (your prescribed medicine)."
   },
   "prevention": {
     pos: "noun",
-    cefr: "C1",
+    cefr: "B2",
     ipa: "/prɪˈven.ʃən/",
     def: "Prevention is action that stops something bad, such as an illness, from happening.",
     ex: ["Washing your hands is the best prevention against many infections.","The school runs a dengue prevention campaign before every rainy season."],
@@ -1975,15 +1849,6 @@ window.LEXICON = {
     colls: ["protect from","protect against","protect your skin","well protected"],
     note: "Pattern: *protect someone from / against something*."
   },
-  "pulmonary": {
-    pos: "adjective",
-    cefr: null,
-    ipa: "/ˈpʌl.mə.nər.i/",
-    def: "Pulmonary means connected with the lungs; it is a medical word.",
-    ex: ["Smoke and haze can cause pulmonary problems over time.","A pulmonary specialist is a doctor who treats lung diseases."],
-    colls: ["pulmonary disease","pulmonary function"],
-    note: "Medical; in everyday English say *lung* before a noun (*a lung infection*)."
-  },
   "put back": {
     pos: "phrasal verb",
     cefr: "B1",
@@ -2002,18 +1867,9 @@ window.LEXICON = {
     colls: ["put your back out","put your shoulder out","put a knee out"],
     note: "Separable: *put your shoulder out*. More common meaning: *put out a fire* = stop it burning."
   },
-  "pyrexia": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/paɪˈrek.si.ə/",
-    def: "The medical word for a body temperature that is higher than normal.",
-    ex: ["The hospital chart said pyrexia, which the nurse explained simply meant fever.","Doctors write pyrexia in their notes, but patients just say they have a temperature."],
-    colls: ["pyrexia of unknown origin","mild pyrexia"],
-    note: "Only used by doctors and nurses. In daily life say fever or temperature."
-  },
   "quality": {
     pos: "noun",
-    cefr: null,
+    cefr: "B2",
     ipa: "/ˈkwɒl.ə.ti/",
     def: "A quality is a feature or characteristic that something or someone has.",
     ex: ["Ginger has a warming quality, which is why Yai puts it in hot drinks.","Patience is an important quality in a nurse."],
@@ -2031,7 +1887,7 @@ window.LEXICON = {
   },
   "questionable": {
     pos: "adjective",
-    cefr: null,
+    cefr: "C2",
     ipa: "/ˈkwes.tʃə.nə.bəl/",
     def: "Something questionable may not be good, safe, true or honest.",
     ex: ["That online cure for flu sounds questionable.","The prawns smelled questionable, so we didn't eat them."],
@@ -2055,6 +1911,15 @@ window.LEXICON = {
     ex: ["Raise your injured arm above the level of your heart to reduce the swelling.","Hot weather and dehydration can raise your body temperature quickly."],
     colls: ["raise your arm","raise your temperature","raise the risk"],
     note: "Raise needs an object; rise has none: My temperature rose."
+  },
+  "raised temperature": {
+    pos: "noun phrase",
+    cefr: null,
+    ipa: "/ˌreɪzd ˈtem.prə.tʃər/",
+    def: "A body temperature that is higher than normal because you are ill; nurses and doctors often use this phrase for a fever.",
+    ex: ["The school nurse said Mali had a slightly raised temperature and should go home to rest.","If a raised temperature lasts more than a few days, it's time to see a doctor."],
+    colls: ["a slightly raised temperature","have a raised temperature","a raised temperature and a cough"],
+    note: "A little more formal than *a high temperature*; in everyday British English people simply say *a temperature*."
   },
   "raring to go": {
     pos: "idiom",
@@ -2085,7 +1950,7 @@ window.LEXICON = {
   },
   "recover": {
     pos: "verb",
-    cefr: "B2",
+    cefr: null,
     ipa: "/rɪˈkʌv.ər/",
     def: "To recover is to become healthy again after an illness or injury.",
     ex: ["She recovered from flu in about a week.","It took the badminton player months to recover fully from her knee injury."],
@@ -2146,15 +2011,6 @@ window.LEXICON = {
     colls: ["rehabilitate an injury","rehabilitate a knee"],
     note: "Noun: *rehabilitation*, often shortened to *rehab*."
   },
-  "rehabilitation": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/ˌriː.əˌbɪl.ɪˈteɪ.ʃən/",
-    def: "Rehabilitation is the process of helping someone to become healthy and active again after an illness or injury.",
-    ex: ["After her knee operation she spent three months in rehabilitation.","The hospital has a rehabilitation centre for sports injuries."],
-    colls: ["a rehabilitation programme","injury rehabilitation","go through rehabilitation"],
-    note: "Often shortened to rehab in speech."
-  },
   "reliable": {
     pos: "adjective",
     cefr: "B1",
@@ -2163,15 +2019,6 @@ window.LEXICON = {
     ex: ["Get health advice from a reliable source, such as a doctor or pharmacist.","The school's water filter is reliable."],
     colls: ["a reliable source","reliable information","completely reliable"],
     note: ""
-  },
-  "renal": {
-    pos: "adjective",
-    cefr: null,
-    ipa: "/ˈriː.nəl/",
-    def: "Renal means connected with the kidneys; doctors use it instead of 'kidney' before a noun.",
-    ex: ["The hospital has a renal unit for people with kidney disease.","Renal problems can make people very tired."],
-    colls: ["renal failure","a renal unit","renal function"],
-    note: "A medical adjective; in everyday English use *kidney* before a noun (*kidney disease*)."
   },
   "reopen": {
     pos: "verb",
@@ -2198,7 +2045,7 @@ window.LEXICON = {
     def: "Your ribcage is the frame of ribs round your chest that protects your heart and lungs.",
     ex: ["Your lungs expand inside your ribcage when you breathe in.","The heart is safe inside the ribcage."],
     colls: ["the ribcage protects","inside the ribcage"],
-    note: "Also written *rib cage*."
+    note: "Also written *rib cage*. Doctors sometimes call it the *thoracic cage*."
   },
   "rigid": {
     pos: "adjective",
@@ -2236,15 +2083,6 @@ window.LEXICON = {
     colls: ["have a scan","a brain scan","a CT scan","an ultrasound scan"],
     note: "*scan* is a general word; an X-ray, an MRI and an ultrasound are all kinds of scans or images."
   },
-  "script": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/skrɪpt/",
-    def: "Script is an informal word, used by doctors and pharmacists, for a prescription.",
-    ex: ["The pharmacist asked whether Mum had brought the script from the doctor.","In the TV hospital drama, the doctor kept saying, 'I'll write you a script.'"],
-    colls: ["write a script","a repeat script","bring your script"],
-    note: "Informal; in the sense of a play or film text, script is a common B1 word."
-  },
   "sedentary": {
     pos: "adjective",
     cefr: "C2",
@@ -2256,7 +2094,7 @@ window.LEXICON = {
   },
   "shake off": {
     pos: "phrasal verb",
-    cefr: null,
+    cefr: "C2",
     ipa: "/ʃeɪk ˈɒf/",
     def: "To shake off an illness is to get rid of it.",
     ex: ["I can't shake off this cold; I've had it for two weeks.","She shook off the flu in a few days."],
@@ -2325,6 +2163,15 @@ window.LEXICON = {
     ex: ["As a baby, my cousin was sickly, but now she is the captain of the swimming team.","The plant looked pale and sickly because it wasn't getting enough sun."],
     colls: ["a sickly child","look sickly","pale and sickly","sickly-looking"],
     note: "*Sickly* is an adjective, not an adverb. It can also describe an unpleasantly sweet smell or taste."
+  },
+  "side effect": {
+    pos: "noun",
+    cefr: "C1",
+    ipa: "/ˈsaɪd ɪˌfekt/",
+    def: "A side effect is an extra, usually unpleasant, effect that a medicine or treatment has on your body as well as the effect it is meant to have.",
+    ex: ["Feeling sleepy is a common side effect of some allergy medicines.","The pharmacist explained the possible side effects before Fah started the new cream."],
+    colls: ["have side effects","cause side effects","possible side effects","a common side effect"],
+    note: "Contrast with property: a property is a quality a substance has (menthol has cooling properties); a side effect is an unwanted result it has on you."
   },
   "sign": {
     pos: "noun",
@@ -2407,15 +2254,6 @@ window.LEXICON = {
     colls: ["put on a splint","a finger splint","in a splint"],
     note: ""
   },
-  "splutter": {
-    pos: "verb",
-    cefr: null,
-    ipa: "/ˈsplʌt.ər/",
-    def: "To make short, unclear noises from your mouth, especially because you cannot breathe properly.",
-    ex: ["She swallowed the water too fast and spluttered for a minute.","He came up from the pool spluttering and laughing."],
-    colls: ["splutter and cough","start to splutter"],
-    note: "Also used for speaking in a confused way when you are angry or surprised."
-  },
   "sprain": {
     pos: "verb and noun",
     cefr: null,
@@ -2461,15 +2299,6 @@ window.LEXICON = {
     colls: ["steady on your feet","hold something steady","keep steady"],
     note: "Opposite: unsteady."
   },
-  "sternutation": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/ˌstɜː.njʊˈteɪ.ʃən/",
-    def: "A very formal, scientific word for the act of sneezing.",
-    ex: ["Sternutation is the medical term for sneezing, but you'll rarely hear it outside a textbook.","The article explained that sternutation helps clear dust from the nose."],
-    colls: ["the act of sternutation"],
-    note: "Extremely rare and technical. Use sneeze in everyday English."
-  },
   "stomach": {
     pos: "noun",
     cefr: "A2",
@@ -2484,7 +2313,7 @@ window.LEXICON = {
     cefr: "A2",
     ipa: "/ˈstʌm.ək ˌeɪk/",
     def: "A pain in your stomach or the lower part of the front of your body.",
-    ex: ["Eating too much spicy som tam gave him a stomach ache.","She stayed home with a stomach ache and drank some ORS."],
+    ex: ["Eating too much spicy som tam gave her a stomach ache.","She stayed home with a stomach ache and drank some ORS."],
     colls: ["have a stomach ache","a bad stomach ache","get a stomach ache"],
     note: "British spelling: stomach ache or stomach-ache. The ch in stomach says /k/."
   },
@@ -2505,15 +2334,6 @@ window.LEXICON = {
     ex: ["Bua pays for a music subscription so she can listen without adverts.","Our badminton club asks for a yearly subscription in January."],
     colls: ["a monthly subscription","cancel a subscription","pay a subscription","a subscription to a streaming service"],
     note: "Easily confused with prescription because they end the same way."
-  },
-  "supercilium": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/ˌsuː.pəˈsɪl.i.əm/",
-    def: "The supercilium is the medical name for the eyebrow, or the area of skin and hair above the eye.",
-    ex: ["The doctor's notes said the cut was just above the left supercilium.","Few people outside medicine ever use the word supercilium."],
-    colls: ["above the supercilium","the left supercilium"],
-    note: "Very technical; you will almost never need it. The adjective *supercilious* (looking down on people as if raising your eyebrows) comes from the same Latin word."
   },
   "supple": {
     pos: "adjective",
@@ -2547,7 +2367,7 @@ window.LEXICON = {
     cefr: "B2",
     ipa: "/ˈsɜː.dʒər.i/",
     def: "Surgery is the treatment of injuries or illnesses by cutting open the body to repair or remove a part.",
-    ex: ["Yai needed surgery on her hip after her fall.","She needed surgery on her shoulder after it kept dislocating."],
+    ex: ["Auntie Noi needed surgery on her knee after years of pain.","She needed surgery on her shoulder after it kept dislocating."],
     colls: ["have surgery","need surgery","knee surgery","major surgery"],
     note: "Usually uncountable: *have surgery*, not *have a surgery*. In British English, a doctor's *surgery* is also the place where a GP sees patients."
   },
@@ -2577,15 +2397,6 @@ window.LEXICON = {
     ex: ["Grandpa was getting better, but on Tuesday he took a turn for the worse.","The weather took a turn for the worse just as the match started."],
     colls: ["take a sudden turn for the worse","take a turn for the worse overnight"],
     note: "The opposite idiom is *take a turn for the better*."
-  },
-  "tarsus": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/ˈtɑː.səs/",
-    def: "The tarsus is the group of seven small bones at the back of the foot that form the ankle and the heel.",
-    ex: ["In the biology diagram, the tarsus was labelled between the shin bone and the long bones of the foot.","The doctor explained that the ankle sprain had not damaged the tarsus."],
-    colls: ["the bones of the tarsus","the human tarsus"],
-    note: "A medical word; in everyday English just say *ankle*. Plural: *tarsi*."
   },
   "tear duct": {
     pos: "noun",
@@ -2634,21 +2445,12 @@ window.LEXICON = {
   },
   "therapy": {
     pos: "noun",
-    cefr: null,
+    cefr: "B2",
     ipa: "/ˈθer.ə.pi/",
     def: "Therapy is treatment that helps someone with an illness, injury or mental problem, often over a long period and without drugs or an operation.",
     ex: ["Speech therapy helped my little sister pronounce her words more clearly.","After the accident she had months of therapy to walk normally again."],
     colls: ["speech therapy","physical therapy","a therapy session","have therapy"],
     note: "Starts with the /θ/ sound: tongue between your teeth."
-  },
-  "thoracic cage": {
-    pos: "noun",
-    cefr: null,
-    ipa: "/θəˈræs.ɪk ˌkeɪdʒ/",
-    def: "The thoracic cage is the medical name for the ribcage, the frame of ribs, spine and breastbone that surrounds the chest.",
-    ex: ["The anatomy model showed the thoracic cage around the heart and lungs.","Doctors check the thoracic cage after a serious car accident."],
-    colls: ["the thoracic cage","injury to the thoracic cage"],
-    note: "Technical; say *ribcage* in everyday English."
   },
   "thorax": {
     pos: "noun",
@@ -2685,15 +2487,6 @@ window.LEXICON = {
     ex: ["Mali stubbed her toe on the leg of the bed and hopped round the room.","Wiggle your toes to warm up your feet."],
     colls: ["your big toe","your little toe","stub your toe","on tiptoe","from head to toe"],
     note: "The heel is the back of the foot; the toes are at the front."
-  },
-  "toenail": {
-    pos: "noun",
-    cefr: "B2",
-    ipa: "/ˈtəʊ.neɪl/",
-    def: "A toenail is the hard, slightly curved layer that covers the end of each toe.",
-    ex: ["Cut your toenails straight across so they don't grow into the skin.","Tight shoes can make your toenails sore."],
-    colls: ["cut your toenails","an ingrown toenail"],
-    note: "Written as one word: *toenail*."
   },
   "transmissible": {
     pos: "adjective",
@@ -2733,7 +2526,7 @@ window.LEXICON = {
   },
   "trustworthy": {
     pos: "adjective",
-    cefr: null,
+    cefr: "C1",
     ipa: "/ˈtrʌstˌwɜː.ði/",
     def: "Someone or something trustworthy can be trusted.",
     ex: ["Khun Dao is a trustworthy pharmacist who explains everything clearly.","Is this website trustworthy?"],
@@ -2769,7 +2562,7 @@ window.LEXICON = {
   },
   "unsafe": {
     pos: "adjective",
-    cefr: null,
+    cefr: "C1",
     ipa: "/ʌnˈseɪf/",
     def: "Something unsafe could harm or hurt you.",
     ex: ["The water from the flooded well was unsafe to drink.","It is unsafe to play badminton with an injured shoulder."],
@@ -2817,7 +2610,7 @@ window.LEXICON = {
     cefr: null,
     ipa: "/ˈvɜː.tɪ.ɡəʊ/",
     def: "A feeling that you or everything around you is spinning, which makes you lose your balance.",
-    ex: ["Her grandmother has vertigo, so she holds the rail on the stairs.","Looking down from the top of the tower gave him vertigo."],
+    ex: ["Her grandmother has vertigo, so she holds the rail on the stairs.","Looking down from the top of the tower gave her vertigo."],
     colls: ["suffer from vertigo","get vertigo","an attack of vertigo"],
     note: "Many people also use vertigo for a fear of heights."
   },
@@ -2880,7 +2673,7 @@ window.LEXICON = {
     cefr: null,
     ipa: "/ˈwɪə.ri.nəs/",
     def: "A feeling of being very tired, especially after a long effort.",
-    ex: ["She felt a deep weariness after a week of exams.","There was weariness in his voice after the long journey home."],
+    ex: ["She felt a deep weariness after a week of exams.","There was weariness in her voice after the long journey home."],
     colls: ["a feeling of weariness","deep weariness"],
     note: "Literary; in speech people say tiredness. Adjective: weary."
   },
@@ -2925,7 +2718,7 @@ window.LEXICON = {
     cefr: null,
     ipa: "/ˈwuː.zi/",
     def: "Feeling weak, unsteady and unable to think clearly.",
-    ex: ["The medicine made her feel a bit woozy, so she lay down.","He woke up woozy after the long nap on the bus."],
+    ex: ["The medicine made her feel a bit woozy, so she lay down.","She woke up woozy after the long nap on the bus."],
     colls: ["feel woozy","a bit woozy","woozy and tired"],
     note: "Informal."
   },
@@ -2940,7 +2733,7 @@ window.LEXICON = {
   },
   "worsen": {
     pos: "verb",
-    cefr: null,
+    cefr: "C1",
     ipa: "/ˈwɜː.sən/",
     def: "To worsen is to become worse, or to make something worse.",
     ex: ["Her cough worsened during the PM2.5 season.","Smoke from burning fields worsens air pollution in the north."],
