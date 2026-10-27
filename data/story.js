@@ -111,7 +111,7 @@ window.STORY = {
       pages: [
         {
           art: "🫚", tint: "warm",
-          img: "",
+          img: "art/ch4p1.webp",
           alt: "A Thai kitchen: Yai, the grandmother, at an open wooden cabinet full of jars and small bottles holding up a ya dom inhaler and a steaming mug of ginger tea, Praew at the table with her sling reading the back of a small box, a sports-drink bottle and ORS sachets on the table.",
           prompt: "A warm Thai family kitchen with an old wooden cabinet open to show rows of jars, small bottles, dried herbs and tins. Yai, a Thai grandmother in her seventies with grey hair in a neat bun, a plain patterned sarong and a pale green blouse, stands at the cabinet holding up a tiny plain inhaler tube in one hand and a steaming mug of ginger tea in the other, with a proud, stubborn smile. Praew, thirteen, long black plait with a red ribbon, plain white blouse, right arm in a blue sling, sits at the table reading the back of a small plain box with a thoughtful frown; a plain sports-drink bottle and a few small plain sachets sit in front of her. Fresh ginger and lime on the counter. Warm, clean, modern picture-book style. No readable text, brand names or logos; every label is a plain colour block.",
           grammar: "Second conditional: *If herbs had no side effects, doctors would prescribe them for everything.*",
@@ -119,8 +119,8 @@ window.STORY = {
         },
         {
           art: "🔬", tint: "cool",
-          img: "",
-          alt: "Praew at her desk late at night with a laptop and a science project poster showing a flooded town drawn in simple shapes, a sketch of a willow tree and a tablet, Mali's empty bed in the background; a small hospital bag by the door.",
+          img: "art/ch4p2.webp",
+          alt: "Praew in pyjamas, her arm in a sling, at her desk late at night with a laptop and a science project poster showing a flooded town drawn in simple shapes, a sketch of a willow tree and a tablet, Mali's empty, neatly made bed through the open door with a small yellow toy on the pillow.",
           prompt: "Praew's bedroom at night, desk lamp glowing. Praew, thirteen, long black plait with a red ribbon, plain white blouse, right arm in a blue sling, sits at her desk typing one-handed on a laptop with a blank glowing screen. Propped beside her is a hand-drawn science poster showing, in simple pictures only, a flooded town, a pot of water boiling over a fire, a willow tree with drooping branches, and a single plain white round tablet. Through the open door, Mali's small bed is empty and neatly made; a small packed overnight bag with a plain yellow toy sits by the door. Quiet, warm night palette. Warm, clean, modern picture-book style. No readable text, letters or numbers anywhere; the poster has only pictures and squiggle lines.",
           grammar: "Second conditional: *If there were no clean water, we would have to boil it.*",
           text: "My science project was due the same week, because the universe has a sense of humour. The question: after a flood, how would a town cope, starting {{fromscratch|from scratch}}? If there were no clean water, we would have to boil it, because {{suspect|suspect}} water spreads disease. People {{pickup|pick up}} food poisoning from food that has sat in the heat. A scratch from dirty floodwater can turn into an {{infection|infection}}, and without medicine an infection can become {{lethal|lethal}}. Cheerful stuff.\n\nMy favourite fact: in 1763 an English clergyman called Edward Stone reported that willow bark brought down fevers, and in 1897 the Bayer company turned the same idea into aspirin. A tree became a tablet.\n\nMeanwhile Mali's fever reached day three, so the clinic sent her to hospital for one night, just to watch her. She {{pullthrough|pulled through}} like a champion, and two days later she was {{upandabout|up and about}}, singing. I almost missed the quiet."
@@ -134,7 +134,7 @@ window.STORY = {
       pages: [
         {
           art: "💪", tint: "bright",
-          img: "",
+          img: "art/ch5p1.webp",
           alt: "A bright physiotherapy room: Khun Fern guiding Praew's arm as Praew pulls a yellow rubber resistance band, no sling now, a wall poster of simple shoulder-exercise pictures, Praew's face a mix of effort and pride.",
           prompt: "A bright, clean physiotherapy room with a window onto green trees, a padded bench and a wall poster of simple stick-figure exercise pictures. Khun Fern, a Thai physiotherapist in her late twenties with black hair in a high ponytail and a plain teal polo shirt and trousers, stands beside Praew gently guiding her elbow. Praew, thirteen, long black plait with a red ribbon, plain white sports shirt and navy shorts, no sling, pulls a plain yellow rubber resistance band outwards with her right arm, face scrunched with effort and pride. A folded blue sling lies discarded on the bench. Warm, clean, modern picture-book style. No readable text or logos; the poster has pictures only.",
           grammar: "*as long as* with a promise: *You'll get completely better as long as you do your exercises every day.*",
@@ -142,7 +142,7 @@ window.STORY = {
         },
         {
           art: "🏆", tint: "warm",
-          img: "",
+          img: "art/ch5p2.webp",
           alt: "The badminton final: Praew and Bua on court with rackets raised and arms around each other's shoulders, both grinning, Coach Nok clapping at the side, Mali and Yai in the front row waving a plain banner, afternoon light.",
           prompt: "A school badminton final in a Bangkok gym, warm afternoon light through high windows, a small crowd of schoolgirls in plain white blouses and navy skirts in the stands. On court, Praew, thirteen, long black plait with a red ribbon, plain white sports shirt and navy shorts, both arms raised with her racket, and Bua (short bobbed hair, same kit) hug with arms around each other's shoulders, both laughing. Coach Nok (short black hair, plain navy tracksuit, whistle) claps at the side of the court. In the front row, Mali, eight, two short black bunches with yellow bands, plain yellow T-shirt, jumps up waving a plain red banner with no writing, and Yai (grey bun, pale green blouse, patterned sarong) beams beside her. Warm, clean, modern picture-book style. No readable text, numbers or logos; the scoreboard is blank.",
           grammar: "*If only* + past perfect for regret: *If only I had known last August what I know now.*",
